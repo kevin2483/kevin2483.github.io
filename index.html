@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>안정재 · 데이터·LLM 엔지니어 포트폴리오</title>
+<meta name="description" content="만드는 것보다 재는 장치를 먼저 세우는 데이터·LLM 엔지니어. 공공데이터 파이프라인 운영, 채용공고 역량 추출 평가 장치, BigQuery MCP 서버.">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root {
+    --ink: #161b33; --ink-2: #1f2547; --text: #1c2130; --muted: #5d6478; --line: #e3e6ee;
+    --bg: #ffffff; --bg-soft: #f4f6fa; --accent: #0e7c86; --accent-soft: #e6f4f5; --accent-ink: #7dd3dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --text: #e8eaf2; --muted: #a9afc4; --line: #2a3050; --bg: #0f1326; --bg-soft: #171c36; --accent: #4fc3cc; --accent-soft: #163a40;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "NanumGothic", sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
+  header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .brand { font-weight: 800; letter-spacing: -.01em; color: var(--text); }
+  nav a { color: var(--muted); margin-left: 18px; font-size: 14px; }
+  nav a:hover { color: var(--accent); text-decoration: none; }
+  .hero { background: var(--ink); color: #f3f4f8; padding: 88px 0 72px; }
+  .hero .kicker { color: var(--accent-ink); font-size: 13px; letter-spacing: .2em; font-weight: 700; }
+  .hero h1 { font-size: clamp(32px, 5vw, 52px); margin: 14px 0 10px; letter-spacing: -.02em; line-height: 1.15; }
+  .hero .role { font-size: 20px; color: #c5c9dc; margin: 0 0 24px; }
+  .hero p.lead { font-size: 18px; max-width: 760px; color: #e3e5ee; margin: 0 0 28px; }
+  .btns a { display: inline-block; padding: 11px 18px; border-radius: 10px; font-weight: 700; margin: 0 10px 10px 0; font-size: 15px; }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-ghost { border: 1px solid #3a4270; color: #e3e5ee; }
+  .btns a:hover { text-decoration: none; filter: brightness(1.08); }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
+  .stat { background: var(--ink-2); border-radius: 14px; padding: 18px; }
+  .stat b { display: block; font-size: 30px; color: var(--accent-ink); letter-spacing: -.02em; }
+  .stat span { font-size: 13px; color: #b7bcd3; }
+  section { padding: 72px 0 8px; }
+  section h2 { font-size: 28px; margin: 0 0 8px; letter-spacing: -.01em; }
+  section .sub { color: var(--muted); margin: 0 0 32px; font-size: 16px; }
+  .project { border: 1px solid var(--line); border-radius: 18px; padding: 28px; margin-bottom: 22px; background: var(--bg); }
+  .project .head { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+  .project .act { color: var(--accent); font-size: 12px; letter-spacing: .18em; font-weight: 800; }
+  .project h3 { margin: 6px 0 4px; font-size: 22px; letter-spacing: -.01em; }
+  .project .meta { color: var(--muted); font-size: 14px; }
+  .project .links { font-size: 14px; white-space: nowrap; align-self: flex-start; }
+  .project .links a { margin-left: 12px; font-weight: 600; }
+  .project p { margin: 14px 0 0; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+  .kpi { background: var(--bg-soft); border-radius: 12px; padding: 14px 16px; }
+  .kpi b { display: block; font-size: 24px; color: var(--accent); letter-spacing: -.01em; }
+  .kpi span { font-size: 13px; color: var(--muted); }
+  .tags { margin-top: 16px; }
+  .tag { display: inline-block; font-size: 12px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; margin: 0 6px 6px 0; color: var(--muted); }
+  details { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
+  summary { cursor: pointer; font-weight: 700; color: var(--accent); list-style: none; }
+  summary::before { content: "+ "; }
+  details[open] summary::before { content: "− "; }
+  details .body { padding-top: 10px; font-size: 15px; }
+  details table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 10px 0; }
+  details th, details td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  details th { color: var(--muted); font-weight: 600; font-size: 12.5px; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+  .shots img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  .skill { background: var(--bg-soft); border-radius: 14px; padding: 16px 18px; }
+  .skill h4 { margin: 0 0 8px; font-size: 14px; color: var(--muted); font-weight: 600; }
+  .about { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; }
+  .about .card { background: var(--bg-soft); border-radius: 14px; padding: 18px 20px; font-size: 15px; }
+  .about .card h4 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
+  footer { margin-top: 64px; padding: 40px 0 56px; background: var(--ink); color: #c5c9dc; font-size: 14px; }
+  footer a { color: var(--accent-ink); }
+  ul.clean { padding-left: 18px; margin: 8px 0; }
+  ul.clean li { margin: 4px 0; }
+  @media (max-width: 760px) {
+    .stats, .kpis, .shots { grid-template-columns: repeat(2, 1fr); }
+    .about { grid-template-columns: 1fr; }
+    nav a:nth-child(n+4) { display: none; }
+    .project { padding: 20px; }
+    .project .links { white-space: normal; }
+    .project .links a { margin: 0 12px 0 0; }
+  }
+  @media (max-width: 480px) { .stats { grid-template-columns: 1fr 1fr; } .kpis, .shots { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <div class="brand">안정재</div>
+  <nav><a href="#projects">프로젝트</a><a href="#skills">기술</a><a href="#about">소개</a><a href="assets/portfolio_2026.pdf">PDF</a><a href="https://github.com/kevin2483">GitHub</a></nav>
+</div></header>
+
+<section class="hero" style="padding-top:88px"><div class="wrap">
+  <div class="kicker">PORTFOLIO · 2026</div>
+  <h1>만드는 것보다,<br>재는 장치를 먼저 세웁니다.</h1>
+  <p class="role">안정재 · LLM 애플리케이션 · 데이터 엔지니어</p>
+  <p class="lead">공공데이터 지도 서비스의 수집·검증·AI 파이프라인을 설계해 두 달간 매일 운영했고, 기능마다 정답이 있는 평가로 숫자를 남겼습니다. 채용공고 추출 파이프라인에서는 평가 장치 자체의 결함을 네 번 찾아 고쳤고, 그 과정을 전부 재현 가능하게 공개했습니다.</p>
+  <div class="btns">
+    <a class="btn-primary" href="#projects">프로젝트 보기</a>
+    <a class="btn-ghost" href="https://careerfit-kevin2483.streamlit.app">CareerFit 데모 열기</a>
+    <a class="btn-ghost" href="assets/portfolio_2026.pdf">PDF 내려받기</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><b>7 / 7</b><span>레디포스트 KPI 전부 달성 · 14일 연속 새벽 배치 성공</span></div>
+    <div class="stat"><b>75 → 95%</b><span>AI 답변의 숫자가 자료에 있는 비율 · 자료 밖 질문에 지어낸 답 0건</span></div>
+    <div class="stat"><b>4회</b><span>CareerFit 평가 장치의 결함을 찾아 고친 횟수 · 결론이 두 번 바뀜</span></div>
+    <div class="stat"><b>1,190건</b><span>채용공고에서 역량 추출 · 정규식 vs Claude 3종을 사람 정답셋으로 비교</span></div>
+  </div>
+</div></section>
+
+<section id="projects"><div class="wrap">
+  <h2>프로젝트</h2>
+  <p class="sub">문제 → 한 일 → 숫자 → 한계 순서로 적었습니다. 숫자는 모두 정답이 있는 평가나 실행 기록에서 나왔습니다.</p>
+
+  <!-- 01 -->
+  <article class="project">
+    <div class="head">
+      <div><div class="act">ACT 01 · 2026.09 – 2026.10 · 미래내일 일경험 (팀 3명, 백엔드·데이터 전담)</div>
+        <h3>레디포스트 — 흩어진 재개발·재건축 공공데이터를 지도 한 장에, AI는 자료만으로 답하게</h3>
+        <div class="meta">수집·검증 파이프라인 · 자동 운영 · API 서버 · AI 질의응답과 평가 체계 · 회사 프로젝트라 코드는 비공개</div></div>
+    </div>
+    <p>서울·경기·인천의 정비사업 자료는 기관마다 다른 형식의 엑셀, CSV, 게시판, 고시문으로 흩어져 있고 같은 사업장도 기관마다 다르게 적혀 있었습니다. 자료를 한 단위로 묶고, 검증을 통과한 것만 내보내고, AI가 자료 밖의 말을 하지 못하게 막는 장치를 만들어 두 달간 매일 운영했습니다.</p>
+    <div class="kpis">
+      <div class="kpi"><b>7 / 7</b><span>PM이 확정한 KPI 전부 달성. 운영 지표 4개는 실행 기록, AI 지표 3개는 정답셋으로 측정</span></div>
+      <div class="kpi"><b>53항목</b><span>검증 통과 때만 작업 스키마 → 공개 스키마 한 트랜잭션 교체. 14/14 새벽 자동 실행 성공</span></div>
+      <div class="kpi"><b>75 → 95%</b><span>답의 숫자가 전부 자료에 있는 비율. 도구 11개 결과만으로 답하고 검증기가 대조</span></div>
+    </div>
+    <details><summary>자세히: 파이프라인, 평가표, 기록한 사고</summary><div class="body">
+      <p><b>파이프라인.</b> 기관 5곳·수집원 17개 → 원문 컬럼은 그대로 두고 표준 컬럼을 옆에 붙임 → 같은 지번은 한 구역(중복은 1:N 보존) → 행 수·채움률·급감·연결 무결성 53항목 검증, 하나라도 실패면 중단 → 통과 때만 공개 스키마 교체, 변경 감지 요약, 실패·침묵 알림. 구역 1,922개, 사업장 레코드 1,949건, 실거래 131만 건(60개월)을 구역에 연결했고 지도 좌표 연결 91.9%는 행정동 표기가 원인임을 찾아 42곳을 보강했습니다.</p>
+      <p><b>AI는 자료가 준 값만 말한다.</b> 자연어를 구조화 출력으로 검색 조건에 바꾸고, 대화는 읽기 전용 도구 11개의 결과만으로 답합니다. 숫자·날짜는 검증기가 도구 결과와 대조하고 추천·전망 같은 금지 표현은 검사기가 잡아 다시 쓰게 합니다.</p>
+      <table>
+        <tr><th>평가 항목</th><th>결과</th><th>비고</th></tr>
+        <tr><td>자연어 검색 110문</td><td>100%</td><td>1차 94.1% → 프롬프트·정규형 수정</td></tr>
+        <tr><td>대화 20문 · 맞는 도구 선택</td><td>100%</td><td>Opus 5.5 / Haiku 5.5 비교 뒤 모델 확정</td></tr>
+        <tr><td>답의 숫자가 전부 자료에 있음</td><td>75% → 95%</td><td>검증기가 잡은 실패 패턴을 규칙으로 되먹임</td></tr>
+        <tr><td>자료 밖 질문 24문 · 지어낸 답</td><td>0건</td><td>자동 채점 8.3%, 사람이 읽으면 0%</td></tr>
+        <tr><td>남이 쓴 50문 · 미확인 숫자·금지 표현</td><td>0건</td><td>공개 Q&amp;A 37 + 담당자 13</td></tr>
+      </table>
+      <p><b>고시문 날짜 추출 파일럿.</b> 고시목록 47만 행에서 사업장 50곳의 고시 81건을 찾아 단계·날짜·고시번호를 구조화 출력으로 뽑고, 인용 구절이 본문에 없으면 버렸습니다. 경기도 공표자료 142개 항목 대비 정확률 79.2%(기준선 78.5%). 이득은 교차 인용에서 나왔고(14개 중 12개), 후보를 못 찾은 70개가 더 큰 한계입니다. 81건에 약 0.6달러.</p>
+      <p><b>기록한 사고 두 건.</b> 경기 자료 ID 중복으로 촉진구역 40곳에 다른 사업장 이력이 이틀간 노출 → 이력 합계 테스트가 잡아 ID를 파일 행 번호로 바꾸고 중복 검증 추가. 배포 뒤 API 재시작 누락으로 20시간 동안 서울 이력이 빈 채 노출 → 운영 절차에 재시작 단계 추가. 두 건 모두 KPI 기록에 남겼습니다.</p>
+    </div></details>
+    <div class="tags"><span class="tag">Python</span> <span class="tag">pandas</span> <span class="tag">PostgreSQL</span> <span class="tag">FastAPI</span> <span class="tag">Claude API</span> <span class="tag">구조화 출력</span> <span class="tag">MCP</span> <span class="tag">AWS EC2</span> <span class="tag">Docker</span> <span class="tag">GitHub Actions</span> <span class="tag">OpenTofu</span> <span class="tag">Ansible</span> <span class="tag">cron</span></div>
+  </article>
+
+  <!-- 02 -->
+  <article class="project">
+    <div class="head">
+      <div><div class="act">ACT 02 · 2026.07 – 2026.10 · 개인 프로젝트 · 전체 설계·구현 · 정답셋 판정 전부 직접</div>
+        <h3>CareerFit — 채용공고 역량 추출, 정규식 베이스라인과 Claude 3종을 같은 정답셋으로 재다</h3>
+        <div class="meta">추출기보다 "재는 장치"를 먼저 만들었고, 그 장치의 결함을 네 번 찾아 고쳤습니다</div></div>
+      <div class="links"><a href="https://github.com/kevin2483/Careerfit">GitHub</a><a href="https://careerfit-kevin2483.streamlit.app">라이브 데모</a></div>
+    </div>
+    <p>채용공고 1,190건에서 요구 역량을 뽑는 일은 LLM에 맡기면 결과가 바로 나옵니다. 문제는 그 결과가 맞는지 확인할 방법이 없다는 점입니다. 사람이 판정한 정답셋, 정규식 베이스라인, 공고 단위 부트스트랩 신뢰구간, 그리고 그 장치 자체를 의심하는 절차를 먼저 만들었습니다. 모든 평가 표는 <code>make reproduce</code> 한 줄로 바이트 단위 재현되고 GitHub Actions가 매 push 검증합니다.</p>
+    <div class="kpis">
+      <div class="kpi"><b>0.863 · 0.854 · 0.853 · 0.828</b><span>F1 · opus · sonnet · 정규식 · haiku. 95% 신뢰구간이 겹쳐 "opus가 정규식보다 낫다"는 확정 불가</span></div>
+      <div class="kpi"><b>4회</b><span>평가 장치 결함 교정. 2차에서 opus 최하위 → 1위, 3차에서 "우위" → "확정 불가", 4차에서 sonnet 재호출</span></div>
+      <div class="kpi"><b>3 / 3 실패</b><span>사전 등록한 haiku 프롬프트 변형 전부 하락. 구조화 출력은 환각 0이지만 목록 안 오탐 78 → 97</span></div>
+    </div>
+    <div class="shots">
+      <img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭" loading="lazy">
+      <img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭" loading="lazy">
+      <img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭" loading="lazy">
+    </div>
+    <details><summary>자세히: 네 번의 교정, 신뢰구간, 라우팅, 재현성</summary><div class="body">
+      <table>
+        <tr><th>#</th><th>결함</th><th>조치 → 결과</th></tr>
+        <tr><td>1</td><td>정답셋이 정규식 출력을 사람이 확인하는 방식이라 정규식이 못 본 태그가 정답에 없음 (자기 채점)</td><td>네 시스템 후보를 출처 가리고 섞어 재판정(블라인드 풀링). 후보 439건 중 127건 제외, 정규식-LLM 격차 0.091 → 0.024</td></tr>
+        <tr><td>2</td><td>풀링 후보에 sonnet·opus가 빠져 단독 태그가 오탐으로 채점</td><td>30건 추가 판정 → opus 최하위에서 1위로</td></tr>
+        <tr><td>3</td><td>사전 alias 충돌 4건, 정답셋 표기 오류 3건, 하위→상위 도구 함의 규칙 부재</td><td>사전 v2(implies), 부트스트랩 CI 도입 → "opus 우위"를 "확정 불가"로 교정</td></tr>
+        <tr><td>4</td><td>독립 리뷰: sonnet 응답 1건이 max_tokens에서 잘려 빈 예측으로 채점(sonnet FN의 31%)</td><td>재호출 → sonnet 0.845 → 0.854, 파레토 최적 합류. 채점기가 실패 행을 경고하게 변경</td></tr>
+      </table>
+      <p><b>짝지은 차이(부트스트랩 10,000회).</b> opus − 정규식 +0.010 [−0.016, +0.037] 확정 불가 · opus − haiku +0.035 [+0.013, +0.059] 확정 · sonnet − haiku +0.027 [+0.001, +0.056] 확정. 명시 기술은 네 방식 모두 F1 0.92~0.95로 동률이고 차이는 서술형 역량(opus 0.766 vs 정규식 0.736)에서 납니다.</p>
+      <p><b>라우팅 시뮬레이션.</b> 긴 공고 40%만 opus로 보내면 opus 수준 F1 0.863을 비용 40%($6.20)로 얻습니다. 그런데 무작위 라우팅 대비 +1.1σ에 그쳐 "작동한다"고 쓰지 않았습니다.</p>
+      <p><b>프롬프트 실험.</b> 정답셋 38건을 보며 프롬프트를 고치면 시험지를 보고 공부하는 셈이라, 변형 3개와 판정 기준을 실행 전에 문서로 고정해 커밋하고 각 1회만 돌렸습니다. 셋 다 점추정이 내려갔고 어느 것도 확정되지 않았습니다. 그대로 공개했습니다.</p>
+      <p><b>그 밖에.</b> 한국어 조사가 정규식 단어 경계를 깨는 문제를 찾아 고쳐 추출량 +7.2%(892건 중 490건 변화). 사전 106 canonical / 288 alias. 테스트 84건. Streamlit 데모는 커밋된 CSV만 읽어 README와 숫자가 같고, 이력서·포트폴리오 PDF를 올리면 시장 대비 학습 우선순위를 돌려줍니다.</p>
+    </div></details>
+    <div class="tags"><span class="tag">Python</span> <span class="tag">정규식</span> <span class="tag">Anthropic API</span> <span class="tag">구조화 출력</span> <span class="tag">부트스트랩 CI</span> <span class="tag">pytest</span> <span class="tag">GitHub Actions</span> <span class="tag">Streamlit</span> <span class="tag">Docker</span> <span class="tag">Claude Code 서브에이전트</span></div>
+  </article>
+
+  <!-- 03 -->
+  <article class="project">
+    <div class="head">
+      <div><div class="act">ACT 03 · 2026.05 – 2026.07 · 직무 부트캠프 (팀)</div>
+        <h3>패션 커머스 데이터 플랫폼 — 수집 → BigQuery → 자연어 질의 MCP 서버 · 고객 세분화</h3>
+        <div class="meta">"98.5% 정확도"가 재현율 6%의 착시임을 진단한 기록</div></div>
+      <div class="links"><a href="https://github.com/kevin2483/fashion-insight-platform">GitHub</a></div>
+    </div>
+    <p>Selenium으로 무신사 랭킹을 수집하고 공휴일 API와 함께 BigQuery에 적재한 뒤 두 경로로 썼습니다. Claude Desktop에서 자연어로 BigQuery를 질의하는 MCP 서버를 JSON-RPC로 직접 구현했고(SELECT 전용 가드), GA 공개 고객 데이터 9,996명을 RFM 4등급으로 나눠 RF·XGBoost로 예측했습니다.</p>
+    <div class="kpis">
+      <div class="kpi"><b>6% → 94%</b><span>우수고객 재현율. 보정 전 정확도 98.5%는 클래스 불균형이 만든 착시였고, 클래스 가중치 보정으로 소수 등급을 잡았습니다</span></div>
+      <div class="kpi"><b>3 툴</b><span>MCP 서버 list_tables · get_schema · run_query. 변경 쿼리·다중 구문 차단, LIMIT 자동 부착</span></div>
+      <div class="kpi"><b>4등급</b><span>VIP 17.5% · 우수 38.2% · 일반 36.1% · 이탈위험 8.2%. 우수고객의 VIP 전환이 가장 큰 지렛대</span></div>
+    </div>
+    <details><summary>자세히: 한계를 먼저</summary><div class="body">
+      <ul class="clean">
+        <li>등급 라벨을 RFM 피처로 다시 예측하는 순환 구조입니다. 타겟을 미래 행동(재구매·이탈)으로 바꾸는 것이 근본 개선입니다.</li>
+        <li>XGBoost 조기 종료가 테스트 세트를 보고 있어 95.4%는 낙관적인 값입니다. README에 적었습니다.</li>
+        <li>무신사 상품 데이터와 GA 고객 데이터는 조인되지 않은 별도 파이프라인입니다.</li>
+      </ul>
+    </div></details>
+    <div class="tags"><span class="tag">Python</span> <span class="tag">Selenium</span> <span class="tag">BeautifulSoup</span> <span class="tag">BigQuery</span> <span class="tag">MCP (JSON-RPC)</span> <span class="tag">scikit-learn</span> <span class="tag">XGBoost</span> <span class="tag">SHAP</span></div>
+  </article>
+
+  <!-- 04 -->
+  <article class="project">
+    <div class="head">
+      <div><div class="act">ACT 04 · 2026.06 · 빅데이터프로그래밍 (팀)</div>
+        <h3>패션 수요 · 전환율 분석 파이프라인 — 이커머스 로그 × 기상 데이터를 HDFS·Spark·Hive로</h3>
+        <div class="meta">결론은 데이터가 허락하는 만큼만</div></div>
+      <div class="links"><a href="https://github.com/kevin2483/BigData_Final_Project">GitHub</a></div>
+    </div>
+    <p>Kaggle 이커머스 로그(195MB)를 100만 행 청크로 읽어 의류만 일별로 나누고, 기상청 ASOS API와 함께 Crontab 배치로 HDFS에 적재했습니다. PySpark로 날짜 기준 조인해 Parquet으로 저장하고 Hive로 4종 집계, Matplotlib로 시각화했습니다. GCP에 HDP 샌드박스를 구성했습니다.</p>
+    <div class="kpis">
+      <div class="kpi"><b>0.5%</b><span>기온 구간별 전환율이 Mild 0.53% · Warm 0.51%로 일정. 기온은 전환율을 움직이지 않았습니다</span></div>
+      <div class="kpi"><b>$91,535</b><span>10/18 일 매출 최대. 10/18~24 급증 구간은 프로모션 기간과 겹칩니다</span></div>
+      <div class="kpi"><b>3,939</b><span>비 오는 날 Shoes 구매(Keds 2,481). 악천후에 신발류 수요가 두드러짐</span></div>
+    </div>
+    <p>날씨는 트래픽을 유인하는 보조 요인으로 보이고, 매출 피크는 프로모션 기간과 겹쳐 <b>날씨 단독 효과는 분리하지 못했습니다.</b> 그 한계까지가 결론입니다.</p>
+    <div class="tags"><span class="tag">PySpark</span> <span class="tag">Hive</span> <span class="tag">HDFS</span> <span class="tag">GCP</span> <span class="tag">Crontab</span> <span class="tag">Parquet</span> <span class="tag">Matplotlib</span></div>
+  </article>
+
+  <!-- 05 -->
+  <article class="project">
+    <div class="head">
+      <div><div class="act">ACT 05 · 2026.03 – 2026.06 · 캡스톤 (팀) · 데이터 파트 전담 · 교내 SW 프로그래밍 대회 장려상</div>
+        <h3>띵커넥트 — 졸업선배 실시간 추천 매칭 서비스</h3>
+        <div class="meta">콜드 스타트 상황에서 협업 필터링 대신 내용 기반 가중치 매칭</div></div>
+      <div class="links"><a href="https://github.com/kevin2483/DdingConnect">GitHub</a></div>
+    </div>
+    <p>가입 초기라 사용자 이력이 거의 없어 추천을 시작할 근거가 부족했습니다. 관심 직무(40%), 기술 스택 자카드 유사도(40%), 목표 기업(20%)의 가중치 매칭을 직접 설계했고, 원티드 API 크롤링부터 DB 적재, FastAPI 서버까지 데이터 파트 전체를 맡았습니다. 프론트·기획 팀원과 API 명세를 먼저 합의한 뒤 매주 매칭 결과를 함께 보며 가중치를 조정했습니다.</p>
+    <div class="tags"><span class="tag">Python</span> <span class="tag">FastAPI</span> <span class="tag">SQLAlchemy</span> <span class="tag">REST API</span> <span class="tag">Jaccard</span></div>
+  </article>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <h2>기술</h2>
+  <p class="sub">써 본 것보다 "정답이 있는 평가로 확인해 본 것"을 위에 두었습니다.</p>
+  <div class="skills">
+    <div class="skill"><h4>LLM · 에이전트</h4>Claude API · 구조화 출력 · Function Calling · MCP 서버 구현 · 프롬프트 설계 · 평가셋 설계 · 블라인드 풀링 · 부트스트랩 신뢰구간</div>
+    <div class="skill"><h4>언어 · 데이터</h4>Python · SQL · Pandas · NumPy · PostgreSQL · BigQuery</div>
+    <div class="skill"><h4>수집 · 백엔드</h4>FastAPI · REST API · Selenium · BeautifulSoup · 공공데이터포털 API · Streamlit</div>
+    <div class="skill"><h4>인프라 · 운영</h4>AWS EC2 · Docker · GitHub Actions · OpenTofu · Ansible · cron · Doppler</div>
+    <div class="skill"><h4>빅데이터 · 모델링</h4>PySpark · Hive · HDFS · GCP · scikit-learn · XGBoost · SHAP · Matplotlib · Looker Studio</div>
+  </div>
+</div></section>
+
+<section id="about"><div class="wrap">
+  <h2>소개</h2>
+  <p class="sub">명지대학교 융합소프트웨어학부 데이터사이언스전공 (2021.03 – 2027.02 재학)</p>
+  <div class="about">
+    <div class="card"><h4>일하는 방식</h4>
+      결과를 눈으로 훑고 "좋아 보인다"로 끝내지 않습니다. 정답이 있는 평가셋을 먼저 만들고, 그 평가 장치 자체도 의심합니다. CareerFit에서 평가 결함을 네 번 찾아 결론을 두 번 뒤집은 기록, 레디포스트에서 사고 두 건을 숨기지 않고 KPI에 남긴 기록이 그 방식의 증거입니다.</div>
+    <div class="card"><h4>경력 · 자격</h4>
+      <ul class="clean">
+        <li>레디포스트 · 백엔드·데이터 (미래내일 일경험, 2026.09 – 2026.10)</li>
+        <li>ADsP 데이터분석 준전문가 (제49회)</li>
+        <li>교내 SW 프로그래밍 대회 장려상 (2026)</li>
+      </ul></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div><b style="color:#f3f4f8">안정재</b> · <a href="mailto:kevin2483@naver.com">kevin2483@naver.com</a> · <a href="https://github.com/kevin2483">github.com/kevin2483</a> · <a href="assets/portfolio_2026.pdf">포트폴리오 PDF</a> · <a href="https://careerfit-kevin2483.streamlit.app">CareerFit 데모</a></div>
+  <div style="margin-top:8px;font-size:13px;color:#8e95b8">만드는 것보다, 재는 장치를 먼저 세우겠습니다.</div>
+</div></footer>
+
+</body>
+</html>
