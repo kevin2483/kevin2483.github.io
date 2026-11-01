@@ -102,12 +102,13 @@
   ul.bul li { margin: 2px 0; }
   .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; align-items: center; }
   .actions .chip.grey { height: 44px; border-radius: 10px; padding: 0 16px; font-size: 13px; }
-  details.full { border: 1px solid var(--border); border-top: 0; border-radius: 0 0 16px 16px; background: var(--surface); margin: -16px 12px 0; padding-top: 16px; }
-  details.full > summary { list-style: none; cursor: pointer; padding: 14px 28px; color: var(--text-muted); font-weight: 700; font-size: 14px; }
+  details.full { border: 1px solid var(--border); border-top: 0; border-radius: 0 0 16px 16px; background: var(--surface); margin: 0 12px; }
+  details.full:not([open]) { display: none; }
+  details.full > summary { display: none; }
   details.full > summary::-webkit-details-marker { display: none; }
-  details.full > summary::after { content: "자세히 ▾"; }
-  details.full[open] > summary::after { content: "접기 ▴"; }
-  details.full .body { padding: 0 28px 32px; font-size: 15px; animation: open .2s ease-out; }
+  details.full .body { padding: 24px 28px 28px; font-size: 15px; animation: open .2s ease-out; }
+  .close-row { margin-top: 24px; }
+  .close-row button { background: none; border: 1px solid var(--border); border-radius: 10px; height: 40px; padding: 0 16px; font: inherit; font-weight: 700; font-size: 14px; color: var(--text); cursor: pointer; }
   @keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
   .sh { display: flex; align-items: center; gap: 10px; margin: 24px 0 8px; font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: .02em; }
   .sh:first-child { margin-top: 4px; }
@@ -208,9 +209,9 @@
     .visual .name { font-size: 30px; }
     .info { padding: 24px; }
     .info h3 { font-size: 22px; }
-    details.full { margin: -16px 8px 0; }
+    details.full { margin: 0 8px; }
     details.full > summary { padding: 12px 20px; }
-    details.full .body { padding: 0 20px 24px; }
+    details.full .body { padding: 20px 20px 24px; }
     .forest-wrap { grid-template-columns: 1fr; }
     .shots, .shots.two { grid-template-columns: 1fr 1fr; }
     .others, .skills, .about { grid-template-columns: 1fr; }
@@ -386,6 +387,7 @@
     <p><b>기록한 사고 두 건.</b> 경기 자료 ID 중복으로 촉진구역 40곳에 다른 사업장 이력이 이틀간 노출 → 이력 합계 테스트가 잡아 ID를 파일 행 번호로 바꾸고 중복 검증 추가. 배포 뒤 API 재시작 누락으로 20시간 동안 서울 이력이 빈 채 노출 → 운영 절차에 재시작 단계 추가. 두 건 모두 KPI 기록에 남겼습니다.</p>
     <div class="retro"><b>다시 한다면.</b> 고시문 날짜 추출에서 후보를 못 찾은 70개가 더 큰 한계였으므로, 다음에는 추출 정확도보다 후보 탐색 재현율을 먼저 재는 평가를 세우겠습니다. 사고 2건은 재시작 누락처럼 절차 문제였으니 배포 체크리스트를 코드로 강제하겠습니다.</div>
     <div class="chips" style="margin-top:14px"><span class="chip">pandas</span><span class="chip">MCP</span><span class="chip">OpenTofu</span><span class="chip">Ansible</span><span class="chip">cron</span><span class="chip">Doppler</span></div>
+    <div class="close-row"><button type="button" data-close="d01">접기 ▴</button></div>
   </div></details>
   </div>
 
@@ -490,6 +492,7 @@
     <p>정답셋 38건은 어떤 순위도 확정하기에 작습니다. 정답셋 2차 확장(후보 208건)은 판정이 성급했음을 스스로 확인해 폐기했고, 레포는 38건을 유지합니다. 네 번째 결함(잘린 응답)은 예측 파일 쪽을 한 번도 의심하지 않아서 생겼습니다.</p>
     <div class="retro"><b>다시 한다면.</b> 정답셋 38건은 프롬프트를 사전 등록해도 통계력이 부족했습니다. 다음에는 정답셋을 먼저 100건 이상으로 키운 뒤 모델 비교를 시작하겠습니다. 예측 파일의 실패 행 검사를 첫날부터 채점기에 넣고, 프롬프트 실험은 정답셋을 개발용과 평가용으로 나눈 뒤에만 하겠습니다. 라우팅 시뮬레이션은 무작위 대비 +1.1σ였으므로 "작동한다"는 표현을 쓰지 않은 판단을 유지합니다.</div>
     <div class="chips" style="margin-top:14px"><span class="chip">GitHub Actions</span><span class="chip">Claude Code 서브에이전트</span></div>
+    <div class="close-row"><button type="button" data-close="d02">접기 ▴</button></div>
   </div></details>
   </div>
 
@@ -565,6 +568,7 @@
       <li>무신사 상품 데이터와 GA 고객 데이터는 조인되지 않은 별도 파이프라인입니다.</li>
     </ul>
     <div class="retro"><b>다시 한다면.</b> 타겟을 RFM 등급이 아니라 "다음 달 재구매 여부"로 정의해 순환을 끊고, 검증 세트를 따로 떼어 조기 종료에 쓰겠습니다. MCP 서버에는 쿼리 비용 상한과 호출 로그를 넣겠습니다.</div>
+    <div class="close-row"><button type="button" data-close="d03">접기 ▴</button></div>
   </div></details>
   </div>
 
@@ -640,6 +644,9 @@
     document.querySelectorAll('button[data-open="'+d.id+'"]').forEach(function(b){ b.textContent = d.open ? '접기 ▴' : '자세히 ▾'; });
   }
   document.querySelectorAll('details.full').forEach(function(d){ d.addEventListener('toggle', function(){ syncLabels(d); }); syncLabels(d); });
+  document.querySelectorAll('[data-close]').forEach(function(el){
+    el.addEventListener('click', function(){ var d=document.getElementById(el.getAttribute('data-close')); if(!d) return; d.open=false; var card=d.previousElementSibling; if(card) card.scrollIntoView({behavior:'smooth', block:'start'}); });
+  });
   document.querySelectorAll('[data-open]').forEach(function(el){
     el.addEventListener('click', function(ev){
       ev.preventDefault();
