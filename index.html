@@ -477,10 +477,15 @@
     <p><b>라우팅 시뮬레이션.</b> 긴 공고 40%만 opus로 보내면 opus 수준 F1 0.863을 비용 40%($6.20)로 얻습니다. 그런데 무작위 라우팅 대비 +1.1σ에 그쳐 "작동한다"고 쓰지 않았습니다.</p>
     <p><b>프롬프트 실험.</b> 사전 등록한 haiku 변형 3개(별칭 목록, 판정 기준, 구조화 출력)는 셋 다 점추정이 내려갔고 어느 것도 확정되지 않았습니다. 구조화 출력은 환각 0이지만 목록 안 오탐이 78 → 97로 늘었습니다. 그대로 공개했습니다.</p>
     <p><b>데모.</b> Streamlit 데모는 커밋된 CSV만 읽어 README와 숫자가 같고, 이력서·포트폴리오 PDF를 올리면 시장 대비 학습 우선순위를 돌려줍니다.</p>
-    <div class="shots">
-      <figure><a href="assets/demo_market.jpg" target="_blank" rel="noopener"><img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭" loading="lazy"></a><figcaption>시장 지형도 · 직무별 역량 출현율</figcaption></figure>
-      <figure><a href="assets/demo_gap.jpg" target="_blank" rel="noopener"><img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭" loading="lazy"></a><figcaption>갭 진단 · PDF 올리면 학습 우선순위</figcaption></figure>
-      <figure><a href="assets/demo_eval.jpg" target="_blank" rel="noopener"><img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭" loading="lazy"></a><figcaption>평가 결과 · README와 같은 CSV</figcaption></figure>
+    <div class="shots one">
+      <figure><a href="assets/demo_eval.jpg" target="_blank" rel="noopener"><img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭: F1과 95% 신뢰구간, 정확도 대비 비용, 방식별 요약 표" loading="lazy" width="1200" height="629"></a>
+      <figcaption><b>평가 결과 탭.</b> 네 방식의 F1과 95% 신뢰구간, 정확도 대비 비용, 방식별 요약 표. 커밋된 CSV를 그대로 읽어 README와 숫자가 같습니다. 누르면 원본 크기로 열립니다.</figcaption></figure>
+    </div>
+    <div class="shots two">
+      <figure><a href="assets/demo_gap.jpg" target="_blank" rel="noopener"><img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭: 예시 이력서를 넣은 뒤 이번 분기 학습 로드맵 top 5" loading="lazy" width="1200" height="1254"></a>
+      <figcaption><b>갭 진단 탭.</b> 이력서·포트폴리오 PDF를 올리면 직무 출현율 × 미보유 × 신입접근성으로 이번 분기 학습 항목 5개를 돌려줍니다. 예시 이력서를 넣은 화면입니다.</figcaption></figure>
+      <figure><a href="assets/demo_market.jpg" target="_blank" rel="noopener"><img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭: 직무별 요구 역량 상위 20과 신입 접근성" loading="lazy" width="1200" height="629"></a>
+      <figcaption><b>시장 지형도 탭.</b> 직무별 요구 역량 상위 20과 그 역량의 신입 접근성. 공고 1,190건에서 뽑은 출현율입니다.</figcaption></figure>
     </div>
 
     <div class="sh">증명한 역량</div>
