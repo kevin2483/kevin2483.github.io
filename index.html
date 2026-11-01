@@ -6,308 +6,665 @@
 <title>안정재 · 데이터·LLM 엔지니어 포트폴리오</title>
 <meta name="description" content="만드는 것보다 재는 장치를 먼저 세우는 데이터·LLM 엔지니어. 공공데이터 파이프라인 운영, 채용공고 역량 추출 평가 장치, BigQuery MCP 서버.">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <style>
   :root {
-    --ink: #161b33; --ink-2: #1f2547; --text: #1c2130; --muted: #5d6478; --line: #e3e6ee;
-    --bg: #ffffff; --bg-soft: #f4f6fa; --accent: #0e7c86; --accent-soft: #e6f4f5; --accent-ink: #7dd3dc;
+    --bg: #f6f7f9; --surface: #ffffff; --navy-900: #161b33; --navy-800: #1f2547;
+    --text: #1c2130; --text-muted: #5d6478; --accent: #0e7c86; --accent-soft: #e6f4f5; --accent-ink: #7dd3dc;
+    --border: #e3e6ee; --diagram-stroke: #cbd5e1; --diagram-fill: #f4f6fa; --shadow: 0 8px 32px rgba(15,23,42,.08);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f1326; --surface: #171c36; --text: #e8eaf2; --text-muted: #a9afc4; --accent: #4fc3cc; --accent-soft: #163a40;
+    --border: #2a3050; --diagram-stroke: #7d86a3; --diagram-fill: #1f2547; --shadow: 0 8px 32px rgba(0,0,0,.35);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --text: #e8eaf2; --muted: #a9afc4; --line: #2a3050; --bg: #0f1326; --bg-soft: #171c36; --accent: #4fc3cc; --accent-soft: #163a40;
+      --bg: #0f1326; --surface: #171c36; --text: #e8eaf2; --text-muted: #a9afc4; --accent: #4fc3cc; --accent-soft: #163a40;
+      --border: #2a3050; --diagram-stroke: #7d86a3; --diagram-fill: #1f2547; --shadow: 0 8px 32px rgba(0,0,0,.35);
     }
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { margin: 0; word-break: keep-all; overflow-wrap: anywhere; font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "NanumGothic", sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  body { margin: 0; word-break: keep-all; overflow-wrap: anywhere; font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "NanumGothic", sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; font-size: 16px; letter-spacing: -.01em; -webkit-font-smoothing: antialiased; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 20px; }
-  header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
-  .brand { font-weight: 800; letter-spacing: -.01em; color: var(--text); }
-  nav a { color: var(--muted); margin-left: 18px; font-size: 14px; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3, h4 { margin: 0; letter-spacing: -.02em; line-height: 1.25; }
+  .eyebrow { color: var(--accent); font-size: 12px; letter-spacing: .2em; font-weight: 800; text-transform: uppercase; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* nav */
+  header.top { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+  header.top.scrolled { border-bottom-color: var(--border); }
+  header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text); white-space: nowrap; }
+  .brand .open { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-muted); }
+  .brand .open::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #2fbf71; box-shadow: 0 0 0 3px rgba(47,191,113,.18); }
+  nav { display: flex; align-items: center; gap: 18px; font-size: 14px; }
+  nav a { color: var(--text-muted); white-space: nowrap; }
   nav a:hover { color: var(--accent); text-decoration: none; }
-  .hero { background: var(--ink); color: #f3f4f8; padding: 88px 0 72px; }
-  .hero .kicker { color: var(--accent-ink); font-size: 13px; letter-spacing: .2em; font-weight: 700; }
-  .hero h1 { font-size: clamp(32px, 5vw, 52px); margin: 14px 0 10px; letter-spacing: -.02em; line-height: 1.15; }
-  .hero .role { font-size: 20px; color: #c5c9dc; margin: 0 0 24px; }
-  .hero p.lead { font-size: 18px; max-width: 760px; color: #e3e5ee; margin: 0 0 28px; }
-  .btns a { display: inline-block; padding: 11px 18px; border-radius: 10px; font-weight: 700; margin: 0 10px 10px 0; font-size: 15px; }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-ghost { border: 1px solid #3a4270; color: #e3e5ee; }
-  .btns a:hover { text-decoration: none; filter: brightness(1.08); }
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 40px; }
-  .stat { background: var(--ink-2); border-radius: 14px; padding: 18px; }
-  .stat b { display: block; font-size: 30px; color: var(--accent-ink); letter-spacing: -.02em; }
-  .stat span { font-size: 13px; color: #b7bcd3; }
-  section { padding: 72px 0 8px; }
-  section h2 { font-size: 28px; margin: 0 0 8px; letter-spacing: -.01em; }
-  section .sub { color: var(--muted); margin: 0 0 32px; font-size: 16px; }
-  .project { border: 1px solid var(--line); border-radius: 18px; padding: 28px; margin-bottom: 22px; background: var(--bg); }
-  .project .head { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-  .project .act { color: var(--accent); font-size: 12px; letter-spacing: .18em; font-weight: 800; }
-  .project h3 { margin: 6px 0 4px; font-size: 22px; letter-spacing: -.01em; }
-  .project .meta { color: var(--muted); font-size: 14px; }
-  .project .links { font-size: 14px; white-space: nowrap; align-self: flex-start; }
-  .project .links a { margin-left: 12px; font-weight: 600; }
-  .project p { margin: 14px 0 0; }
-  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
-  .kpi { background: var(--bg-soft); border-radius: 12px; padding: 14px 16px; }
-  .kpi b { display: block; font-size: 24px; color: var(--accent); letter-spacing: -.01em; }
-  .kpi span { font-size: 13px; color: var(--muted); }
-  .tags { margin-top: 16px; }
-  .tag { display: inline-block; font-size: 12px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; margin: 0 6px 6px 0; color: var(--muted); }
-  details { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 12px; }
-  summary { cursor: pointer; font-weight: 700; color: var(--accent); list-style: none; }
-  summary::before { content: "+ "; }
-  details[open] summary::before { content: "− "; }
-  details .body { padding-top: 10px; font-size: 15px; }
-  details table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 10px 0; }
-  details th, details td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  details th { color: var(--muted); font-weight: 600; font-size: 12.5px; }
+  .theme { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; width: 34px; height: 34px; cursor: pointer; display: inline-grid; place-items: center; padding: 0; flex: none; }
+  .theme svg { width: 16px; height: 16px; }
+  .theme .moon { display: none; }
+  .theme[aria-pressed="true"] .sun { display: none; }
+  .theme[aria-pressed="true"] .moon { display: block; }
+
+  /* hero */
+  .hero { background: var(--navy-900); color: #f3f4f8; padding: 96px 0 80px; }
+  .hero .eyebrow { color: var(--accent-ink); }
+  .hero h1 { font-size: 48px; margin: 16px 0 12px; line-height: 1.2; }
+  .hero .role { font-size: 18px; color: #c5c9dc; margin: 0 0 20px; }
+  .hero p.lead { font-size: 18px; max-width: 640px; color: #e3e5ee; margin: 0 0 32px; }
+  .btn { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 10px; font-weight: 700; font-size: 15px; border: 1px solid transparent; cursor: pointer; font-family: inherit; line-height: 1; }
+  .btn:hover { text-decoration: none; filter: brightness(1.06); }
+  .btn-fill { background: var(--accent); color: #fff; }
+  .btn-line { border-color: var(--border); color: var(--text); background: var(--surface); }
+  .hero .btn-line { border-color: #3a4270; color: #e3e5ee; background: transparent; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
+  .tile { background: var(--navy-800); border-radius: 12px; padding: 18px 18px 16px 20px; border-left: 3px solid var(--accent-ink); }
+  .tile b { display: block; font-size: 32px; color: var(--accent-ink); letter-spacing: -.02em; line-height: 1.1; margin-bottom: 8px; }
+  .tile span { display: block; font-size: 13px; color: #d5d8e6; line-height: 1.45; }
+  .tile small { display: block; font-size: 11px; color: #8e95b8; margin-top: 6px; line-height: 1.4; }
+
+  /* sections */
+  section { padding: 112px 0 0; }
+  section:last-of-type { padding-bottom: 112px; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
+  section h2 { font-size: 32px; }
+  .sec-head .right { color: var(--text-muted); font-size: 14px; }
+  section .sub { color: var(--text-muted); margin: 0 0 40px; font-size: 16px; max-width: 760px; }
+
+  /* timeline */
+  .gantt { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
+  .gantt svg { width: 100%; height: auto; display: block; }
+  .gantt .list { display: none; }
+  .gantt .note { font-size: 14px; color: var(--text-muted); margin: 16px 0 0; }
+
+  /* featured cards */
+  .block { margin-bottom: 80px; }
+  .feat { display: grid; grid-template-columns: 1fr 1fr; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+  .visual { position: relative; background: var(--navy-900); min-height: 420px; color: #f3f4f8; overflow: hidden; }
+  .visual svg { position: absolute; left: 24px; right: 24px; top: 24px; width: calc(100% - 48px); height: calc(100% - 170px); opacity: .45; transition: opacity .25s; }
+  .feat:hover .visual svg { opacity: .7; }
+  .visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(22,27,51,0) 55%, rgba(22,27,51,.85) 100%); pointer-events: none; }
+  .visual .overlay { position: absolute; left: 32px; right: 32px; bottom: 28px; z-index: 1; }
+  .visual .name { font-size: 48px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
+  .visual .subname { color: #c5c9dc; font-size: 15px; margin: 10px 0 14px; }
+  .visual a.detail { color: var(--accent-ink); font-weight: 700; font-size: 14px; }
+  .info { padding: 40px; display: flex; flex-direction: column; gap: 16px; }
+  .info h3 { font-size: 26px; }
+  .info .result { font-size: 16px; font-weight: 700; margin: 0; }
+  .meta { display: grid; grid-template-columns: 80px 1fr; row-gap: 4px; column-gap: 8px; font-size: 14px; margin: 0; }
+  .meta dt { color: var(--text-muted); }
+  .meta dd { margin: 0; }
+  .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .kpi { background: var(--bg); border-radius: 12px; padding: 12px 14px 12px 16px; border-left: 3px solid var(--accent); }
+  .kpi b { display: block; font-size: 24px; color: var(--accent); letter-spacing: -.02em; line-height: 1.15; }
+  .kpi span { display: block; font-size: 12px; color: var(--text); margin-top: 4px; line-height: 1.4; }
+  .kpi small { display: block; font-size: 11px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; font-size: 12px; background: var(--accent-soft); color: var(--text); white-space: nowrap; }
+  .chip.grey { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+  .chip i { font-style: normal; color: var(--text-muted); font-size: 10px; margin-left: 6px; letter-spacing: .08em; }
+  ul.bul { margin: 0; padding-left: 18px; font-size: 15px; }
+  ul.bul li { margin: 2px 0; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; align-items: center; }
+  .actions .chip.grey { height: 44px; border-radius: 10px; padding: 0 16px; font-size: 13px; }
+  details.full { border: 1px solid var(--border); border-top: 0; border-radius: 0 0 16px 16px; background: var(--surface); margin: -16px 12px 0; padding-top: 16px; }
+  details.full > summary { list-style: none; cursor: pointer; padding: 14px 28px; color: var(--accent); font-weight: 700; font-size: 14px; }
+  details.full > summary::-webkit-details-marker { display: none; }
+  details.full > summary::after { content: "자세히 ▾"; }
+  details.full[open] > summary::after { content: "접기 ▴"; }
+  details.full .body { padding: 0 28px 32px; font-size: 15px; animation: open .2s ease-out; }
+  @keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  .sh { display: flex; align-items: center; gap: 10px; margin: 24px 0 8px; font-size: 14px; font-weight: 800; color: var(--accent); letter-spacing: .02em; }
+  .sh:first-child { margin-top: 4px; }
+  .sh::before { content: ""; width: 2px; height: 16px; background: var(--accent); }
+  .body p { margin: 10px 0; }
+  .body table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 10px 0; }
+  .body th, .body td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .body th { color: var(--text-muted); font-weight: 600; font-size: 12.5px; }
   .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
-  .shots img { width: 100%; border-radius: 10px; border: 1px solid var(--line); display: block; }
-  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
-  .skill { background: var(--bg-soft); border-radius: 14px; padding: 16px 18px; }
-  .skill h4 { margin: 0 0 8px; font-size: 14px; color: var(--muted); font-weight: 600; }
-  .about { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; }
-  .about .card { background: var(--bg-soft); border-radius: 14px; padding: 18px 20px; font-size: 15px; }
-  .about .card h4 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
-  footer { margin-top: 64px; padding: 40px 0 56px; background: var(--ink); color: #c5c9dc; font-size: 14px; }
-  footer a { color: var(--accent-ink); }
-  ul.clean { padding-left: 18px; margin: 8px 0; }
-  ul.clean li { margin: 4px 0; }
-  .fig { margin: 18px 0 4px; }
+  .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); display: block; }
+  .fig { margin: 12px 0 4px; }
   .fig svg { width: 100%; height: auto; display: block; }
-  .fig .cap { font-size: 13px; color: var(--muted); margin-top: 6px; }
-  .fig.wide .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  .fig.wide svg { min-width: 760px; }
-  .fig.forest svg { min-width: 460px; }
-  .fig .hint { display: none; font-size: 12px; color: var(--muted); }
-  @media (max-width: 800px) { .fig .hint { display: block; } }
-  .retro { margin-top: 16px; background: var(--accent-soft); border-radius: 12px; padding: 12px 16px; font-size: 14.5px; }
+  .fig .cap { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+  .fig .scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .fig.wide svg { min-width: 780px; }
+  .fig.forest svg { min-width: 520px; }
+  .fig .hint { display: none; font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
+  .forest-wrap { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: center; }
+  .forest-wrap .notes { font-size: 14px; }
+  .forest-wrap .notes div { padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .forest-wrap .notes b { color: var(--accent); }
+  .retro { background: var(--accent-soft); border-radius: 12px; padding: 14px 18px; font-size: 14.5px; margin-top: 10px; }
   .retro b { color: var(--accent); }
-  .compact { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .compact .project { margin: 0; padding: 20px 22px; }
-  .compact h3 { font-size: 18px; }
-  @media (max-width: 760px) {
-    .compact { grid-template-columns: 1fr; }
-    .stats, .kpis, .shots { grid-template-columns: repeat(2, 1fr); }
-    .about { grid-template-columns: 1fr; }
-    nav a:nth-child(n+4) { display: none; }
-    .project { padding: 20px; }
-    .project .links { white-space: normal; }
-    .project .links a { margin: 0 12px 0 0; }
+
+  /* others */
+  .others { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .small { min-height: 200px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow); transition: transform .2s; }
+  .small:hover { transform: translateY(-2px); }
+  .small h3 { font-size: 18px; }
+  .small .one { font-size: 14px; color: var(--text-muted); margin: 0; }
+  .small .n { font-size: 14px; margin: 0; }
+  .small .n b { color: var(--accent); font-size: 20px; margin-right: 4px; }
+  .small .foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
+  .small .foot a { font-weight: 700; font-size: 14px; white-space: nowrap; }
+
+  /* skills */
+  .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .skill { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
+  .skill h3 { font-size: 15px; color: var(--text-muted); font-weight: 700; margin-bottom: 12px; }
+  .skills .legend { grid-column: 1 / -1; font-size: 12px; color: var(--text-muted); }
+
+  /* about */
+  .about { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16px; }
+  .about .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; font-size: 15px; box-shadow: var(--shadow); }
+  .about .card h3 { font-size: 15px; color: var(--text-muted); font-weight: 700; margin-bottom: 10px; }
+  ul.clean { padding-left: 18px; margin: 6px 0; }
+  ul.clean li { margin: 4px 0; }
+
+  footer { padding: 40px 0 56px; background: var(--navy-900); color: #c5c9dc; font-size: 14px; }
+  footer a { color: var(--accent-ink); }
+  footer .thesis { margin-top: 10px; font-size: 13px; color: #8e95b8; }
+
+  /* motion */
+  .reveal { opacity: 0; transform: translateY(12px); transition: opacity .3s ease-out, transform .3s ease-out; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .small, .visual svg, header.top { transition: none; }
+    details.full .body { animation: none; }
   }
-  @media (max-width: 480px) { .stats { grid-template-columns: 1fr 1fr; } .kpis, .shots { grid-template-columns: 1fr; } }
+
+  /* responsive */
+  @media (max-width: 1023px) {
+    .feat { grid-template-columns: 45fr 55fr; }
+    .visual .name { font-size: 36px; }
+    .info { padding: 32px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .skills { grid-template-columns: 1fr 1fr; }
+    section { padding-top: 80px; }
+    section:last-of-type { padding-bottom: 80px; }
+    .hero { padding: 72px 0 64px; }
+    .hero h1 { font-size: 40px; }
+  }
+  @media (max-width: 800px) { .fig .hint { display: block; } }
+  @media (max-width: 767px) {
+    .wrap { padding: 0 16px; }
+    header.top .wrap { gap: 10px; }
+    .brand .open span { display: none; }
+    nav { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; gap: 14px; }
+    nav::-webkit-scrollbar { display: none; }
+    .hero { padding: 64px 0 56px; }
+    .hero h1 { font-size: 32px; }
+    .hero p.lead { font-size: 16px; }
+    .tile b { font-size: 28px; }
+    section { padding-top: 64px; }
+    section:last-of-type { padding-bottom: 64px; }
+    section h2 { font-size: 26px; }
+    .gantt { padding: 16px; }
+    .gantt svg { display: none; }
+    .gantt .list { display: block; }
+    .block { margin-bottom: 48px; }
+    .feat { grid-template-columns: 1fr; }
+    .visual { min-height: 240px; }
+    .visual svg { left: 12px; right: 12px; top: 10px; width: calc(100% - 24px); height: calc(100% - 20px); opacity: .22; }
+    .visual .overlay { left: 20px; right: 20px; bottom: 18px; }
+    .visual .name { font-size: 30px; }
+    .info { padding: 24px; }
+    .info h3 { font-size: 22px; }
+    details.full { margin: -16px 8px 0; }
+    details.full > summary { padding: 12px 20px; }
+    details.full .body { padding: 0 20px 24px; }
+    .forest-wrap { grid-template-columns: 1fr; }
+    .shots { grid-template-columns: 1fr 1fr; }
+    .others, .skills, .about { grid-template-columns: 1fr; }
+    .small { min-height: 0; }
+  }
+  @media (max-width: 480px) { .shots { grid-template-columns: 1fr; } .meta { grid-template-columns: 72px 1fr; } .tile b { font-size: 25px; } }
+
+  /* mobile timeline list */
+  .tl { list-style: none; margin: 0; padding: 0; }
+  .tl li { display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+  .tl li:last-child { border-bottom: 0; }
+  .tl .m { color: var(--text-muted); font-size: 12px; }
+  .tl .bar { height: 10px; border-radius: 6px; background: var(--accent); margin-top: 4px; }
+  .tl .bar.grey { background: var(--border); }
+  .tl .lab { font-weight: 700; }
+  .tl .lab small { font-weight: 500; color: var(--text-muted); }
 </style>
 </head>
 <body>
 
 <header class="top"><div class="wrap">
-  <div class="brand">안정재</div>
-  <nav><a href="#projects">프로젝트</a><a href="#skills">기술</a><a href="#about">소개</a><a href="assets/portfolio_2026.pdf">PDF</a><a href="https://github.com/kevin2483">GitHub</a></nav>
+  <div class="brand"><span class="open"><span>Open to work</span></span>안정재</div>
+  <nav>
+    <a href="#timeline">타임라인</a><a href="#projects">프로젝트</a><a href="#skills">기술</a><a href="#about">소개</a>
+    <a href="assets/portfolio_2026.pdf">PDF</a><a href="https://github.com/kevin2483">GitHub</a>
+    <button class="theme" id="theme" type="button" aria-pressed="false" aria-label="다크 모드" title="다크 모드">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </nav>
 </div></header>
 
-<section class="hero" style="padding-top:88px"><div class="wrap">
-  <div class="kicker">PORTFOLIO · 2026</div>
+<section class="hero"><div class="wrap">
+  <div class="eyebrow">Portfolio · 2026</div>
   <h1>만드는 것보다,<br>재는 장치를 먼저 세웁니다.</h1>
   <p class="role">안정재 · LLM 애플리케이션 · 데이터 엔지니어</p>
-  <p class="lead">공공데이터 파이프라인을 두 달간 매일 운영하며 기능마다 정답이 있는 평가로 숫자를 남겼고, 그 평가 장치 자체의 결함까지 찾아 고친 기록을 공개합니다.</p>
+  <p class="lead">정답이 있는 평가셋을 먼저 만들고, 그 평가 장치까지 의심하는 데이터·LLM 엔지니어입니다.</p>
   <div class="btns">
-    <a class="btn-primary" href="#projects">프로젝트 보기</a>
-    <a class="btn-ghost" href="https://careerfit-kevin2483.streamlit.app">CareerFit 데모 열기</a>
-    <a class="btn-ghost" href="assets/portfolio_2026.pdf">PDF 내려받기</a>
+    <a class="btn btn-fill" href="#projects">프로젝트 보기</a>
+    <a class="btn btn-line" href="assets/portfolio_2026.pdf">PDF 내려받기</a>
   </div>
   <div class="stats">
-    <div class="stat"><b>7 / 7</b><span>레디포스트 KPI 전부 달성 · 14일 연속 새벽 배치 성공</span></div>
-    <div class="stat"><b>75 → 95%</b><span>AI 답변의 숫자가 자료에 있는 비율 · 자료 밖 질문에 지어낸 답 0건</span></div>
-    <div class="stat"><b>4회</b><span>CareerFit 평가 장치의 결함을 찾아 고친 횟수 · 결론이 두 번 바뀜</span></div>
-    <div class="stat"><b>1,190건</b><span>채용공고에서 역량 추출 · 정규식 vs Claude 3종을 사람 정답셋으로 비교</span></div>
+    <div class="tile"><b class="num">7 / 7</b><span>레디포스트 KPI 전부 달성</span><small>운영 4개 실행 기록 · AI 3개 정답셋</small></div>
+    <div class="tile"><b class="num">75 → 95%</b><span>AI 답변의 숫자가 자료에 있는 비율</span><small>검증기 대조 · 자료 밖 24문 지어낸 답 0건</small></div>
+    <div class="tile"><b class="num">4회</b><span>CareerFit 평가 장치 결함 교정</span><small>결론 2회 뒤집힘 · 전 과정 커밋</small></div>
+    <div class="tile"><b class="num">1,190건</b><span>채용공고 역량 추출 비교</span><small>정규식 vs Claude 3종 · 사람 정답셋 38건</small></div>
   </div>
 </div></section>
 
-<section id="projects"><div class="wrap">
-  <h2>대표 프로젝트</h2>
-  <p class="sub">역할이 다른 셋입니다. 파이프라인 운영(01), 평가·실험(02), 모델링·MCP(03). 문제 → 한 일 → 숫자 → 한계 → 다시 한다면 순서로 적었고, 숫자는 모두 정답이 있는 평가나 실행 기록에서 나왔습니다.</p>
+<!-- ===== 타임라인 ===== -->
+<section id="timeline"><div class="wrap">
+  <div class="sec-head"><h2>타임라인</h2><div class="right num">2026.03 — 현재</div></div>
+  <p class="sub">캡스톤과 과제가 끝나자마자 부트캠프, 그 결과를 개인 프로젝트로 검증하고 바로 일경험에 투입했습니다.</p>
+  <div class="gantt reveal">
+    <svg viewBox="0 0 1040 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="tl-t tl-d" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif">
+      <title id="tl-t">2026년 3월부터 11월까지 프로젝트 5개의 간트 타임라인</title>
+      <desc id="tl-d">띵커넥트 3–6월(장려상), 빅데이터 과제 6월, 패션 플랫폼 5–7월, CareerFit 7–10월(평가 교정 4회), 레디포스트 9–10월(KPI 7/7). 현재는 11월.</desc>
+      <g font-size="12" fill="var(--text-muted)" text-anchor="middle">
+        <text x="227" y="24">03</text><text x="322" y="24">04</text><text x="416" y="24">05</text><text x="511" y="24">06</text><text x="605" y="24">07</text><text x="699" y="24">08</text><text x="794" y="24">09</text><text x="888" y="24">10</text><text x="983" y="24">11</text>
+      </g>
+      <g stroke="var(--border)" stroke-dasharray="3 4">
+        <line x1="180" y1="32" x2="180" y2="222"/><line x1="274.4" y1="32" x2="274.4" y2="222"/><line x1="368.9" y1="32" x2="368.9" y2="222"/><line x1="463.3" y1="32" x2="463.3" y2="222"/><line x1="557.8" y1="32" x2="557.8" y2="222"/><line x1="652.2" y1="32" x2="652.2" y2="222"/><line x1="746.7" y1="32" x2="746.7" y2="222"/><line x1="841.1" y1="32" x2="841.1" y2="222"/><line x1="1030" y1="32" x2="1030" y2="222"/>
+      </g>
+      <line x1="935.6" y1="32" x2="935.6" y2="222" stroke="var(--accent)" stroke-width="1.5"/>
+      <text x="940" y="234" font-size="11" fill="var(--accent)" font-weight="700">현재</text>
+      <g font-size="13" fill="var(--text)">
+        <text x="0" y="61">띵커넥트 <tspan fill="var(--text-muted)" font-size="11">캡스톤</tspan></text>
+        <text x="0" y="97">빅데이터 과제 <tspan fill="var(--text-muted)" font-size="11">수업</tspan></text>
+        <text x="0" y="133">패션 플랫폼 <tspan fill="var(--text-muted)" font-size="11">부트캠프</tspan></text>
+        <text x="0" y="169">CareerFit <tspan fill="var(--text-muted)" font-size="11">개인</tspan></text>
+        <text x="0" y="205">레디포스트 <tspan fill="var(--text-muted)" font-size="11">일경험</tspan></text>
+      </g>
+      <rect x="180" y="44" width="377.8" height="24" rx="6" fill="var(--border)"/>
+      <text x="192" y="61" font-size="12" fill="var(--text)">띵커넥트 · 데이터 파트</text>
+      <rect x="463.3" y="80" width="94.5" height="24" rx="6" fill="var(--border)"/>
+      <text x="474" y="97" font-size="12" fill="var(--text)">HDFS·Spark</text>
+      <rect x="368.9" y="116" width="283.3" height="24" rx="6" fill="var(--accent)"/>
+      <text x="380" y="133" font-size="12" fill="#fff" font-weight="700">패션 플랫폼 · 데이터·MCP 담당</text>
+      <rect x="557.8" y="152" width="377.8" height="24" rx="6" fill="var(--accent)"/>
+      <text x="569" y="169" font-size="12" fill="#fff" font-weight="700">CareerFit · 전체 설계·구현</text>
+      <rect x="746.7" y="188" width="188.9" height="24" rx="6" fill="var(--accent)"/>
+      <text x="758" y="205" font-size="12" fill="#fff" font-weight="700">레디포스트 · 백엔드·데이터</text>
+      <g fill="var(--accent)">
+        <path d="M557.8 48 l8 8 -8 8 -8 -8z"/><text x="572" y="61" font-size="11" fill="var(--text-muted)">06 교내 대회 장려상</text>
+        <circle cx="760" cy="164" r="3.5" fill="#fff"/><circle cx="800" cy="164" r="3.5" fill="#fff"/><circle cx="840" cy="164" r="3.5" fill="#fff"/><circle cx="880" cy="164" r="3.5" fill="#fff"/>
+        <text x="946" y="169" font-size="11" fill="var(--text-muted)">교정 4회</text>
+        <path d="M935.6 192 l8 8 -8 8 -8 -8z"/><text x="946" y="205" font-size="11" fill="var(--text-muted)">KPI 7/7</text>
+      </g>
+    </svg>
+    <ul class="tl list">
+      <li><span class="m">2026.03 – 06</span><span><span class="lab">띵커넥트 <small>캡스톤 · 데이터 파트 · 06 장려상</small></span><div class="bar grey" style="width:44%"></div></span></li>
+      <li><span class="m">2026.06</span><span><span class="lab">빅데이터 과제 <small>수업 · HDFS·Spark</small></span><div class="bar grey" style="width:11%"></div></span></li>
+      <li><span class="m">2026.05 – 07</span><span><span class="lab">패션 플랫폼 <small>부트캠프 · 데이터·MCP 담당</small></span><div class="bar" style="width:33%"></div></span></li>
+      <li><span class="m">2026.07 – 10</span><span><span class="lab">CareerFit <small>개인 · 전체 설계·구현 · 교정 4회</small></span><div class="bar" style="width:44%"></div></span></li>
+      <li><span class="m">2026.09 – 10</span><span><span class="lab">레디포스트 <small>일경험 · 백엔드·데이터 · KPI 7/7</small></span><div class="bar" style="width:22%"></div></span></li>
+    </ul>
+    <p class="note">틸 막대 = 대표 프로젝트, 회색 = 그 외. 마커는 수상·KPI 달성·평가 교정 시점입니다.</p>
+  </div>
+</div></section>
 
-  <!-- 01 -->
-  <article class="project">
-    <div class="head">
-      <div><div class="act">ACT 01 · 2026.09 – 2026.10 · 미래내일 일경험 (팀 3명, 백엔드·데이터 전담)</div>
-        <h3>레디포스트 — 흩어진 재개발·재건축 공공데이터를 지도 한 장에, AI는 자료만으로 답하게</h3>
-        <div class="meta">수집·검증 파이프라인 · 자동 운영 · API 서버 · AI 질의응답과 평가 체계 · 회사 프로젝트라 코드는 비공개</div></div>
+<!-- ===== 대표 프로젝트 ===== -->
+<section id="projects"><div class="wrap">
+  <div class="sec-head"><h2>대표 프로젝트</h2><div class="right">역할이 다른 셋: 운영 · 평가 · 모델링·MCP</div></div>
+  <p class="sub">문제 → 한 일 → 숫자 → 한계 순서로 적었고, 숫자는 모두 정답이 있는 평가나 실행 기록에서 나왔습니다.</p>
+
+  <!-- 01 레디포스트 -->
+  <div class="block reveal">
+  <article class="feat" id="p01">
+    <div class="visual">
+      <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v1t" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" preserveAspectRatio="xMidYMid meet">
+        <title id="v1t">레디포스트 파이프라인 6단계 개요</title>
+        <defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#aab0c8"/></marker></defs>
+        <g fill="none" stroke="#aab0c8" stroke-width="1.5">
+          <rect x="24" y="36" width="150" height="64" rx="12"/><rect x="204" y="36" width="150" height="64" rx="12"/><rect x="384" y="36" width="150" height="64" rx="12"/>
+          <rect x="24" y="150" width="150" height="64" rx="12"/><rect x="384" y="150" width="150" height="64" rx="12"/>
+        </g>
+        <rect x="204" y="150" width="150" height="64" rx="12" fill="var(--accent)"/>
+        <g font-size="14" font-weight="700" fill="#f3f4f8" text-anchor="middle">
+          <text x="99" y="63">① 수집</text><text x="279" y="63">② 표준화</text><text x="459" y="63">③ 구역 결합</text>
+          <text x="99" y="177">⑥ 요약·알림</text><text x="279" y="177">④ 검증 53항목</text><text x="459" y="177">⑤ 공개 스키마 교체</text>
+        </g>
+        <g font-size="11" fill="#c5c9dc" text-anchor="middle">
+          <text x="99" y="84">기관 5곳 · 수집원 17개</text><text x="279" y="84">원문 보존 + 표준 컬럼</text><text x="459" y="84">같은 지번 1구역 · 1:N</text>
+          <text x="99" y="198">cron 14/14 · 슬랙</text><text x="279" y="198" fill="#f3f4f8">실패 → 중단·알림</text><text x="459" y="198">한 트랜잭션</text>
+        </g>
+        <g stroke="#aab0c8" stroke-width="1.5" marker-end="url(#arw)" fill="none">
+          <line x1="174" y1="68" x2="202" y2="68"/><line x1="354" y1="68" x2="382" y2="68"/>
+          <path d="M459 100 L459 125 L279 125 L279 148"/>
+          <line x1="354" y1="182" x2="382" y2="182"/>
+          <path d="M459 214 L459 240 L99 240 L99 214"/>
+        </g>
+        <path d="M279 214 L279 250" stroke="#aab0c8" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <text x="279" y="266" font-size="11" fill="#c5c9dc" text-anchor="middle">하나라도 실패 → 중단</text>
+        <text x="24" y="300" font-size="11" fill="#c5c9dc">AI 경로 · 자연어 → 구조화 출력 → 도구 11개 → 검증기 → 답변</text>
+        <g fill="none" stroke="#aab0c8" stroke-width="1.2"><rect x="24" y="312" width="96" height="30" rx="8"/><rect x="140" y="312" width="96" height="30" rx="8"/><rect x="256" y="312" width="96" height="30" rx="8"/></g>
+        <rect x="372" y="312" width="110" height="30" rx="8" fill="var(--accent)"/>
+        <g font-size="11" fill="#f3f4f8" text-anchor="middle"><text x="72" y="331">자연어</text><text x="188" y="331">구조화 출력</text><text x="304" y="331">도구 11개</text><text x="427" y="331">검증기 75→95%</text></g>
+        <g stroke="#aab0c8" stroke-width="1.2" marker-end="url(#arw)"><line x1="120" y1="327" x2="138" y2="327"/><line x1="236" y1="327" x2="254" y2="327"/><line x1="352" y1="327" x2="370" y2="327"/></g>
+        <text x="24" y="372" font-size="10.5" fill="#8e95b8">구역 1,922 · 사업장 1,949 · 실거래 131만 건</text>
+      </svg>
+      <div class="overlay">
+        <div class="name">레디포스트</div>
+        <div class="subname">재개발·재건축 공공데이터 지도 · AI는 자료만으로 답하게</div>
+        <a class="detail" href="#d01" data-open="d01">Project Detail →</a>
+      </div>
     </div>
+    <div class="info">
+      <div class="eyebrow">ACT 01 · 2026.09 – 2026.10 · 미래내일 일경험</div>
+      <h3>흩어진 정비사업 자료를 지도 한 장에, AI는 자료만으로 답하게</h3>
+      <p class="result">두 달 매일 운영한 파이프라인, KPI 7/7, AI 환각 0건을 정답셋으로 증명했습니다.</p>
+      <dl class="meta">
+        <dt>참여 기간</dt><dd class="num">2026.09 – 2026.10 (두 달 매일 운영)</dd>
+        <dt>인원·역할</dt><dd>팀 3명 · 백엔드·데이터 전담</dd>
+        <dt>담당 범위</dt><dd>수집·검증 파이프라인, API 서버, AI 질의응답·평가 체계, 자동 운영</dd>
+      </dl>
+      <div class="kpis">
+        <div class="kpi"><b class="num">7 / 7</b><span>PM이 확정한 KPI 전부 달성</span><small>운영 4개 실행 기록 · AI 3개 정답셋</small></div>
+        <div class="kpi"><b class="num">53항목</b><span>검증 통과 때만 공개 스키마 교체</span><small>행 수·채움률·급감·무결성</small></div>
+        <div class="kpi"><b class="num">75 → 95%</b><span>답의 숫자가 전부 자료에 있는 비율</span><small>도구 11개 결과 + 검증기 대조</small></div>
+        <div class="kpi"><b class="num">14 / 14</b><span>새벽 cron 배치 연속 성공</span><small>실패는 슬랙 · 안 돌면 침묵 감시</small></div>
+      </div>
+      <div class="chips"><span class="chip">Python</span><span class="chip">PostgreSQL</span><span class="chip">FastAPI</span><span class="chip">Claude API</span><span class="chip">구조화 출력</span><span class="chip">AWS EC2</span><span class="chip">Docker</span><span class="chip">GitHub Actions</span></div>
+      <ul class="bul">
+        <li>기관 5곳·수집원 17개 → 53항목 검증 → 공개 스키마 한 트랜잭션 교체. <b>구역 1,922 · 실거래 131만 건</b></li>
+        <li>자연어 검색 110문 <b>100%</b> · 자료 밖 질문 24문 지어낸 답 <b>0건</b> · 남이 쓴 50문 미확인 숫자 <b>0건</b></li>
+        <li>사고 2건(ID 중복 노출, 재시작 누락)을 숨기지 않고 KPI 기록에 남김</li>
+      </ul>
+      <div class="actions"><button class="btn btn-fill" type="button" data-open="d01">자세히 ▾</button><span class="chip grey">코드 비공개 · 아키텍처 공개</span></div>
+    </div>
+  </article>
+  <details class="full" id="d01"><summary></summary><div class="body">
+    <div class="sh">문제와 데이터</div>
     <p>서울·경기·인천의 정비사업 자료는 기관마다 다른 형식의 엑셀, CSV, 게시판, 고시문으로 흩어져 있고 같은 사업장도 기관마다 다르게 적혀 있었습니다. 자료를 한 단위로 묶고, 검증을 통과한 것만 내보내고, AI가 자료 밖의 말을 하지 못하게 막는 장치를 만들어 두 달간 매일 운영했습니다.</p>
     <div class="fig wide">
       <div class="hint">↔ 좌우로 밀어서 보기</div>
-      <div class="scroll"><svg viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" role="img" aria-label="레디포스트 파이프라인 아키텍처">
-        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8a90a3"/></marker></defs>
-        <g font-size="13" fill="#1c2130">
-          <rect x="10" y="40" width="150" height="78" rx="12" fill="#f4f6fa" stroke="#d5d9e4"/>
-          <text x="85" y="66" text-anchor="middle" font-weight="700">① 수집</text><text x="85" y="86" text-anchor="middle" font-size="12" fill="#5d6478">기관 5곳 · 수집원 17개</text><text x="85" y="103" text-anchor="middle" font-size="12" fill="#5d6478">엑셀·CSV·게시판·고시문</text>
-          <rect x="190" y="40" width="150" height="78" rx="12" fill="#f4f6fa" stroke="#d5d9e4"/>
-          <text x="265" y="66" text-anchor="middle" font-weight="700">② 적재·표준화</text><text x="265" y="86" text-anchor="middle" font-size="12" fill="#5d6478">원문 컬럼 보존 + 표준 컬럼</text><text x="265" y="103" text-anchor="middle" font-size="12" fill="#5d6478">같은 지번 = 한 구역 (1:N)</text>
-          <rect x="370" y="40" width="170" height="78" rx="12" fill="#e6f4f5" stroke="#0e7c86" stroke-width="1.5"/>
-          <text x="455" y="66" text-anchor="middle" font-weight="700" fill="#0e7c86">③ 검증 53항목</text><text x="455" y="86" text-anchor="middle" font-size="12">행 수·채움률·급감·무결성</text><text x="455" y="103" text-anchor="middle" font-size="12">하나라도 실패 → 중단</text>
-          <rect x="570" y="40" width="160" height="78" rx="12" fill="#f4f6fa" stroke="#d5d9e4"/>
-          <text x="650" y="66" text-anchor="middle" font-weight="700">④ 공개 스키마 교체</text><text x="650" y="86" text-anchor="middle" font-size="12" fill="#5d6478">통과 때만 한 트랜잭션</text><text x="650" y="103" text-anchor="middle" font-size="12" fill="#5d6478">실행 중에도 직전 데이터 제공</text>
-          <rect x="760" y="40" width="230" height="78" rx="12" fill="#161b33"/>
-          <text x="875" y="66" text-anchor="middle" font-weight="700" fill="#f3f4f8">⑤ API · 지도 화면</text><text x="875" y="86" text-anchor="middle" font-size="12" fill="#c5c9dc">구역 1,922 · 실거래 131만 건</text><text x="875" y="103" text-anchor="middle" font-size="12" fill="#c5c9dc">시군구 버블 · 조건 검색 · AI 패널</text>
-          <g stroke="#8a90a3" stroke-width="1.5" marker-end="url(#ar)"><line x1="160" y1="79" x2="188" y2="79"/><line x1="340" y1="79" x2="368" y2="79"/><line x1="540" y1="79" x2="568" y2="79"/><line x1="730" y1="79" x2="758" y2="79"/></g>
-          <rect x="10" y="140" width="530" height="44" rx="10" fill="none" stroke="#d5d9e4" stroke-dasharray="4 4"/>
-          <text x="24" y="167" font-size="12" fill="#5d6478">운영 · 매일 03:30 cron (AWS) · 실패는 슬랙, 안 돌면 아침 침묵 감시 · 변경 감지 요약 · 백업 · 14/14 연속 성공</text>
-          <rect x="570" y="200" width="130" height="78" rx="12" fill="#f4f6fa" stroke="#d5d9e4"/>
-          <text x="635" y="226" text-anchor="middle" font-weight="700">자연어 질문</text><text x="635" y="246" text-anchor="middle" font-size="12" fill="#5d6478">구조화 출력으로</text><text x="635" y="263" text-anchor="middle" font-size="12" fill="#5d6478">검색 조건 변환</text>
-          <rect x="730" y="200" width="120" height="78" rx="12" fill="#f4f6fa" stroke="#d5d9e4"/>
-          <text x="790" y="226" text-anchor="middle" font-weight="700">도구 11개</text><text x="790" y="246" text-anchor="middle" font-size="12" fill="#5d6478">읽기 전용 호출</text><text x="790" y="263" text-anchor="middle" font-size="12" fill="#5d6478">결과만으로 답함</text>
-          <rect x="870" y="200" width="120" height="78" rx="12" fill="#e6f4f5" stroke="#0e7c86" stroke-width="1.5"/>
-          <text x="930" y="226" text-anchor="middle" font-weight="700" fill="#0e7c86">검증기</text><text x="930" y="246" text-anchor="middle" font-size="12">숫자·날짜 대조</text><text x="930" y="263" text-anchor="middle" font-size="12">금지 표현 → 재작성</text>
-          <g stroke="#8a90a3" stroke-width="1.5" marker-end="url(#ar)"><line x1="700" y1="239" x2="728" y2="239"/><line x1="850" y1="239" x2="868" y2="239"/></g>
-          <path d="M875 118 L875 150 L790 150 L790 198" fill="none" stroke="#8a90a3" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ar)"/>
-          <text x="800" y="166" font-size="11.5" fill="#5d6478">공개된 자료만 도구가 읽는다</text>
+      <div class="scroll"><svg viewBox="0 0 1040 300" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" role="img" aria-labelledby="a1t a1d">
+        <title id="a1t">레디포스트 파이프라인 아키텍처</title>
+        <desc id="a1d">수집, 적재·표준화, 검증 53항목, 공개 스키마 교체, API·지도 화면의 다섯 단계와, 자연어 질문이 도구 11개와 검증기를 거쳐 답이 되는 AI 경로.</desc>
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--diagram-stroke)"/></marker></defs>
+        <g font-size="13" fill="var(--text)">
+          <rect x="10" y="40" width="160" height="78" rx="12" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/>
+          <text x="90" y="66" text-anchor="middle" font-weight="700">① 수집</text><text x="90" y="86" text-anchor="middle" font-size="12" fill="var(--text-muted)">기관 5곳 · 수집원 17개</text><text x="90" y="103" text-anchor="middle" font-size="12" fill="var(--text-muted)">엑셀·CSV·게시판·고시문</text>
+          <rect x="200" y="40" width="160" height="78" rx="12" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/>
+          <text x="280" y="66" text-anchor="middle" font-weight="700">② 적재·표준화</text><text x="280" y="86" text-anchor="middle" font-size="12" fill="var(--text-muted)">원문 컬럼 보존 + 표준 컬럼</text><text x="280" y="103" text-anchor="middle" font-size="12" fill="var(--text-muted)">같은 지번 = 한 구역 (1:N)</text>
+          <rect x="390" y="40" width="180" height="78" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="480" y="66" text-anchor="middle" font-weight="700" fill="var(--accent)">③ 검증 53항목</text><text x="480" y="86" text-anchor="middle" font-size="12">행 수·채움률·급감·무결성</text><text x="480" y="103" text-anchor="middle" font-size="12">하나라도 실패 → 중단</text>
+          <rect x="600" y="40" width="170" height="78" rx="12" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/>
+          <text x="685" y="66" text-anchor="middle" font-weight="700">④ 공개 스키마 교체</text><text x="685" y="86" text-anchor="middle" font-size="12" fill="var(--text-muted)">통과 때만 한 트랜잭션</text><text x="685" y="103" text-anchor="middle" font-size="12" fill="var(--text-muted)">실행 중에도 직전 데이터 제공</text>
+          <rect x="800" y="40" width="230" height="78" rx="12" fill="var(--navy-900)"/>
+          <text x="915" y="66" text-anchor="middle" font-weight="700" fill="#f3f4f8">⑤ API · 지도 화면</text><text x="915" y="86" text-anchor="middle" font-size="12" fill="#c5c9dc">구역 1,922 · 실거래 131만 건</text><text x="915" y="103" text-anchor="middle" font-size="12" fill="#c5c9dc">시군구 버블 · 조건 검색 · AI 패널</text>
+          <g stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#ar)"><line x1="170" y1="79" x2="198" y2="79"/><line x1="360" y1="79" x2="388" y2="79"/><line x1="570" y1="79" x2="598" y2="79"/><line x1="770" y1="79" x2="798" y2="79"/></g>
+          <rect x="10" y="140" width="560" height="44" rx="10" fill="none" stroke="var(--diagram-stroke)" stroke-dasharray="4 4"/>
+          <text x="24" y="167" font-size="12" fill="var(--text-muted)">운영 · 매일 03:30 cron (AWS) · 실패는 슬랙, 안 돌면 아침 침묵 감시 · 변경 감지 요약 · 백업 · 14/14 연속 성공</text>
+          <rect x="600" y="200" width="130" height="78" rx="12" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/>
+          <text x="665" y="226" text-anchor="middle" font-weight="700">자연어 질문</text><text x="665" y="246" text-anchor="middle" font-size="12" fill="var(--text-muted)">구조화 출력으로</text><text x="665" y="263" text-anchor="middle" font-size="12" fill="var(--text-muted)">검색 조건 변환</text>
+          <rect x="760" y="200" width="120" height="78" rx="12" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/>
+          <text x="820" y="226" text-anchor="middle" font-weight="700">도구 11개</text><text x="820" y="246" text-anchor="middle" font-size="12" fill="var(--text-muted)">읽기 전용 호출</text><text x="820" y="263" text-anchor="middle" font-size="12" fill="var(--text-muted)">결과만으로 답함</text>
+          <rect x="910" y="200" width="120" height="78" rx="12" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+          <text x="970" y="226" text-anchor="middle" font-weight="700" fill="var(--accent)">검증기 75→95%</text><text x="970" y="246" text-anchor="middle" font-size="12">숫자·날짜 대조</text><text x="970" y="263" text-anchor="middle" font-size="12">금지 표현 → 재작성</text>
+          <g stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#ar)"><line x1="730" y1="239" x2="758" y2="239"/><line x1="880" y1="239" x2="908" y2="239"/></g>
+          <path d="M915 118 L915 150 L820 150 L820 198" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+          <text x="830" y="166" font-size="11.5" fill="var(--text-muted)">공개된 자료만 도구가 읽는다</text>
         </g>
       </svg></div>
       <div class="cap">수집 → 검증 → 공개 → AI 질의 흐름. 색칠된 두 상자(검증 53항목, 검증기)가 "자료 밖의 말을 못 하게" 막는 지점입니다.</div>
     </div>
-    <div class="kpis">
-      <div class="kpi"><b>7 / 7</b><span>PM이 확정한 KPI 전부 달성. 운영 지표 4개는 실행 기록, AI 지표 3개는 정답셋으로 측정</span></div>
-      <div class="kpi"><b>53항목</b><span>검증 통과 때만 작업 스키마 → 공개 스키마 한 트랜잭션 교체. 14/14 새벽 자동 실행 성공</span></div>
-      <div class="kpi"><b>75 → 95%</b><span>답의 숫자가 전부 자료에 있는 비율. 도구 11개 결과만으로 답하고 검증기가 대조</span></div>
-    </div>
-    <details><summary>자세히: 파이프라인, 평가표, 기록한 사고</summary><div class="body">
-      <p><b>파이프라인.</b> 기관 5곳·수집원 17개 → 원문 컬럼은 그대로 두고 표준 컬럼을 옆에 붙임 → 같은 지번은 한 구역(중복은 1:N 보존) → 행 수·채움률·급감·연결 무결성 53항목 검증, 하나라도 실패면 중단 → 통과 때만 공개 스키마 교체, 변경 감지 요약, 실패·침묵 알림. 구역 1,922개, 사업장 레코드 1,949건, 실거래 131만 건(60개월)을 구역에 연결했고 지도 좌표 연결 91.9%는 행정동 표기가 원인임을 찾아 42곳을 보강했습니다.</p>
-      <p><b>AI는 자료가 준 값만 말한다.</b> 자연어를 구조화 출력으로 검색 조건에 바꾸고, 대화는 읽기 전용 도구 11개의 결과만으로 답합니다. 숫자·날짜는 검증기가 도구 결과와 대조하고 추천·전망 같은 금지 표현은 검사기가 잡아 다시 쓰게 합니다.</p>
-      <table>
-        <tr><th>평가 항목</th><th>결과</th><th>비고</th></tr>
-        <tr><td>자연어 검색 110문</td><td>100%</td><td>1차 94.1% → 프롬프트·정규형 수정</td></tr>
-        <tr><td>대화 20문 · 맞는 도구 선택</td><td>100%</td><td>Opus 5.5 / Haiku 5.5 비교 뒤 모델 확정</td></tr>
-        <tr><td>답의 숫자가 전부 자료에 있음</td><td>75% → 95%</td><td>검증기가 잡은 실패 패턴을 규칙으로 되먹임</td></tr>
-        <tr><td>자료 밖 질문 24문 · 지어낸 답</td><td>0건</td><td>자동 채점 8.3%, 사람이 읽으면 0%</td></tr>
-        <tr><td>남이 쓴 50문 · 미확인 숫자·금지 표현</td><td>0건</td><td>공개 Q&amp;A 37 + 담당자 13</td></tr>
-      </table>
-      <p><b>고시문 날짜 추출 파일럿.</b> 고시목록 47만 행에서 사업장 50곳의 고시 81건을 찾아 단계·날짜·고시번호를 구조화 출력으로 뽑고, 인용 구절이 본문에 없으면 버렸습니다. 경기도 공표자료 142개 항목 대비 정확률 79.2%(기준선 78.5%). 이득은 교차 인용에서 나왔고(14개 중 12개), 후보를 못 찾은 70개가 더 큰 한계입니다. 81건에 약 0.6달러.</p>
-      <p><b>기록한 사고 두 건.</b> 경기 자료 ID 중복으로 촉진구역 40곳에 다른 사업장 이력이 이틀간 노출 → 이력 합계 테스트가 잡아 ID를 파일 행 번호로 바꾸고 중복 검증 추가. 배포 뒤 API 재시작 누락으로 20시간 동안 서울 이력이 빈 채 노출 → 운영 절차에 재시작 단계 추가. 두 건 모두 KPI 기록에 남겼습니다.</p>
-    </div></details>
-    <div class="retro"><b>다시 한다면.</b> 두 사고 모두 "사람이 기억해야 하는 절차"에서 났습니다. 배포 뒤 재시작을 배포 스크립트 안에 넣고, 원천 파일의 ID 규칙 검증을 수집 단계로 앞당겨 적재 전에 막겠습니다. 고시문 날짜 추출은 후보를 못 찾은 70개가 가장 큰 한계였으니 HTML만이 아니라 첨부 PDF까지 읽는 경로를 먼저 만들겠습니다.</div>
-    <div class="tags"><span class="tag">Python</span> <span class="tag">pandas</span> <span class="tag">PostgreSQL</span> <span class="tag">FastAPI</span> <span class="tag">Claude API</span> <span class="tag">구조화 출력</span> <span class="tag">MCP</span> <span class="tag">AWS EC2</span> <span class="tag">Docker</span> <span class="tag">GitHub Actions</span> <span class="tag">OpenTofu</span> <span class="tag">Ansible</span> <span class="tag">cron</span></div>
-  </article>
+    <p>기관 5곳·수집원 17개 → 원문 컬럼은 그대로 두고 표준 컬럼을 옆에 붙임 → 같은 지번은 한 구역(중복은 1:N 보존) → 행 수·채움률·급감·연결 무결성 53항목 검증, 하나라도 실패면 중단 → 통과 때만 공개 스키마 교체, 변경 감지 요약, 실패·침묵 알림. 구역 1,922개, 사업장 레코드 1,949건, 실거래 131만 건(60개월)을 구역에 연결했고 지도 좌표 연결 91.9%는 행정동 표기가 원인임을 찾아 42곳을 보강했습니다.</p>
 
-  <!-- 02 -->
-  <article class="project">
-    <div class="head">
-      <div><div class="act">ACT 02 · 2026.07 – 2026.10 · 개인 프로젝트 · 전체 설계·구현 · 정답셋 판정 전부 직접</div>
-        <h3>CareerFit — 채용공고 역량 추출, 정규식 베이스라인과 Claude 3종을 같은 정답셋으로 재다</h3>
-        <div class="meta">추출기보다 "재는 장치"를 먼저 만들었고, 그 장치의 결함을 네 번 찾아 고쳤습니다</div></div>
-      <div class="links"><a href="https://github.com/kevin2483/Careerfit">GitHub</a><a href="https://careerfit-kevin2483.streamlit.app">라이브 데모</a></div>
-    </div>
-    <p>채용공고 1,190건에서 요구 역량을 뽑는 일은 LLM에 맡기면 결과가 바로 나옵니다. 문제는 그 결과가 맞는지 확인할 방법이 없다는 점입니다. 사람이 판정한 정답셋, 정규식 베이스라인, 공고 단위 부트스트랩 신뢰구간, 그리고 그 장치 자체를 의심하는 절차를 먼저 만들었습니다. 모든 평가 표는 <code>make reproduce</code> 한 줄로 바이트 단위 재현되고 GitHub Actions가 매 push 검증합니다.</p>
-    <div class="kpis">
-      <div class="kpi"><b>0.863 · 0.854 · 0.853 · 0.828</b><span>F1 · opus · sonnet · 정규식 · haiku. 95% 신뢰구간이 겹쳐 "opus가 정규식보다 낫다"는 확정 불가</span></div>
-      <div class="kpi"><b>4회</b><span>평가 장치 결함 교정. 2차에서 opus 최하위 → 1위, 3차에서 "우위" → "확정 불가", 4차에서 sonnet 재호출</span></div>
-      <div class="kpi"><b>3 / 3 실패</b><span>사전 등록한 haiku 프롬프트 변형 전부 하락. 구조화 출력은 환각 0이지만 목록 안 오탐 78 → 97</span></div>
-    </div>
-    <div class="fig wide forest">
-      <div class="hint">↔ 좌우로 밀어서 보기</div>
-      <div class="scroll"><svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" role="img" aria-label="네 방식의 F1과 95% 신뢰구간">
-        <g font-size="11" fill="#8a90a3"><text x="190" y="190" text-anchor="middle">0.76</text><text x="297" y="190" text-anchor="middle">0.80</text><text x="405" y="190" text-anchor="middle">0.84</text><text x="512" y="190" text-anchor="middle">0.88</text><text x="620" y="190" text-anchor="middle">0.92</text></g>
-        <g stroke="#eceef3"><line x1="190" y1="10" x2="190" y2="172"/><line x1="297" y1="10" x2="297" y2="172"/><line x1="405" y1="10" x2="405" y2="172"/><line x1="512" y1="10" x2="512" y2="172"/><line x1="620" y1="10" x2="620" y2="172"/></g>
-        <g font-size="13" fill="#1c2130"><text x="0" y="40">Claude opus-5</text><text x="0" y="80">Claude sonnet-5</text><text x="0" y="120">정규식</text><text x="0" y="160">Claude haiku-4.5</text></g>
-        <g stroke="#0e7c86" stroke-width="4" stroke-linecap="round"><line x1="356.6" y1="36" x2="555.5" y2="36"/><line x1="332.4" y1="76" x2="539.4" y2="76"/><line x1="313.6" y1="116" x2="544.8" y2="116"/><line x1="257.2" y1="156" x2="472.2" y2="156"/></g>
-        <g fill="#161b33"><circle cx="466.8" cy="36" r="6"/><circle cx="442.6" cy="76" r="6"/><circle cx="440" cy="116" r="6"/><circle cx="372.8" cy="156" r="6"/></g>
-        <g font-size="12" font-weight="700" fill="#161b33"><text x="568" y="40">0.863</text><text x="552" y="80">0.854</text><text x="557" y="120">0.853</text><text x="485" y="160">0.828</text></g>
-      </svg></div>
-      <div class="cap">정답셋 38건 · 공고 단위 부트스트랩 10,000회. 구간이 겹쳐서 "opus가 정규식보다 낫다"를 확정할 수 없습니다. 확정되는 것은 haiku가 opus·sonnet보다 낮다는 것뿐입니다.</div>
-    </div>
-    <details><summary>자세히: 네 번의 교정, 라우팅, 재현성, 데모 화면</summary><div class="body">
-      <div class="shots">
-        <img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭" loading="lazy">
-        <img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭" loading="lazy">
-        <img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭" loading="lazy">
+    <div class="sh">평가 방법</div>
+    <p>AI는 자료가 준 값만 말합니다. 자연어를 구조화 출력으로 검색 조건에 바꾸고, 대화는 읽기 전용 도구 11개의 결과만으로 답합니다. 숫자·날짜는 검증기가 도구 결과와 대조하고 추천·전망 같은 금지 표현은 검사기가 잡아 다시 쓰게 합니다. 기능마다 정답이 있는 문항을 먼저 만들고, 자동 채점과 사람 채점을 둘 다 남겼습니다.</p>
+
+    <div class="sh">결과</div>
+    <table>
+      <tr><th>평가 항목</th><th>결과</th><th>비고</th></tr>
+      <tr><td>자연어 검색 110문</td><td>100%</td><td>1차 94.1% → 프롬프트·정규형 수정</td></tr>
+      <tr><td>대화 20문 · 맞는 도구 선택</td><td>100%</td><td>Opus 5.5 / Haiku 5.5 비교 뒤 모델 확정</td></tr>
+      <tr><td>답의 숫자가 전부 자료에 있음</td><td>75% → 95%</td><td>검증기가 잡은 실패 패턴을 규칙으로 되먹임</td></tr>
+      <tr><td>자료 밖 질문 24문 · 지어낸 답</td><td>0건</td><td>자동 채점 8.3%, 사람이 읽으면 0%</td></tr>
+      <tr><td>남이 쓴 50문 · 미확인 숫자·금지 표현</td><td>0건</td><td>공개 Q&amp;A 37 + 담당자 13</td></tr>
+    </table>
+    <p><b>고시문 날짜 추출 파일럿.</b> 고시목록 47만 행에서 사업장 50곳의 고시 81건을 찾아 단계·날짜·고시번호를 구조화 출력으로 뽑고, 인용 구절이 본문에 없으면 버렸습니다. 경기도 공표자료 142개 항목 대비 정확률 79.2%(기준선 78.5%). 이득은 교차 인용에서 나왔고(14개 중 12개), 후보를 못 찾은 70개가 더 큰 한계입니다. 81건에 약 0.6달러.</p>
+
+    <div class="sh">한계와 다시 한다면</div>
+    <p><b>기록한 사고 두 건.</b> 경기 자료 ID 중복으로 촉진구역 40곳에 다른 사업장 이력이 이틀간 노출 → 이력 합계 테스트가 잡아 ID를 파일 행 번호로 바꾸고 중복 검증 추가. 배포 뒤 API 재시작 누락으로 20시간 동안 서울 이력이 빈 채 노출 → 운영 절차에 재시작 단계 추가. 두 건 모두 KPI 기록에 남겼습니다.</p>
+    <div class="retro"><b>다시 한다면.</b> 고시문 날짜 추출에서 후보를 못 찾은 70개가 더 큰 한계였으므로, 다음에는 추출 정확도보다 후보 탐색 재현율을 먼저 재는 평가를 세우겠습니다. 사고 2건은 재시작 누락처럼 절차 문제였으니 배포 체크리스트를 코드로 강제하겠습니다.</div>
+    <div class="chips" style="margin-top:14px"><span class="chip grey">pandas</span><span class="chip grey">MCP</span><span class="chip grey">OpenTofu</span><span class="chip grey">Ansible</span><span class="chip grey">cron</span><span class="chip grey">Doppler</span></div>
+  </div></details>
+  </div>
+
+  <!-- 02 CareerFit -->
+  <div class="block reveal">
+  <article class="feat" id="p02">
+    <div class="visual">
+      <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v2t v2d" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" preserveAspectRatio="xMidYMid meet">
+        <title id="v2t">네 방식의 F1 점추정과 95% 신뢰구간</title>
+        <desc id="v2d">opus 0.863, sonnet 0.854, 정규식 0.853, haiku 0.828. 구간이 겹쳐 opus가 정규식보다 낫다고 확정할 수 없다.</desc>
+        <g stroke="#3a4270" stroke-dasharray="3 4"><line x1="60" y1="40" x2="60" y2="360"/><line x1="175" y1="40" x2="175" y2="360"/><line x1="290" y1="40" x2="290" y2="360"/><line x1="405" y1="40" x2="405" y2="360"/><line x1="520" y1="40" x2="520" y2="360"/></g>
+        <rect x="40" y="226" width="500" height="48" rx="8" fill="#ffffff" opacity=".06"/>
+        <g font-size="13" fill="#e3e5ee" font-weight="700"><text x="60" y="72">Claude opus-5 · 0.863</text><text x="60" y="152">Claude sonnet-5 · 0.854</text><text x="60" y="232">정규식 베이스라인 · 0.853</text><text x="60" y="312">Claude haiku-4.5 · 0.828</text></g>
+        <g stroke="var(--accent-ink)" stroke-width="6" stroke-linecap="round"><line x1="239.1" y1="90" x2="451" y2="90"/><line x1="212.7" y1="170" x2="432.3" y2="170"/><line x1="191.1" y1="250" x2="440.1" y2="250"/><line x1="131.3" y1="330" x2="362.5" y2="330"/></g>
+        <g fill="#f3f4f8"><circle cx="355.8" cy="90" r="8"/><circle cx="331.1" cy="170" r="8"/><circle cx="327.4" cy="250" r="8"/><circle cx="254.9" cy="330" r="8"/></g>
+        <text x="60" y="390" font-size="11" fill="#8e95b8">정답셋 38건 · 부트스트랩 10,000회 · 95% 신뢰구간</text>
+      </svg>
+      <div class="overlay">
+        <div class="name">CareerFit</div>
+        <div class="subname">채용공고 역량 추출 · 정규식 vs Claude 3종을 같은 정답셋으로</div>
+        <a class="detail" href="#d02" data-open="d02">Project Detail →</a>
       </div>
-      <table>
-        <tr><th>#</th><th>결함</th><th>조치 → 결과</th></tr>
-        <tr><td>1</td><td>정답셋이 정규식 출력을 사람이 확인하는 방식이라 정규식이 못 본 태그가 정답에 없음 (자기 채점)</td><td>네 시스템 후보를 출처 가리고 섞어 재판정(블라인드 풀링). 후보 439건 중 127건 제외, 정규식-LLM 격차 0.091 → 0.024</td></tr>
-        <tr><td>2</td><td>풀링 후보에 sonnet·opus가 빠져 단독 태그가 오탐으로 채점</td><td>30건 추가 판정 → opus 최하위에서 1위로</td></tr>
-        <tr><td>3</td><td>사전 alias 충돌 4건, 정답셋 표기 오류 3건, 하위→상위 도구 함의 규칙 부재</td><td>사전 v2(implies), 부트스트랩 CI 도입 → "opus 우위"를 "확정 불가"로 교정</td></tr>
-        <tr><td>4</td><td>독립 리뷰: sonnet 응답 1건이 max_tokens에서 잘려 빈 예측으로 채점(sonnet FN의 31%)</td><td>재호출 → sonnet 0.845 → 0.854, 파레토 최적 합류. 채점기가 실패 행을 경고하게 변경</td></tr>
-      </table>
-      <p><b>짝지은 차이(부트스트랩 10,000회).</b> opus − 정규식 +0.010 [−0.016, +0.037] 확정 불가 · opus − haiku +0.035 [+0.013, +0.059] 확정 · sonnet − haiku +0.027 [+0.001, +0.056] 확정. 명시 기술은 네 방식 모두 F1 0.92~0.95로 동률이고 차이는 서술형 역량(opus 0.766 vs 정규식 0.736)에서 납니다.</p>
-      <p><b>라우팅 시뮬레이션.</b> 긴 공고 40%만 opus로 보내면 opus 수준 F1 0.863을 비용 40%($6.20)로 얻습니다. 그런데 무작위 라우팅 대비 +1.1σ에 그쳐 "작동한다"고 쓰지 않았습니다.</p>
-      <p><b>프롬프트 실험.</b> 정답셋 38건을 보며 프롬프트를 고치면 시험지를 보고 공부하는 셈이라, 변형 3개와 판정 기준을 실행 전에 문서로 고정해 커밋하고 각 1회만 돌렸습니다. 셋 다 점추정이 내려갔고 어느 것도 확정되지 않았습니다. 그대로 공개했습니다.</p>
-      <p><b>그 밖에.</b> 한국어 조사가 정규식 단어 경계를 깨는 문제를 찾아 고쳐 추출량 +7.2%(892건 중 490건 변화). 사전 106 canonical / 288 alias. 테스트 84건. Streamlit 데모는 커밋된 CSV만 읽어 README와 숫자가 같고, 이력서·포트폴리오 PDF를 올리면 시장 대비 학습 우선순위를 돌려줍니다.</p>
-    </div></details>
-    <div class="retro"><b>다시 한다면.</b> 정답셋 38건으로는 어떤 순위도 확정되지 않았으니, 추출기보다 정답셋을 먼저 80건 이상으로 키우겠습니다. 네 번째 결함(잘린 응답)은 예측 파일 쪽을 한 번도 의심하지 않아서 생겼습니다. 정답셋만이 아니라 예측 파일의 실패 행 검사를 첫날부터 채점기에 넣겠습니다. 프롬프트 실험은 정답셋을 개발용과 평가용으로 나눈 뒤에만 하겠습니다.</div>
-    <div class="tags"><span class="tag">Python</span> <span class="tag">정규식</span> <span class="tag">Anthropic API</span> <span class="tag">구조화 출력</span> <span class="tag">부트스트랩 CI</span> <span class="tag">pytest</span> <span class="tag">GitHub Actions</span> <span class="tag">Streamlit</span> <span class="tag">Docker</span> <span class="tag">Claude Code 서브에이전트</span></div>
-  </article>
-
-  <!-- 03 -->
-  <article class="project">
-    <div class="head">
-      <div><div class="act">ACT 03 · 2026.05 – 2026.07 · 직무 부트캠프 (팀)</div>
-        <h3>패션 커머스 데이터 플랫폼 — 수집 → BigQuery → 자연어 질의 MCP 서버 · 고객 세분화</h3>
-        <div class="meta">"98.5% 정확도"가 재현율 6%의 착시임을 진단한 기록</div></div>
-      <div class="links"><a href="https://github.com/kevin2483/fashion-insight-platform">GitHub</a></div>
     </div>
-    <p>Selenium으로 무신사 랭킹을 수집하고 공휴일 API와 함께 BigQuery에 적재한 뒤 두 경로로 썼습니다. Claude Desktop에서 자연어로 BigQuery를 질의하는 MCP 서버를 JSON-RPC로 직접 구현했고(SELECT 전용 가드), GA 공개 고객 데이터 9,996명을 RFM 4등급으로 나눠 RF·XGBoost로 예측했습니다.</p>
-    <div class="kpis">
-      <div class="kpi"><b>6% → 94%</b><span>우수고객 재현율. 보정 전 정확도 98.5%는 클래스 불균형이 만든 착시였고, 클래스 가중치 보정으로 소수 등급을 잡았습니다</span></div>
-      <div class="kpi"><b>3 툴</b><span>MCP 서버 list_tables · get_schema · run_query. 변경 쿼리·다중 구문 차단, LIMIT 자동 부착</span></div>
-      <div class="kpi"><b>4등급</b><span>VIP 17.5% · 우수 38.2% · 일반 36.1% · 이탈위험 8.2%. 우수고객의 VIP 전환이 가장 큰 지렛대</span></div>
-    </div>
-    <details><summary>자세히: 한계를 먼저</summary><div class="body">
-      <ul class="clean">
-        <li>등급 라벨을 RFM 피처로 다시 예측하는 순환 구조입니다. 타겟을 미래 행동(재구매·이탈)으로 바꾸는 것이 근본 개선입니다.</li>
-        <li>XGBoost 조기 종료가 테스트 세트를 보고 있어 95.4%는 낙관적인 값입니다. README에 적었습니다.</li>
-        <li>무신사 상품 데이터와 GA 고객 데이터는 조인되지 않은 별도 파이프라인입니다.</li>
+    <div class="info">
+      <div class="eyebrow">ACT 02 · 2026.07 – 2026.10 · 개인 프로젝트</div>
+      <h3>추출기보다 "재는 장치"를 먼저 만들고, 그 장치의 결함을 네 번 고치다</h3>
+      <p class="result">"opus가 정규식보다 낫다"를 확정하지 못했고, 그렇게 쓰지 않았습니다.</p>
+      <dl class="meta">
+        <dt>참여 기간</dt><dd class="num">2026.07 – 2026.10</dd>
+        <dt>인원·역할</dt><dd>개인 · 전체 설계·구현 · 정답셋 판정 전부 직접</dd>
+        <dt>담당 범위</dt><dd>정답셋 판정, 베이스라인, 부트스트랩 CI, 데모, CI/CD</dd>
+      </dl>
+      <div class="kpis">
+        <div class="kpi"><b class="num">F1 0.863</b><span>opus · 정규식 0.853과 구간 겹침</span><small>정답셋 38건 · 부트스트랩 10,000회</small></div>
+        <div class="kpi"><b class="num">4회</b><span>평가 장치 결함 교정</span><small>결론 2회 뒤집힘 · 전 과정 커밋</small></div>
+        <div class="kpi"><b class="num">3 / 3 실패</b><span>사전 등록한 프롬프트 변형 전부 하락</span><small>실행 전 판정 기준 커밋 · 각 1회</small></div>
+        <div class="kpi"><b class="num">84 테스트</b><span>make reproduce 바이트 단위 재현</span><small>GitHub Actions 매 push 검증</small></div>
+      </div>
+      <div class="chips"><span class="chip">Python</span><span class="chip">정규식</span><span class="chip">Anthropic API</span><span class="chip">구조화 출력</span><span class="chip">부트스트랩 CI</span><span class="chip">pytest</span><span class="chip">Streamlit</span><span class="chip">Docker</span></div>
+      <ul class="bul">
+        <li>채용공고 <b>1,190건</b>, 사전 106 canonical / 288 alias, 사람 정답셋 <b>38건</b>(블라인드 풀링)</li>
+        <li>2차 교정에서 opus 최하위 → 1위, 3차에서 "우위" → "확정 불가", 4차에서 잘린 응답 재호출</li>
+        <li>한국어 조사가 단어 경계를 깨는 문제를 고쳐 정규식 추출량 <b>+7.2%</b></li>
       </ul>
-    </div></details>
-    <div class="retro"><b>다시 한다면.</b> 타겟을 RFM 등급이 아니라 "다음 달 재구매 여부"로 정의해 순환을 끊고, 검증 세트를 따로 떼어 조기 종료에 쓰겠습니다. MCP 서버에는 쿼리 비용 상한과 호출 로그를 넣겠습니다.</div>
-    <div class="tags"><span class="tag">Python</span> <span class="tag">Selenium</span> <span class="tag">BeautifulSoup</span> <span class="tag">BigQuery</span> <span class="tag">MCP (JSON-RPC)</span> <span class="tag">scikit-learn</span> <span class="tag">XGBoost</span> <span class="tag">SHAP</span></div>
+      <div class="actions"><button class="btn btn-fill" type="button" data-open="d02">자세히 ▾</button><a class="btn btn-line" href="https://github.com/kevin2483/Careerfit">GitHub</a><a class="btn btn-line" href="https://careerfit-kevin2483.streamlit.app">라이브 데모</a></div>
+    </div>
   </article>
+  <details class="full" id="d02"><summary></summary><div class="body">
+    <div class="sh">문제와 데이터</div>
+    <p>채용공고 1,190건(데이터 사이언티스트·엔지니어·ML 엔지니어·데이터 분석가)에서 요구 역량을 뽑는 일은 LLM에 맡기면 결과가 바로 나옵니다. 문제는 그 결과가 맞는지 확인할 방법이 없다는 점입니다. 역량 사전 106 canonical / 288 alias를 만들고, 공고 38건을 사람이 판정한 정답셋을 먼저 세웠습니다.</p>
 
-  <h2 style="margin-top:28px">그 외</h2>
-  <p class="sub">수업·캡스톤에서 만든 것들입니다. 대표작보다 수치 근거가 약해 짧게 둡니다.</p>
-  <div class="compact">
-    <article class="project">
-      <div class="act">2026.06 · 빅데이터프로그래밍 (팀)</div>
+    <div class="sh">평가 방법</div>
+    <p>정규식 베이스라인과 Claude haiku·sonnet·opus를 같은 정답셋으로 채점합니다. 정답셋은 네 시스템의 후보를 출처를 가리고 섞어 판정했고(블라인드 풀링), 방식 간 차이는 공고 단위 부트스트랩 10,000회의 짝지은 차이 신뢰구간으로만 말합니다. 프롬프트 실험은 변형과 판정 기준을 실행 전에 문서로 고정해 커밋하고 각 1회만 돌렸습니다. 모든 표는 <code>make reproduce</code> 한 줄로 바이트 단위 재현되고 GitHub Actions가 매 push 검증합니다.</p>
+
+    <div class="sh">결과</div>
+    <div class="forest-wrap">
+      <div class="fig forest">
+        <div class="hint">↔ 좌우로 밀어서 보기</div>
+        <div class="scroll"><svg viewBox="0 0 640 210" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" role="img" aria-labelledby="f2t f2d">
+          <title id="f2t">네 방식의 F1과 95% 신뢰구간</title>
+          <desc id="f2d">opus 0.863 [0.822, 0.896], sonnet 0.854 [0.813, 0.890], 정규식 0.853 [0.806, 0.892], haiku 0.828 [0.785, 0.865]. 정규식이 베이스라인.</desc>
+          <rect x="150" y="98" width="490" height="36" rx="6" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)" stroke-dasharray="3 3"/>
+          <text x="156" y="132" font-size="10" fill="var(--text-muted)">베이스라인</text>
+          <g font-size="11" fill="var(--text-muted)"><text x="190" y="200" text-anchor="middle">0.76</text><text x="297" y="200" text-anchor="middle">0.80</text><text x="405" y="200" text-anchor="middle">0.84</text><text x="512" y="200" text-anchor="middle">0.88</text><text x="620" y="200" text-anchor="middle">0.92</text></g>
+          <g stroke="var(--border)"><line x1="190" y1="10" x2="190" y2="180"/><line x1="297" y1="10" x2="297" y2="180"/><line x1="405" y1="10" x2="405" y2="180"/><line x1="512" y1="10" x2="512" y2="180"/><line x1="620" y1="10" x2="620" y2="180"/></g>
+          <g font-size="13" fill="var(--text)"><text x="0" y="40">Claude opus-5</text><text x="0" y="80">Claude sonnet-5</text><text x="0" y="120">정규식</text><text x="0" y="160">Claude haiku-4.5</text></g>
+          <g stroke="var(--accent)" stroke-width="4" stroke-linecap="round"><line x1="357.4" y1="36" x2="555.5" y2="36"/><line x1="332.7" y1="76" x2="538" y2="76"/><line x1="312.6" y1="116" x2="545.3" y2="116"/><line x1="256.7" y1="156" x2="472.7" y2="156"/></g>
+          <g fill="var(--text)"><circle cx="466.5" cy="36" r="6"/><circle cx="443.5" cy="76" r="6"/><circle cx="440" cy="116" r="6"/><circle cx="372.2" cy="156" r="6"/></g>
+          <g font-size="12" font-weight="700" fill="var(--text)"><text x="568" y="40">0.863</text><text x="552" y="80">0.854</text><text x="557" y="120">0.853</text><text x="485" y="160">0.828</text></g>
+        </svg></div>
+        <div class="cap">신뢰구간이 겹치면 "낫다"고 쓰지 않았습니다. 부트스트랩 10,000회, 공고 단위. 축은 haiku 하한(0.785)이 보이도록 0.76부터.</div>
+      </div>
+      <div class="notes num">
+        <div>opus − 정규식 <b>+0.010</b> [−0.016, +0.037] · 확정 불가</div>
+        <div>opus − haiku <b>+0.035</b> [+0.013, +0.059] · 확정</div>
+        <div>sonnet − haiku <b>+0.027</b> [+0.001, +0.056] · 확정</div>
+        <div style="border:0;color:var(--text-muted);font-size:13px">명시 기술은 네 방식 모두 F1 0.92~0.95로 동률. 차이는 서술형 역량(opus 0.766 vs 정규식 0.736)에서 납니다.</div>
+      </div>
+    </div>
+    <table>
+      <tr><th>#</th><th>결함</th><th>조치 → 결과</th></tr>
+      <tr><td>1</td><td>정답셋이 정규식 출력을 사람이 확인하는 방식이라 정규식이 못 본 태그가 정답에 없음 (자기 채점)</td><td>네 시스템 후보를 출처 가리고 섞어 재판정(블라인드 풀링). 후보 439건 중 127건 제외, 정규식-LLM 격차 0.091 → 0.024</td></tr>
+      <tr><td>2</td><td>풀링 후보에 sonnet·opus가 빠져 단독 태그가 오탐으로 채점</td><td>30건 추가 판정 → opus 최하위에서 1위로</td></tr>
+      <tr><td>3</td><td>사전 alias 충돌 4건, 정답셋 표기 오류 3건, 하위→상위 도구 함의 규칙 부재</td><td>사전 v2(implies), 부트스트랩 CI 도입 → "opus 우위"를 "확정 불가"로 교정</td></tr>
+      <tr><td>4</td><td>독립 리뷰: sonnet 응답 1건이 max_tokens에서 잘려 빈 예측으로 채점(sonnet FN의 31%)</td><td>재호출 → sonnet 0.845 → 0.854, 파레토 최적 합류. 채점기가 실패 행을 경고하게 변경</td></tr>
+    </table>
+    <p><b>라우팅 시뮬레이션.</b> 긴 공고 40%만 opus로 보내면 opus 수준 F1 0.863을 비용 40%($6.20)로 얻습니다. 그런데 무작위 라우팅 대비 +1.1σ에 그쳐 "작동한다"고 쓰지 않았습니다.</p>
+    <p><b>프롬프트 실험.</b> 사전 등록한 haiku 변형 3개(별칭 목록, 판정 기준, 구조화 출력)는 셋 다 점추정이 내려갔고 어느 것도 확정되지 않았습니다. 구조화 출력은 환각 0이지만 목록 안 오탐이 78 → 97로 늘었습니다. 그대로 공개했습니다.</p>
+    <p><b>데모.</b> Streamlit 데모는 커밋된 CSV만 읽어 README와 숫자가 같고, 이력서·포트폴리오 PDF를 올리면 시장 대비 학습 우선순위를 돌려줍니다.</p>
+    <div class="shots">
+      <img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭" loading="lazy">
+      <img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭" loading="lazy">
+      <img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭" loading="lazy">
+    </div>
+
+    <div class="sh">한계와 다시 한다면</div>
+    <p>정답셋 38건은 어떤 순위도 확정하기에 작습니다. 정답셋 2차 확장(후보 208건)은 판정이 성급했음을 스스로 확인해 폐기했고, 레포는 38건을 유지합니다. 네 번째 결함(잘린 응답)은 예측 파일 쪽을 한 번도 의심하지 않아서 생겼습니다.</p>
+    <div class="retro"><b>다시 한다면.</b> 정답셋 38건은 프롬프트를 사전 등록해도 통계력이 부족했습니다. 다음에는 정답셋을 먼저 100건 이상으로 키운 뒤 모델 비교를 시작하겠습니다. 예측 파일의 실패 행 검사를 첫날부터 채점기에 넣고, 프롬프트 실험은 정답셋을 개발용과 평가용으로 나눈 뒤에만 하겠습니다. 라우팅 시뮬레이션은 무작위 대비 +1.1σ였으므로 "작동한다"는 표현을 쓰지 않은 판단을 유지합니다.</div>
+    <div class="chips" style="margin-top:14px"><span class="chip grey">GitHub Actions</span><span class="chip grey">Claude Code 서브에이전트</span></div>
+  </div></details>
+  </div>
+
+  <!-- 03 패션 플랫폼 -->
+  <div class="block reveal">
+  <article class="feat" id="p03">
+    <div class="visual">
+      <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v3t v3d" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" preserveAspectRatio="xMidYMid meet">
+        <title id="v3t">패션 플랫폼 MCP 서버와 BigQuery 흐름도</title>
+        <desc id="v3d">위: Selenium 수집과 공휴일 API가 BigQuery에 적재. 가운데: Claude Desktop이 MCP 서버(JSON-RPC, 툴 3개, 가드 3줄)를 거쳐 BigQuery를 질의. 아래: GA 고객 9,996명을 RFM 4등급으로 나눠 RF·XGBoost로 예측, 재현율 6%에서 94%. 두 파이프라인은 조인되지 않음.</desc>
+        <defs><marker id="arw3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#aab0c8"/></marker></defs>
+        <g fill="none" stroke="#aab0c8" stroke-width="1.3"><rect x="24" y="28" width="120" height="40" rx="8"/><rect x="172" y="28" width="120" height="40" rx="8"/></g>
+        <g font-size="12" fill="#f3f4f8" text-anchor="middle" font-weight="700"><text x="84" y="53">Selenium 수집</text><text x="232" y="53">공휴일 API</text></g>
+        <g stroke="#aab0c8" stroke-width="1.3" marker-end="url(#arw3)" fill="none"><line x1="144" y1="48" x2="170" y2="48"/><path d="M292 48 L463 48 L463 128"/></g>
+        <g fill="none" stroke="#aab0c8" stroke-width="1.5"><rect x="24" y="130" width="120" height="56" rx="10"/></g>
+        <rect x="172" y="104" width="190" height="112" rx="12" fill="var(--accent)" opacity=".92"/>
+        <g fill="none" stroke="#aab0c8" stroke-width="1.5"><rect x="390" y="130" width="146" height="56" rx="10"/></g>
+        <g font-size="13" fill="#f3f4f8" text-anchor="middle" font-weight="700"><text x="84" y="163">Claude Desktop</text><text x="267" y="126">MCP 서버 · JSON-RPC</text><text x="463" y="163">BigQuery</text></g>
+        <g font-size="11" fill="#f3f4f8" text-anchor="middle"><text x="267" y="146">list_tables · get_schema · run_query</text><text x="267" y="166">SELECT 전용 · 다중 구문 차단</text><text x="267" y="184">LIMIT 자동 부착</text></g>
+        <g stroke="#aab0c8" stroke-width="1.5" marker-end="url(#arw3)"><line x1="144" y1="158" x2="170" y2="158"/><line x1="362" y1="158" x2="388" y2="158"/></g>
+        <line x1="24" y1="248" x2="536" y2="248" stroke="#aab0c8" stroke-dasharray="5 5"/>
+        <text x="24" y="240" font-size="10.5" fill="#8e95b8">두 파이프라인은 조인되지 않음 (한계 그대로)</text>
+        <g fill="none" stroke="#aab0c8" stroke-width="1.3"><rect x="24" y="272" width="136" height="48" rx="8"/><rect x="188" y="272" width="120" height="48" rx="8"/><rect x="336" y="272" width="200" height="48" rx="8"/></g>
+        <g font-size="12" fill="#f3f4f8" text-anchor="middle" font-weight="700"><text x="92" y="292">GA 고객 9,996명</text><text x="248" y="292">RFM 4등급</text><text x="436" y="292">RF · XGBoost</text></g>
+        <g font-size="11" fill="#c5c9dc" text-anchor="middle"><text x="92" y="309">공개 데이터</text><text x="248" y="309">VIP·우수·일반·이탈위험</text><text x="436" y="309">우수고객 재현율 6% → 94%</text></g>
+        <g stroke="#aab0c8" stroke-width="1.3" marker-end="url(#arw3)"><line x1="160" y1="296" x2="186" y2="296"/><line x1="308" y1="296" x2="334" y2="296"/></g>
+        <text x="24" y="372" font-size="10.5" fill="#8e95b8">정확도 98.5%는 클래스 불균형의 착시 → 클래스 가중치 보정</text>
+      </svg>
+      <div class="overlay">
+        <div class="name">패션 플랫폼</div>
+        <div class="subname">수집 → BigQuery → 자연어 질의 MCP 서버 · 고객 세분화</div>
+        <a class="detail" href="#d03" data-open="d03">Project Detail →</a>
+      </div>
+    </div>
+    <div class="info">
+      <div class="eyebrow">ACT 03 · 2026.05 – 2026.07 · 직무 부트캠프</div>
+      <h3>"98.5% 정확도"가 재현율 6%의 착시임을 진단하다</h3>
+      <p class="result">정확도 98.5%가 재현율 6%의 착시임을 찾아 94%로 올렸습니다.</p>
+      <dl class="meta">
+        <dt>참여 기간</dt><dd class="num">2026.05 – 2026.07</dd>
+        <dt>인원·역할</dt><dd>부트캠프 팀 · 데이터·MCP 담당</dd>
+        <dt>담당 범위</dt><dd>수집 → BigQuery 적재, MCP 서버, RFM·XGBoost 예측</dd>
+      </dl>
+      <div class="kpis">
+        <div class="kpi"><b class="num">6% → 94%</b><span>우수고객 재현율</span><small>클래스 가중치 보정 · 소수 등급 포착</small></div>
+        <div class="kpi"><b class="num">98.5%</b><span>보정 전 정확도 · 불균형이 만든 착시</span><small>정확도 대신 등급별 재현율로 판단</small></div>
+        <div class="kpi"><b class="num">3 툴</b><span>MCP 서버 · SELECT 전용 가드</span><small>list_tables · get_schema · run_query</small></div>
+        <div class="kpi"><b class="num">9,996명</b><span>GA 고객 · RFM 4등급</span><small>VIP 17.5 · 우수 38.2 · 일반 36.1 · 이탈위험 8.2%</small></div>
+      </div>
+      <div class="chips"><span class="chip">Python</span><span class="chip">Selenium</span><span class="chip">BigQuery</span><span class="chip">MCP (JSON-RPC)</span><span class="chip">scikit-learn</span><span class="chip">XGBoost</span><span class="chip">SHAP</span><span class="chip">BeautifulSoup</span></div>
+      <ul class="bul">
+        <li>무신사 랭킹을 Selenium으로 수집해 공휴일 API와 함께 BigQuery 적재</li>
+        <li>Claude Desktop에서 자연어로 BigQuery를 질의하는 MCP 서버를 JSON-RPC로 직접 구현. 변경 쿼리·다중 구문 차단, <b>LIMIT 자동 부착</b></li>
+        <li>우수고객의 VIP 전환이 가장 큰 지렛대라는 결론까지. 조기 종료 누수는 README에 적음</li>
+      </ul>
+      <div class="actions"><button class="btn btn-fill" type="button" data-open="d03">자세히 ▾</button><a class="btn btn-line" href="https://github.com/kevin2483/fashion-insight-platform">GitHub</a></div>
+    </div>
+  </article>
+  <details class="full" id="d03"><summary></summary><div class="body">
+    <div class="sh">문제와 데이터</div>
+    <p>무신사 랭킹을 Selenium으로 수집하고 공휴일 API와 함께 BigQuery에 적재한 뒤 두 경로로 썼습니다. 하나는 Claude Desktop에서 자연어로 BigQuery를 질의하는 MCP 서버, 다른 하나는 GA 공개 고객 데이터 9,996명의 RFM 등급 예측입니다. 두 데이터는 조인되지 않은 별도 파이프라인입니다.</p>
+    <div class="sh">평가 방법</div>
+    <p>RFM 4등급(VIP 17.5% · 우수 38.2% · 일반 36.1% · 이탈위험 8.2%)을 RF·XGBoost로 예측하고, 전체 정확도가 아니라 등급별 재현율로 판단했습니다. MCP 서버는 SELECT 전용, 다중 구문 차단, LIMIT 자동 부착의 가드 3줄을 두고 툴 3개(list_tables · get_schema · run_query)만 노출합니다.</p>
+    <div class="sh">결과</div>
+    <p>보정 전 정확도 98.5%는 클래스 불균형이 만든 착시였고 우수고객 재현율은 6%였습니다. 클래스 가중치 보정으로 재현율 94%까지 올렸고, 우수고객의 VIP 전환이 가장 큰 지렛대라는 결론을 냈습니다.</p>
+    <div class="sh">한계와 다시 한다면</div>
+    <ul class="clean">
+      <li>등급 라벨을 RFM 피처로 다시 예측하는 순환 구조입니다. 타겟을 미래 행동(재구매·이탈)으로 바꾸는 것이 근본 개선입니다.</li>
+      <li>XGBoost 조기 종료가 테스트 세트를 보고 있어 95.4%는 낙관적인 값입니다. README에 적었습니다.</li>
+      <li>무신사 상품 데이터와 GA 고객 데이터는 조인되지 않은 별도 파이프라인입니다.</li>
+    </ul>
+    <div class="retro"><b>다시 한다면.</b> 타겟을 RFM 등급이 아니라 "다음 달 재구매 여부"로 정의해 순환을 끊고, 검증 세트를 따로 떼어 조기 종료에 쓰겠습니다. MCP 서버에는 쿼리 비용 상한과 호출 로그를 넣겠습니다.</div>
+  </div></details>
+  </div>
+
+  <!-- ===== 그 외 ===== -->
+  <div class="sec-head" style="margin-top:8px"><h2 style="font-size:24px">그 외 프로젝트</h2></div>
+  <p class="sub">수업·팀 과제. 결론은 데이터가 허락하는 만큼만.</p>
+  <div class="others reveal">
+    <article class="small">
+      <div class="eyebrow">ACT 04 · 2026.06 · 팀</div>
       <h3>패션 수요 · 전환율 분석 파이프라인</h3>
-      <div class="meta">이커머스 로그 × 기상 데이터를 HDFS·Spark·Hive로 결합</div>
-      <p>Kaggle 로그 195MB를 100만 행 청크로 나눠 Crontab 배치로 HDFS에 적재하고, PySpark 조인 → Hive 집계 4종 → 시각화. 기온 구간별 전환율은 0.53% / 0.51%로 일정했고 매출 피크는 프로모션 기간과 겹쳐, <b>날씨 단독 효과는 분리하지 못했다</b>까지가 결론입니다.</p>
-      <div class="tags"><span class="tag">PySpark</span> <span class="tag">Hive</span> <span class="tag">HDFS</span> <span class="tag">GCP</span> <span class="tag">Crontab</span></div>
-      <div class="links" style="margin-top:10px"><a href="https://github.com/kevin2483/BigData_Final_Project" style="margin:0">GitHub</a></div>
+      <p class="one">이커머스 로그 × 기상 데이터를 HDFS·Spark·Hive로 결합</p>
+      <p class="n"><b class="num">0.5%</b> 기온 구간별 전환율 일정(Mild 0.53% · Warm 0.51%). 매출 피크는 프로모션과 겹쳐 날씨 단독 효과는 분리하지 못했습니다.</p>
+      <div class="foot"><div class="chips"><span class="chip grey">PySpark</span><span class="chip grey">Hive</span><span class="chip grey">HDFS</span><span class="chip grey">GCP</span></div><a href="https://github.com/kevin2483/BigData_Final_Project">GitHub →</a></div>
     </article>
-    <article class="project">
-      <div class="act">2026.03 – 2026.06 · 캡스톤 (팀) · 교내 SW 프로그래밍 대회 장려상</div>
+    <article class="small">
+      <div class="eyebrow">ACT 05 · 2026.03 – 2026.06 · 캡스톤 팀</div>
       <h3>띵커넥트 — 졸업선배 추천 매칭</h3>
-      <div class="meta">콜드 스타트에서 협업 필터링 대신 내용 기반 가중치 매칭</div>
-      <p>관심 직무 40% · 기술 스택 자카드 유사도 40% · 목표 기업 20%의 매칭을 설계하고, 원티드 API 크롤링부터 DB 적재, FastAPI 서버까지 데이터 파트 전체를 맡았습니다. 프론트·기획 팀원과 API 명세를 먼저 합의한 뒤 매주 결과를 보며 가중치를 조정했습니다.</p>
-      <div class="tags"><span class="tag">Python</span> <span class="tag">FastAPI</span> <span class="tag">SQLAlchemy</span> <span class="tag">REST API</span> <span class="tag">Jaccard</span></div>
-      <div class="links" style="margin-top:10px"><a href="https://github.com/kevin2483/DdingConnect" style="margin:0">GitHub</a></div>
+      <p class="one">콜드 스타트라 협업 필터링 대신 내용 기반 가중치 매칭 · 교내 SW 프로그래밍 대회 장려상</p>
+      <p class="n"><b class="num">40 · 40 · 20</b> 직무·기술·기업 가중치 매칭을 설계했고, 원티드 API 크롤링부터 DB 적재, FastAPI 서버까지 데이터 파트 전체를 맡았습니다.</p>
+      <div class="foot"><div class="chips"><span class="chip grey">Python</span><span class="chip grey">FastAPI</span><span class="chip grey">SQLAlchemy</span><span class="chip grey">Jaccard</span></div><a href="https://github.com/kevin2483/DdingConnect">GitHub →</a></div>
     </article>
   </div>
 </div></section>
 
+<!-- ===== 기술 ===== -->
 <section id="skills"><div class="wrap">
-  <h2>기술</h2>
-  <p class="sub">써 본 것보다 "정답이 있는 평가로 확인해 본 것"을 위에 두었습니다.</p>
-  <div class="skills">
-    <div class="skill"><h4>LLM · 에이전트</h4>Claude API · 구조화 출력 · Function Calling · MCP 서버 구현 · 프롬프트 설계 · 평가셋 설계 · 블라인드 풀링 · 부트스트랩 신뢰구간</div>
-    <div class="skill"><h4>언어 · 데이터</h4>Python · SQL · Pandas · NumPy · PostgreSQL · BigQuery</div>
-    <div class="skill"><h4>수집 · 백엔드</h4>FastAPI · REST API · Selenium · BeautifulSoup · 공공데이터포털 API · Streamlit</div>
-    <div class="skill"><h4>인프라 · 운영</h4>AWS EC2 · Docker · GitHub Actions · OpenTofu · Ansible · cron · Doppler</div>
-    <div class="skill"><h4>빅데이터 · 모델링</h4>PySpark · Hive · HDFS · GCP · scikit-learn · XGBoost · SHAP · Matplotlib · Looker Studio</div>
+  <div class="sec-head"><h2>기술</h2></div>
+  <p class="sub">정답이 있는 평가로 확인해 본 것을 위에 두었습니다. 칩 끝의 번호는 증명 프로젝트(01 레디포스트 · 02 CareerFit · 03 패션 플랫폼)입니다.</p>
+  <div class="skills reveal">
+    <div class="skill"><h3>LLM · 평가</h3>
+      <div class="chips"><span class="chip">Claude API<i>01 02</i></span><span class="chip">구조화 출력<i>01 02</i></span><span class="chip">MCP 서버 구현<i>01 03</i></span><span class="chip">평가셋 설계<i>01 02</i></span><span class="chip">블라인드 풀링<i>02</i></span><span class="chip">부트스트랩 신뢰구간<i>02</i></span><span class="chip">프롬프트 사전 등록<i>02</i></span><span class="chip">Function Calling<i>01</i></span><span class="chip">정규식 베이스라인<i>02</i></span><span class="chip grey">Claude Code 서브에이전트</span></div></div>
+    <div class="skill"><h3>데이터 · 백엔드</h3>
+      <div class="chips"><span class="chip">Python<i>01 02 03</i></span><span class="chip">SQL<i>01 03</i></span><span class="chip">PostgreSQL<i>01</i></span><span class="chip">BigQuery<i>03</i></span><span class="chip">pandas<i>01 02</i></span><span class="chip">FastAPI<i>01</i></span><span class="chip">Selenium<i>03</i></span><span class="chip">Streamlit<i>02</i></span><span class="chip">scikit-learn<i>03</i></span><span class="chip">XGBoost<i>03</i></span><span class="chip">SHAP<i>03</i></span><span class="chip grey">공공데이터포털 API</span><span class="chip grey">BeautifulSoup</span><span class="chip grey">SQLAlchemy</span></div></div>
+    <div class="skill"><h3>인프라 · 빅데이터</h3>
+      <div class="chips"><span class="chip">AWS EC2<i>01</i></span><span class="chip">Docker<i>01 02</i></span><span class="chip">GitHub Actions<i>01 02</i></span><span class="chip">cron<i>01</i></span><span class="chip">pytest<i>02</i></span><span class="chip">OpenTofu<i>01</i></span><span class="chip">Ansible<i>01</i></span><span class="chip grey">Doppler</span><span class="chip grey">PySpark</span><span class="chip grey">Hive</span><span class="chip grey">HDFS</span><span class="chip grey">GCP</span><span class="chip grey">Looker Studio</span></div></div>
+    <div class="legend">색 칩 = 정답이 있는 평가나 실행 기록으로 확인한 것 · 회색 칩 = 써 본 것</div>
   </div>
 </div></section>
 
+<!-- ===== 소개 ===== -->
 <section id="about"><div class="wrap">
-  <h2>소개</h2>
+  <div class="sec-head"><h2>소개</h2></div>
   <p class="sub">명지대학교 융합소프트웨어학부 데이터사이언스전공 (2021.03 – 2027.02 재학)</p>
-  <div class="about">
-    <div class="card"><h4>일하는 방식</h4>
-      결과를 눈으로 훑고 "좋아 보인다"로 끝내지 않습니다. 정답이 있는 평가셋을 먼저 만들고, 그 평가 장치 자체도 의심합니다. CareerFit에서 평가 결함을 네 번 찾아 결론을 두 번 뒤집은 기록, 레디포스트에서 사고 두 건을 숨기지 않고 KPI에 남긴 기록이 그 방식의 증거입니다.</div>
-    <div class="card"><h4>경력 · 자격</h4>
+  <div class="about reveal">
+    <div class="card"><h3>일하는 방식</h3>
+      결과를 눈으로 훑고 "좋아 보인다"로 끝내지 않습니다. 정답이 있는 평가셋을 먼저 만들고, 그 평가 장치 자체도 의심합니다. 평가 결함을 네 번 찾아 결론을 두 번 뒤집은 기록과, 사고 두 건을 숨기지 않고 KPI에 남긴 기록이 그 증거입니다.</div>
+    <div class="card"><h3>학력 · 경력 · 자격</h3>
       <ul class="clean">
+        <li>명지대학교 융합소프트웨어학부 데이터사이언스전공 (2021.03 – 2027.02)</li>
         <li>레디포스트 · 백엔드·데이터 (미래내일 일경험, 2026.09 – 2026.10)</li>
         <li>ADsP 데이터분석 준전문가 (제49회)</li>
         <li>교내 SW 프로그래밍 대회 장려상 (2026)</li>
@@ -316,9 +673,28 @@
 </div></section>
 
 <footer><div class="wrap">
-  <div><b style="color:#f3f4f8">안정재</b> · <a href="mailto:kevin2483@naver.com">kevin2483@naver.com</a> · <a href="https://github.com/kevin2483">github.com/kevin2483</a> · <a href="assets/portfolio_2026.pdf">포트폴리오 PDF</a> · <a href="https://careerfit-kevin2483.streamlit.app">CareerFit 데모</a></div>
-  <div style="margin-top:8px;font-size:13px;color:#8e95b8">만드는 것보다, 재는 장치를 먼저 세우겠습니다.</div>
+  <div><b style="color:#f3f4f8">안정재</b> · <a href="mailto:kevin2483@naver.com">kevin2483@naver.com</a> · <a href="https://github.com/kevin2483">github.com/kevin2483</a> · <a href="assets/portfolio_2026.pdf">포트폴리오 PDF</a> · <a href="https://careerfit-kevin2483.streamlit.app">CareerFit 데모</a> · <span class="num">마지막 업데이트 2026.11</span></div>
+  <div class="thesis">만드는 것보다, 재는 장치를 먼저 세우겠습니다.</div>
 </div></footer>
 
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('theme');
+  function isDark(){ var t=root.getAttribute('data-theme'); if(t) return t==='dark'; return window.matchMedia('(prefers-color-scheme: dark)').matches; }
+  function sync(){ btn.setAttribute('aria-pressed', isDark()?'true':'false'); }
+  btn.addEventListener('click', function(){ var next=isDark()?'light':'dark'; root.setAttribute('data-theme', next); try{localStorage.setItem('theme', next);}catch(e){} sync(); });
+  sync();
+  var top=document.querySelector('header.top');
+  function onScroll(){ top.classList.toggle('scrolled', window.scrollY>8); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  document.querySelectorAll('[data-open]').forEach(function(el){
+    el.addEventListener('click', function(ev){ ev.preventDefault(); var d=document.getElementById(el.getAttribute('data-open')); if(!d) return; d.open=true; d.scrollIntoView({behavior:'smooth', block:'start'}); });
+  });
+  if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && location.search.indexOf('noanim')<0){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }); }, {rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else { document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); }); }
+})();
+</script>
 </body>
 </html>
