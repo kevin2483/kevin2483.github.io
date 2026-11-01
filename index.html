@@ -6,31 +6,33 @@
 <title>안정재 · 데이터·LLM 엔지니어 포트폴리오</title>
 <meta name="description" content="만드는 것보다 재는 장치를 먼저 세우는 데이터·LLM 엔지니어. 공공데이터 파이프라인 운영, 채용공고 역량 추출 평가 장치, BigQuery MCP 서버.">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&display=swap">
 <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <style>
   :root {
-    --bg: #f6f7f9; --surface: #ffffff; --navy-900: #161b33; --navy-800: #1f2547;
-    --text: #1c2130; --text-muted: #5d6478; --accent: #0e7c86; --accent-soft: #e6f4f5; --accent-ink: #7dd3dc;
-    --border: #e3e6ee; --diagram-stroke: #cbd5e1; --diagram-fill: #f4f6fa; --shadow: 0 8px 32px rgba(15,23,42,.08);
+    --bg: #ffffff; --surface: #fafafa; --navy-900: #141518; --navy-800: #1d1e23;
+    --text: #141518; --text-muted: #6b6e76; --accent: #141518; --on-accent: #ffffff; --accent-soft: #f1f2f4; --accent-ink: #e4e5e9;
+    --border: #e6e7ea; --diagram-stroke: #c9cbd1; --diagram-fill: #f4f4f6; --ok: #1f9d55; --shadow: 0 8px 32px rgba(20,21,24,.06);
   }
   :root[data-theme="dark"] {
-    --bg: #0f1326; --surface: #171c36; --text: #e8eaf2; --text-muted: #a9afc4; --accent: #4fc3cc; --accent-soft: #163a40;
-    --border: #2a3050; --diagram-stroke: #7d86a3; --diagram-fill: #1f2547; --shadow: 0 8px 32px rgba(0,0,0,.35);
+    --bg: #0e0f12; --surface: #16171b; --text: #e8e8ea; --text-muted: #9a9ca3; --accent: #e8e8ea; --on-accent: #0e0f12; --accent-soft: #24262b; --accent-ink: #e4e5e9;
+    --border: #26282e; --diagram-stroke: #4a4d55; --diagram-fill: #1b1c21; --shadow: 0 8px 32px rgba(0,0,0,.4);
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0f1326; --surface: #171c36; --text: #e8eaf2; --text-muted: #a9afc4; --accent: #4fc3cc; --accent-soft: #163a40;
-      --border: #2a3050; --diagram-stroke: #7d86a3; --diagram-fill: #1f2547; --shadow: 0 8px 32px rgba(0,0,0,.35);
+      --bg: #0e0f12; --surface: #16171b; --text: #e8e8ea; --text-muted: #9a9ca3; --accent: #e8e8ea; --on-accent: #0e0f12; --accent-soft: #24262b; --accent-ink: #e4e5e9;
+      --border: #26282e; --diagram-stroke: #4a4d55; --diagram-fill: #1b1c21; --shadow: 0 8px 32px rgba(0,0,0,.4);
     }
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; word-break: keep-all; overflow-wrap: anywhere; font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "NanumGothic", sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; font-size: 16px; letter-spacing: -.01em; -webkit-font-smoothing: antialiased; }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--border); }
+  a:hover { text-decoration-color: var(--text); }
   .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
   h1, h2, h3, h4 { margin: 0; letter-spacing: -.02em; line-height: 1.25; }
-  .eyebrow { color: var(--accent); font-size: 12px; letter-spacing: .2em; font-weight: 800; text-transform: uppercase; }
+  .serif, h1, section h2, .visual .name, footer .thesis { font-family: "Gowun Batang", "Pretendard Variable", serif; letter-spacing: -.01em; }
+  .eyebrow { color: var(--text-muted); font-size: 12px; letter-spacing: .2em; font-weight: 700; text-transform: uppercase; }
   .num { font-variant-numeric: tabular-nums; }
 
   /* nav */
@@ -39,10 +41,10 @@
   header.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 16px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--text); white-space: nowrap; }
   .brand .open { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text-muted); }
-  .brand .open::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #2fbf71; box-shadow: 0 0 0 3px rgba(47,191,113,.18); }
+  .brand .open::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(31,157,85,.18); }
   nav { display: flex; align-items: center; gap: 18px; font-size: 14px; }
-  nav a { color: var(--text-muted); white-space: nowrap; }
-  nav a:hover { color: var(--accent); text-decoration: none; }
+  nav a { color: var(--text-muted); white-space: nowrap; text-decoration: none; }
+  nav a:hover { color: var(--text); }
   .theme { border: 1px solid var(--border); background: var(--surface); color: var(--text); border-radius: 999px; width: 34px; height: 34px; cursor: pointer; display: inline-grid; place-items: center; padding: 0; flex: none; }
   .theme svg { width: 16px; height: 16px; }
   .theme .moon { display: none; }
@@ -50,22 +52,23 @@
   .theme[aria-pressed="true"] .moon { display: block; }
 
   /* hero */
-  .hero { background: var(--navy-900); color: #f3f4f8; padding: 96px 0 80px; }
-  .hero .eyebrow { color: var(--accent-ink); }
-  .hero h1 { font-size: 48px; margin: 16px 0 12px; line-height: 1.2; }
-  .hero .role { font-size: 18px; color: #c5c9dc; margin: 0 0 20px; }
-  .hero p.lead { font-size: 18px; max-width: 640px; color: #e3e5ee; margin: 0 0 32px; }
+  .hero { background: var(--bg); color: var(--text); padding: 96px 0 80px; border-bottom: 1px solid var(--border); }
+  .hero .eyebrow { color: var(--text-muted); }
+  .hero h1 { font-size: 48px; margin: 16px 0 12px; line-height: 1.3; font-weight: 700; }
+  .hero .role { font-size: 18px; color: var(--text-muted); margin: 0 0 20px; }
+  .hero p.lead { font-size: 18px; max-width: 640px; color: var(--text); margin: 0 0 32px; }
   .btn { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 10px; font-weight: 700; font-size: 15px; border: 1px solid transparent; cursor: pointer; font-family: inherit; line-height: 1; }
-  .btn:hover { text-decoration: none; filter: brightness(1.06); }
-  .btn-fill { background: var(--accent); color: #fff; }
+  .btn { text-decoration: none; }
+  .btn:hover { opacity: .9; }
+  .btn-fill { background: var(--accent); color: var(--on-accent); }
   .btn-line { border-color: var(--border); color: var(--text); background: var(--surface); }
-  .hero .btn-line { border-color: #3a4270; color: #e3e5ee; background: transparent; }
+  .hero .btn-line { border-color: var(--border); color: var(--text); background: var(--surface); }
   .btns { display: flex; gap: 12px; flex-wrap: wrap; }
   .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 48px; }
-  .tile { background: var(--navy-800); border-radius: 12px; padding: 18px 18px 16px 20px; border-left: 3px solid var(--accent-ink); }
-  .tile b { display: block; font-size: 32px; color: var(--accent-ink); letter-spacing: -.02em; line-height: 1.1; margin-bottom: 8px; }
-  .tile span { display: block; font-size: 13px; color: #d5d8e6; line-height: 1.45; }
-  .tile small { display: block; font-size: 11px; color: #8e95b8; margin-top: 6px; line-height: 1.4; }
+  .tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 18px 16px 20px; }
+  .tile b { display: block; font-size: 32px; color: var(--text); letter-spacing: -.02em; line-height: 1.1; margin-bottom: 8px; }
+  .tile span { display: block; font-size: 13px; color: var(--text); line-height: 1.45; }
+  .tile small { display: block; font-size: 11px; color: var(--text-muted); margin-top: 6px; line-height: 1.4; }
 
   /* sections */
   section { padding: 112px 0 0; }
@@ -87,11 +90,11 @@
   .visual { position: relative; background: var(--navy-900); min-height: 420px; color: #f3f4f8; overflow: hidden; }
   .visual svg { position: absolute; left: 24px; right: 24px; top: 24px; width: calc(100% - 48px); height: calc(100% - 170px); opacity: .45; transition: opacity .25s; }
   .feat:hover .visual svg { opacity: .7; }
-  .visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(22,27,51,0) 55%, rgba(22,27,51,.85) 100%); pointer-events: none; }
+  .visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,21,24,0) 55%, rgba(20,21,24,.88) 100%); pointer-events: none; }
   .visual .overlay { position: absolute; left: 32px; right: 32px; bottom: 28px; z-index: 1; }
   .visual .name { font-size: 48px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
-  .visual .subname { color: #c5c9dc; font-size: 15px; margin: 10px 0 14px; }
-  .visual a.detail { color: var(--accent-ink); font-weight: 700; font-size: 14px; }
+  .visual .subname { color: #b9bbc2; font-size: 15px; margin: 10px 0 14px; }
+  .visual a.detail { color: #ffffff; font-weight: 700; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
   .info { padding: 40px; display: flex; flex-direction: column; gap: 16px; }
   .info h3 { font-size: 26px; }
   .info .result { font-size: 16px; font-weight: 700; margin: 0; }
@@ -99,8 +102,8 @@
   .meta dt { color: var(--text-muted); }
   .meta dd { margin: 0; }
   .kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .kpi { background: var(--bg); border-radius: 12px; padding: 12px 14px 12px 16px; border-left: 3px solid var(--accent); }
-  .kpi b { display: block; font-size: 24px; color: var(--accent); letter-spacing: -.02em; line-height: 1.15; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px 12px 16px; }
+  .kpi b { display: block; font-size: 24px; color: var(--text); letter-spacing: -.02em; line-height: 1.15; }
   .kpi span { display: block; font-size: 12px; color: var(--text); margin-top: 4px; line-height: 1.4; }
   .kpi small { display: block; font-size: 11px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -112,15 +115,15 @@
   .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 4px; align-items: center; }
   .actions .chip.grey { height: 44px; border-radius: 10px; padding: 0 16px; font-size: 13px; }
   details.full { border: 1px solid var(--border); border-top: 0; border-radius: 0 0 16px 16px; background: var(--surface); margin: -16px 12px 0; padding-top: 16px; }
-  details.full > summary { list-style: none; cursor: pointer; padding: 14px 28px; color: var(--accent); font-weight: 700; font-size: 14px; }
+  details.full > summary { list-style: none; cursor: pointer; padding: 14px 28px; color: var(--text-muted); font-weight: 700; font-size: 14px; }
   details.full > summary::-webkit-details-marker { display: none; }
   details.full > summary::after { content: "자세히 ▾"; }
   details.full[open] > summary::after { content: "접기 ▴"; }
   details.full .body { padding: 0 28px 32px; font-size: 15px; animation: open .2s ease-out; }
   @keyframes open { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
-  .sh { display: flex; align-items: center; gap: 10px; margin: 24px 0 8px; font-size: 14px; font-weight: 800; color: var(--accent); letter-spacing: .02em; }
+  .sh { display: flex; align-items: center; gap: 10px; margin: 24px 0 8px; font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: .02em; }
   .sh:first-child { margin-top: 4px; }
-  .sh::before { content: ""; width: 2px; height: 16px; background: var(--accent); }
+  .sh::before { content: ""; width: 2px; height: 16px; background: var(--text); }
   .body p { margin: 10px 0; }
   .body table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 10px 0; }
   .body th, .body td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
@@ -129,7 +132,7 @@
   .shots.two { grid-template-columns: 1fr 1fr; gap: 14px; }
   .shots.one { grid-template-columns: 1fr; margin-top: 14px; }
   .shots figure { margin: 0; }
-  .shots a { display: block; }
+  .shots a { display: block; text-decoration: none; }
   .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); display: block; }
   .shots a:hover img { box-shadow: var(--shadow); }
   .shots figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
@@ -144,9 +147,9 @@
   .forest-wrap { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: center; }
   .forest-wrap .notes { font-size: 14px; }
   .forest-wrap .notes div { padding: 6px 0; border-bottom: 1px solid var(--border); }
-  .forest-wrap .notes b { color: var(--accent); }
-  .retro { background: var(--accent-soft); border-radius: 12px; padding: 14px 18px; font-size: 14.5px; margin-top: 10px; }
-  .retro b { color: var(--accent); }
+  .forest-wrap .notes b { color: var(--text); }
+  .retro { background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--text); border-radius: 12px; padding: 14px 18px; font-size: 14.5px; margin-top: 10px; }
+  .retro b { color: var(--text); }
 
   /* others */
   .others { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -155,9 +158,9 @@
   .small h3 { font-size: 18px; }
   .small .one { font-size: 14px; color: var(--text-muted); margin: 0; }
   .small .n { font-size: 14px; margin: 0; }
-  .small .n b { color: var(--accent); font-size: 20px; margin-right: 4px; }
+  .small .n b { color: var(--text); font-size: 20px; margin-right: 4px; }
   .small .foot { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: auto; padding-top: 6px; flex-wrap: wrap; }
-  .small .foot a { font-weight: 700; font-size: 14px; white-space: nowrap; }
+  .small .foot a { font-weight: 700; font-size: 14px; white-space: nowrap; text-decoration: none; }
 
   /* skills */
   .skills { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
@@ -172,9 +175,9 @@
   ul.clean { padding-left: 18px; margin: 6px 0; }
   ul.clean li { margin: 4px 0; }
 
-  footer { padding: 40px 0 56px; background: var(--navy-900); color: #c5c9dc; font-size: 14px; }
-  footer a { color: var(--accent-ink); }
-  footer .thesis { margin-top: 10px; font-size: 13px; color: #8e95b8; }
+  footer { padding: 40px 0 56px; background: var(--bg); color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border); }
+  footer a { color: var(--text); }
+  footer .thesis { margin-top: 12px; font-size: 15px; color: var(--text); }
 
   /* motion */
   .reveal { opacity: 0; transform: translateY(12px); transition: opacity .3s ease-out, transform .3s ease-out; }
@@ -290,7 +293,7 @@
         <line x1="180" y1="32" x2="180" y2="222"/><line x1="274.4" y1="32" x2="274.4" y2="222"/><line x1="368.9" y1="32" x2="368.9" y2="222"/><line x1="463.3" y1="32" x2="463.3" y2="222"/><line x1="557.8" y1="32" x2="557.8" y2="222"/><line x1="652.2" y1="32" x2="652.2" y2="222"/><line x1="746.7" y1="32" x2="746.7" y2="222"/><line x1="841.1" y1="32" x2="841.1" y2="222"/><line x1="1030" y1="32" x2="1030" y2="222"/>
       </g>
       <line x1="935.6" y1="32" x2="935.6" y2="222" stroke="var(--accent)" stroke-width="1.5"/>
-      <text x="940" y="234" font-size="11" fill="var(--accent)" font-weight="700">현재</text>
+      <text x="940" y="234" font-size="11" fill="var(--text)" font-weight="700">현재</text>
       <g font-size="13" fill="var(--text)">
         <text x="0" y="61">띵커넥트 <tspan fill="var(--text-muted)" font-size="11">캡스톤</tspan></text>
         <text x="0" y="97">빅데이터 과제 <tspan fill="var(--text-muted)" font-size="11">수업</tspan></text>
@@ -303,14 +306,14 @@
       <rect x="463.3" y="80" width="94.5" height="24" rx="6" fill="var(--border)"/>
       <text x="474" y="97" font-size="12" fill="var(--text)">HDFS·Spark</text>
       <rect x="368.9" y="116" width="283.3" height="24" rx="6" fill="var(--accent)"/>
-      <text x="380" y="133" font-size="12" fill="#fff" font-weight="700">패션 플랫폼 · 데이터·MCP 담당</text>
+      <text x="380" y="133" font-size="12" fill="var(--on-accent)" font-weight="700">패션 플랫폼 · 데이터·MCP 담당</text>
       <rect x="557.8" y="152" width="377.8" height="24" rx="6" fill="var(--accent)"/>
-      <text x="569" y="169" font-size="12" fill="#fff" font-weight="700">CareerFit · 전체 설계·구현</text>
+      <text x="569" y="169" font-size="12" fill="var(--on-accent)" font-weight="700">CareerFit · 전체 설계·구현</text>
       <rect x="746.7" y="188" width="188.9" height="24" rx="6" fill="var(--accent)"/>
-      <text x="758" y="205" font-size="12" fill="#fff" font-weight="700">레디포스트 · 백엔드·데이터</text>
+      <text x="758" y="205" font-size="12" fill="var(--on-accent)" font-weight="700">레디포스트 · 백엔드·데이터</text>
       <g fill="var(--accent)">
         <path d="M557.8 48 l8 8 -8 8 -8 -8z"/><text x="572" y="61" font-size="11" fill="var(--text-muted)">06 교내 대회 장려상</text>
-        <circle cx="760" cy="164" r="3.5" fill="#fff"/><circle cx="800" cy="164" r="3.5" fill="#fff"/><circle cx="840" cy="164" r="3.5" fill="#fff"/><circle cx="880" cy="164" r="3.5" fill="#fff"/>
+        <circle cx="760" cy="164" r="3.5" fill="var(--on-accent)"/><circle cx="800" cy="164" r="3.5" fill="var(--on-accent)"/><circle cx="840" cy="164" r="3.5" fill="var(--on-accent)"/><circle cx="880" cy="164" r="3.5" fill="var(--on-accent)"/>
         <text x="946" y="169" font-size="11" fill="var(--text-muted)">교정 4회</text>
         <path d="M935.6 192 l8 8 -8 8 -8 -8z"/><text x="946" y="205" font-size="11" fill="var(--text-muted)">KPI 7/7</text>
       </g>
@@ -322,7 +325,7 @@
       <li><span class="m">2026.07 – 10</span><span><span class="lab">CareerFit <small>개인 · 전체 설계·구현 · 교정 4회</small></span><div class="bar" style="width:44%"></div></span></li>
       <li><span class="m">2026.09 – 10</span><span><span class="lab">레디포스트 <small>일경험 · 백엔드·데이터 · KPI 7/7</small></span><div class="bar" style="width:22%"></div></span></li>
     </ul>
-    <p class="note">틸 막대 = 대표 프로젝트, 회색 = 그 외. 마커는 수상·KPI 달성·평가 교정 시점입니다.</p>
+    <p class="note">진한 막대 = 대표 프로젝트, 연한 막대 = 그 외. 마커는 수상·KPI 달성·평가 교정 시점입니다.</p>
   </div>
 </div></section>
 
@@ -337,34 +340,34 @@
     <div class="visual">
       <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v1t" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" preserveAspectRatio="xMidYMid meet">
         <title id="v1t">레디포스트 파이프라인 6단계 개요</title>
-        <defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#aab0c8"/></marker></defs>
-        <g fill="none" stroke="#aab0c8" stroke-width="1.5">
+        <defs><marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9a9ca3"/></marker></defs>
+        <g fill="none" stroke="#9a9ca3" stroke-width="1.5">
           <rect x="24" y="36" width="150" height="64" rx="12"/><rect x="204" y="36" width="150" height="64" rx="12"/><rect x="384" y="36" width="150" height="64" rx="12"/>
           <rect x="24" y="150" width="150" height="64" rx="12"/><rect x="384" y="150" width="150" height="64" rx="12"/>
         </g>
-        <rect x="204" y="150" width="150" height="64" rx="12" fill="var(--accent)"/>
+        <rect x="204" y="150" width="150" height="64" rx="12" fill="#ffffff" fill-opacity=".16" stroke="#ffffff" stroke-opacity=".8" stroke-width="1.5"/>
         <g font-size="14" font-weight="700" fill="#f3f4f8" text-anchor="middle">
           <text x="99" y="63">① 수집</text><text x="279" y="63">② 표준화</text><text x="459" y="63">③ 구역 결합</text>
           <text x="99" y="177">⑥ 요약·알림</text><text x="279" y="177">④ 검증 53항목</text><text x="459" y="177">⑤ 공개 스키마 교체</text>
         </g>
-        <g font-size="11" fill="#c5c9dc" text-anchor="middle">
+        <g font-size="11" fill="#b9bbc2" text-anchor="middle">
           <text x="99" y="84">기관 5곳 · 수집원 17개</text><text x="279" y="84">원문 보존 + 표준 컬럼</text><text x="459" y="84">같은 지번 1구역 · 1:N</text>
           <text x="99" y="198">cron 14/14 · 슬랙</text><text x="279" y="198" fill="#f3f4f8">실패 → 중단·알림</text><text x="459" y="198">한 트랜잭션</text>
         </g>
-        <g stroke="#aab0c8" stroke-width="1.5" marker-end="url(#arw)" fill="none">
+        <g stroke="#9a9ca3" stroke-width="1.5" marker-end="url(#arw)" fill="none">
           <line x1="174" y1="68" x2="202" y2="68"/><line x1="354" y1="68" x2="382" y2="68"/>
           <path d="M459 100 L459 125 L279 125 L279 148"/>
           <line x1="354" y1="182" x2="382" y2="182"/>
           <path d="M459 214 L459 240 L99 240 L99 214"/>
         </g>
-        <path d="M279 214 L279 250" stroke="#aab0c8" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
-        <text x="279" y="266" font-size="11" fill="#c5c9dc" text-anchor="middle">하나라도 실패 → 중단</text>
-        <text x="24" y="300" font-size="11" fill="#c5c9dc">AI 경로 · 자연어 → 구조화 출력 → 도구 11개 → 검증기 → 답변</text>
-        <g fill="none" stroke="#aab0c8" stroke-width="1.2"><rect x="24" y="312" width="96" height="30" rx="8"/><rect x="140" y="312" width="96" height="30" rx="8"/><rect x="256" y="312" width="96" height="30" rx="8"/></g>
-        <rect x="372" y="312" width="110" height="30" rx="8" fill="var(--accent)"/>
+        <path d="M279 214 L279 250" stroke="#9a9ca3" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <text x="279" y="266" font-size="11" fill="#b9bbc2" text-anchor="middle">하나라도 실패 → 중단</text>
+        <text x="24" y="300" font-size="11" fill="#b9bbc2">AI 경로 · 자연어 → 구조화 출력 → 도구 11개 → 검증기 → 답변</text>
+        <g fill="none" stroke="#9a9ca3" stroke-width="1.2"><rect x="24" y="312" width="96" height="30" rx="8"/><rect x="140" y="312" width="96" height="30" rx="8"/><rect x="256" y="312" width="96" height="30" rx="8"/></g>
+        <rect x="372" y="312" width="110" height="30" rx="8" fill="#ffffff" fill-opacity=".16" stroke="#ffffff" stroke-opacity=".8" stroke-width="1.2"/>
         <g font-size="11" fill="#f3f4f8" text-anchor="middle"><text x="72" y="331">자연어</text><text x="188" y="331">구조화 출력</text><text x="304" y="331">도구 11개</text><text x="427" y="331">검증기 75→95%</text></g>
-        <g stroke="#aab0c8" stroke-width="1.2" marker-end="url(#arw)"><line x1="120" y1="327" x2="138" y2="327"/><line x1="236" y1="327" x2="254" y2="327"/><line x1="352" y1="327" x2="370" y2="327"/></g>
-        <text x="24" y="372" font-size="10.5" fill="#8e95b8">구역 1,922 · 사업장 1,949 · 실거래 131만 건</text>
+        <g stroke="#9a9ca3" stroke-width="1.2" marker-end="url(#arw)"><line x1="120" y1="327" x2="138" y2="327"/><line x1="236" y1="327" x2="254" y2="327"/><line x1="352" y1="327" x2="370" y2="327"/></g>
+        <text x="24" y="372" font-size="10.5" fill="#7d7f86">구역 1,922 · 사업장 1,949 · 실거래 131만 건</text>
       </svg>
       <div class="overlay">
         <div class="name">레디포스트</div>
@@ -415,7 +418,7 @@
           <rect x="600" y="40" width="170" height="78" rx="12" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/>
           <text x="685" y="66" text-anchor="middle" font-weight="700">④ 공개 스키마 교체</text><text x="685" y="86" text-anchor="middle" font-size="12" fill="var(--text-muted)">통과 때만 한 트랜잭션</text><text x="685" y="103" text-anchor="middle" font-size="12" fill="var(--text-muted)">실행 중에도 직전 데이터 제공</text>
           <rect x="800" y="40" width="230" height="78" rx="12" fill="var(--navy-900)"/>
-          <text x="915" y="66" text-anchor="middle" font-weight="700" fill="#f3f4f8">⑤ API · 지도 화면</text><text x="915" y="86" text-anchor="middle" font-size="12" fill="#c5c9dc">구역 1,922 · 실거래 131만 건</text><text x="915" y="103" text-anchor="middle" font-size="12" fill="#c5c9dc">시군구 버블 · 조건 검색 · AI 패널</text>
+          <text x="915" y="66" text-anchor="middle" font-weight="700" fill="#f3f4f8">⑤ API · 지도 화면</text><text x="915" y="86" text-anchor="middle" font-size="12" fill="#b9bbc2">구역 1,922 · 실거래 131만 건</text><text x="915" y="103" text-anchor="middle" font-size="12" fill="#b9bbc2">시군구 버블 · 조건 검색 · AI 패널</text>
           <g stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#ar)"><line x1="170" y1="79" x2="198" y2="79"/><line x1="360" y1="79" x2="388" y2="79"/><line x1="570" y1="79" x2="598" y2="79"/><line x1="770" y1="79" x2="798" y2="79"/></g>
           <rect x="10" y="140" width="560" height="44" rx="10" fill="none" stroke="var(--diagram-stroke)" stroke-dasharray="4 4"/>
           <text x="24" y="167" font-size="12" fill="var(--text-muted)">운영 · 매일 03:30 cron (AWS) · 실패는 슬랙, 안 돌면 아침 침묵 감시 · 변경 감지 요약 · 백업 · 14/14 연속 성공</text>
@@ -477,12 +480,12 @@
       <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v2t v2d" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" preserveAspectRatio="xMidYMid meet">
         <title id="v2t">네 방식의 F1 점추정과 95% 신뢰구간</title>
         <desc id="v2d">opus 0.863, sonnet 0.854, 정규식 0.853, haiku 0.828. 구간이 겹쳐 opus가 정규식보다 낫다고 확정할 수 없다.</desc>
-        <g stroke="#3a4270" stroke-dasharray="3 4"><line x1="60" y1="40" x2="60" y2="360"/><line x1="175" y1="40" x2="175" y2="360"/><line x1="290" y1="40" x2="290" y2="360"/><line x1="405" y1="40" x2="405" y2="360"/><line x1="520" y1="40" x2="520" y2="360"/></g>
+        <g stroke="#3a3c43" stroke-dasharray="3 4"><line x1="60" y1="40" x2="60" y2="360"/><line x1="175" y1="40" x2="175" y2="360"/><line x1="290" y1="40" x2="290" y2="360"/><line x1="405" y1="40" x2="405" y2="360"/><line x1="520" y1="40" x2="520" y2="360"/></g>
         <rect x="40" y="226" width="500" height="48" rx="8" fill="#ffffff" opacity=".06"/>
         <g font-size="13" fill="#e3e5ee" font-weight="700"><text x="60" y="72">Claude opus-5 · 0.863</text><text x="60" y="152">Claude sonnet-5 · 0.854</text><text x="60" y="232">정규식 베이스라인 · 0.853</text><text x="60" y="312">Claude haiku-4.5 · 0.828</text></g>
         <g stroke="var(--accent-ink)" stroke-width="6" stroke-linecap="round"><line x1="239.1" y1="90" x2="451" y2="90"/><line x1="212.7" y1="170" x2="432.3" y2="170"/><line x1="191.1" y1="250" x2="440.1" y2="250"/><line x1="131.3" y1="330" x2="362.5" y2="330"/></g>
-        <g fill="#f3f4f8"><circle cx="355.8" cy="90" r="8"/><circle cx="331.1" cy="170" r="8"/><circle cx="327.4" cy="250" r="8"/><circle cx="254.9" cy="330" r="8"/></g>
-        <text x="60" y="390" font-size="11" fill="#8e95b8">정답셋 38건 · 부트스트랩 10,000회 · 95% 신뢰구간</text>
+        <g fill="#141518" stroke="#f3f4f8" stroke-width="2.5"><circle cx="355.8" cy="90" r="8"/><circle cx="331.1" cy="170" r="8"/><circle cx="327.4" cy="250" r="8"/><circle cx="254.9" cy="330" r="8"/></g>
+        <text x="60" y="390" font-size="11" fill="#7d7f86">정답셋 38건 · 부트스트랩 10,000회 · 95% 신뢰구간</text>
       </svg>
       <div class="overlay">
         <div class="name">CareerFit</div>
@@ -534,7 +537,7 @@
           <g stroke="var(--border)"><line x1="190" y1="10" x2="190" y2="180"/><line x1="297" y1="10" x2="297" y2="180"/><line x1="405" y1="10" x2="405" y2="180"/><line x1="512" y1="10" x2="512" y2="180"/><line x1="620" y1="10" x2="620" y2="180"/></g>
           <g font-size="13" fill="var(--text)"><text x="0" y="40">Claude opus-5</text><text x="0" y="80">Claude sonnet-5</text><text x="0" y="120">정규식</text><text x="0" y="160">Claude haiku-4.5</text></g>
           <g stroke="var(--accent)" stroke-width="4" stroke-linecap="round"><line x1="357.4" y1="36" x2="555.5" y2="36"/><line x1="332.7" y1="76" x2="538" y2="76"/><line x1="312.6" y1="116" x2="545.3" y2="116"/><line x1="256.7" y1="156" x2="472.7" y2="156"/></g>
-          <g fill="var(--text)"><circle cx="466.5" cy="36" r="6"/><circle cx="443.5" cy="76" r="6"/><circle cx="440" cy="116" r="6"/><circle cx="372.2" cy="156" r="6"/></g>
+          <g fill="var(--surface)" stroke="var(--text)" stroke-width="2"><circle cx="466.5" cy="36" r="6"/><circle cx="443.5" cy="76" r="6"/><circle cx="440" cy="116" r="6"/><circle cx="372.2" cy="156" r="6"/></g>
           <g font-size="12" font-weight="700" fill="var(--text)"><text x="568" y="40">0.863</text><text x="552" y="80">0.854</text><text x="557" y="120">0.853</text><text x="485" y="160">0.828</text></g>
         </svg></div>
         <div class="cap">신뢰구간이 겹치면 "낫다"고 쓰지 않았습니다. 부트스트랩 10,000회, 공고 단위. 축은 haiku 하한(0.785)이 보이도록 0.76부터.</div>
@@ -576,23 +579,23 @@
       <svg viewBox="0 0 560 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="v3t v3d" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" preserveAspectRatio="xMidYMid meet">
         <title id="v3t">패션 플랫폼 MCP 서버와 BigQuery 흐름도</title>
         <desc id="v3d">위: Selenium 수집과 공휴일 API가 BigQuery에 적재. 가운데: Claude Desktop이 MCP 서버(JSON-RPC, 툴 3개, 가드 3줄)를 거쳐 BigQuery를 질의. 아래: GA 고객 9,996명을 RFM 4등급으로 나눠 RF·XGBoost로 예측, 재현율 6%에서 94%. 두 파이프라인은 조인되지 않음.</desc>
-        <defs><marker id="arw3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#aab0c8"/></marker></defs>
-        <g fill="none" stroke="#aab0c8" stroke-width="1.3"><rect x="24" y="28" width="120" height="40" rx="8"/><rect x="172" y="28" width="120" height="40" rx="8"/></g>
+        <defs><marker id="arw3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9a9ca3"/></marker></defs>
+        <g fill="none" stroke="#9a9ca3" stroke-width="1.3"><rect x="24" y="28" width="120" height="40" rx="8"/><rect x="172" y="28" width="120" height="40" rx="8"/></g>
         <g font-size="12" fill="#f3f4f8" text-anchor="middle" font-weight="700"><text x="84" y="53">Selenium 수집</text><text x="232" y="53">공휴일 API</text></g>
-        <g stroke="#aab0c8" stroke-width="1.3" marker-end="url(#arw3)" fill="none"><line x1="144" y1="48" x2="170" y2="48"/><path d="M292 48 L463 48 L463 128"/></g>
-        <g fill="none" stroke="#aab0c8" stroke-width="1.5"><rect x="24" y="130" width="120" height="56" rx="10"/></g>
-        <rect x="172" y="104" width="190" height="112" rx="12" fill="var(--accent)" opacity=".92"/>
-        <g fill="none" stroke="#aab0c8" stroke-width="1.5"><rect x="390" y="130" width="146" height="56" rx="10"/></g>
+        <g stroke="#9a9ca3" stroke-width="1.3" marker-end="url(#arw3)" fill="none"><line x1="144" y1="48" x2="170" y2="48"/><path d="M292 48 L463 48 L463 128"/></g>
+        <g fill="none" stroke="#9a9ca3" stroke-width="1.5"><rect x="24" y="130" width="120" height="56" rx="10"/></g>
+        <rect x="172" y="104" width="190" height="112" rx="12" fill="#ffffff" fill-opacity=".16" stroke="#ffffff" stroke-opacity=".8" stroke-width="1.5"/>
+        <g fill="none" stroke="#9a9ca3" stroke-width="1.5"><rect x="390" y="130" width="146" height="56" rx="10"/></g>
         <g font-size="13" fill="#f3f4f8" text-anchor="middle" font-weight="700"><text x="84" y="163">Claude Desktop</text><text x="267" y="126">MCP 서버 · JSON-RPC</text><text x="463" y="163">BigQuery</text></g>
         <g font-size="11" fill="#f3f4f8" text-anchor="middle"><text x="267" y="146">list_tables · get_schema · run_query</text><text x="267" y="166">SELECT 전용 · 다중 구문 차단</text><text x="267" y="184">LIMIT 자동 부착</text></g>
-        <g stroke="#aab0c8" stroke-width="1.5" marker-end="url(#arw3)"><line x1="144" y1="158" x2="170" y2="158"/><line x1="362" y1="158" x2="388" y2="158"/></g>
-        <line x1="24" y1="248" x2="536" y2="248" stroke="#aab0c8" stroke-dasharray="5 5"/>
-        <text x="24" y="240" font-size="10.5" fill="#8e95b8">두 파이프라인은 조인되지 않음 (한계 그대로)</text>
-        <g fill="none" stroke="#aab0c8" stroke-width="1.3"><rect x="24" y="272" width="136" height="48" rx="8"/><rect x="188" y="272" width="120" height="48" rx="8"/><rect x="336" y="272" width="200" height="48" rx="8"/></g>
+        <g stroke="#9a9ca3" stroke-width="1.5" marker-end="url(#arw3)"><line x1="144" y1="158" x2="170" y2="158"/><line x1="362" y1="158" x2="388" y2="158"/></g>
+        <line x1="24" y1="248" x2="536" y2="248" stroke="#9a9ca3" stroke-dasharray="5 5"/>
+        <text x="24" y="240" font-size="10.5" fill="#7d7f86">두 파이프라인은 조인되지 않음 (한계 그대로)</text>
+        <g fill="none" stroke="#9a9ca3" stroke-width="1.3"><rect x="24" y="272" width="136" height="48" rx="8"/><rect x="188" y="272" width="120" height="48" rx="8"/><rect x="336" y="272" width="200" height="48" rx="8"/></g>
         <g font-size="12" fill="#f3f4f8" text-anchor="middle" font-weight="700"><text x="92" y="292">GA 고객 9,996명</text><text x="248" y="292">RFM 4등급</text><text x="436" y="292">RF · XGBoost</text></g>
-        <g font-size="11" fill="#c5c9dc" text-anchor="middle"><text x="92" y="309">공개 데이터</text><text x="248" y="309">VIP·우수·일반·이탈위험</text><text x="436" y="309">우수고객 재현율 6% → 94%</text></g>
-        <g stroke="#aab0c8" stroke-width="1.3" marker-end="url(#arw3)"><line x1="160" y1="296" x2="186" y2="296"/><line x1="308" y1="296" x2="334" y2="296"/></g>
-        <text x="24" y="372" font-size="10.5" fill="#8e95b8">정확도 98.5%는 클래스 불균형의 착시 → 클래스 가중치 보정</text>
+        <g font-size="11" fill="#b9bbc2" text-anchor="middle"><text x="92" y="309">공개 데이터</text><text x="248" y="309">VIP·우수·일반·이탈위험</text><text x="436" y="309">우수고객 재현율 6% → 94%</text></g>
+        <g stroke="#9a9ca3" stroke-width="1.3" marker-end="url(#arw3)"><line x1="160" y1="296" x2="186" y2="296"/><line x1="308" y1="296" x2="334" y2="296"/></g>
+        <text x="24" y="372" font-size="10.5" fill="#7d7f86">정확도 98.5%는 클래스 불균형의 착시 → 클래스 가중치 보정</text>
       </svg>
       <div class="overlay">
         <div class="name">패션 플랫폼</div>
@@ -695,7 +698,7 @@
 </div></section>
 
 <footer><div class="wrap">
-  <div><b style="color:#f3f4f8">안정재</b> · <a href="mailto:kevin2483@naver.com">kevin2483@naver.com</a> · <a href="https://github.com/kevin2483">github.com/kevin2483</a> · <a href="assets/portfolio_2026.pdf">포트폴리오 PDF</a> · <a href="https://careerfit-kevin2483.streamlit.app">CareerFit 데모</a> · <span class="num">마지막 업데이트 2026.11</span></div>
+  <div><b style="color:var(--text)">안정재</b> · <a href="mailto:kevin2483@naver.com">kevin2483@naver.com</a> · <a href="https://github.com/kevin2483">github.com/kevin2483</a> · <a href="assets/portfolio_2026.pdf">포트폴리오 PDF</a> · <a href="https://careerfit-kevin2483.streamlit.app">CareerFit 데모</a> · <span class="num">마지막 업데이트 2026.11</span></div>
   <div class="thesis">만드는 것보다, 재는 장치를 먼저 세우겠습니다.</div>
 </div></footer>
 
