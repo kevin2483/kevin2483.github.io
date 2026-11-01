@@ -126,7 +126,14 @@
   .body th, .body td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
   .body th { color: var(--text-muted); font-weight: 600; font-size: 12.5px; }
   .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 12px 0; }
+  .shots.two { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .shots.one { grid-template-columns: 1fr; margin-top: 14px; }
+  .shots figure { margin: 0; }
+  .shots a { display: block; }
   .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); display: block; }
+  .shots a:hover img { box-shadow: var(--shadow); }
+  .shots figcaption { font-size: 12.5px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+  .shots figcaption b { color: var(--text); font-weight: 600; }
   .fig { margin: 12px 0 4px; }
   .fig svg { width: 100%; height: auto; display: block; }
   .fig .cap { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
@@ -220,11 +227,11 @@
     details.full > summary { padding: 12px 20px; }
     details.full .body { padding: 0 20px 24px; }
     .forest-wrap { grid-template-columns: 1fr; }
-    .shots { grid-template-columns: 1fr 1fr; }
+    .shots, .shots.two { grid-template-columns: 1fr 1fr; }
     .others, .skills, .about { grid-template-columns: 1fr; }
     .small { min-height: 0; }
   }
-  @media (max-width: 480px) { .shots { grid-template-columns: 1fr; } .meta { grid-template-columns: 72px 1fr; } .tile b { font-size: 25px; } }
+  @media (max-width: 480px) { .shots, .shots.two { grid-template-columns: 1fr; } .meta { grid-template-columns: 72px 1fr; } .tile b { font-size: 25px; } }
 
   /* mobile timeline list */
   .tl { list-style: none; margin: 0; padding: 0; }
@@ -440,12 +447,16 @@
       <tr><td>남이 쓴 50문 · 미확인 숫자·금지 표현</td><td>0건</td><td>공개 Q&amp;A 37 + 담당자 13</td></tr>
     </table>
     <p><b>고시문 날짜 추출 파일럿.</b> 고시목록 47만 행에서 사업장 50곳의 고시 81건을 찾아 단계·날짜·고시번호를 구조화 출력으로 뽑고, 인용 구절이 본문에 없으면 버렸습니다. 경기도 공표자료 142개 항목 대비 정확률 79.2%(기준선 78.5%). 이득은 교차 인용에서 나왔고(14개 중 12개), 후보를 못 찾은 70개가 더 큰 한계입니다. 81건에 약 0.6달러.</p>
-    <div class="shots">
-      <img src="assets/readypost_map.jpg" alt="운영 화면: 시군구별 사업장 수 버블 지도, 왼쪽 사업장 목록, 오른쪽 AI 패널의 조건 검색 결과 표" loading="lazy">
-      <img src="assets/readypost_ai.jpg" alt="운영 화면: 투자 질문에 판단 대신 진행 이력·소요기간·동 시세를 자료 값으로 답하는 AI 패널" loading="lazy">
-      <img src="assets/readypost_ops.jpg" alt="PM 확정 KPI 7개 측정표: 수집 성공률·오류 노출·지도 표시 비율·반영 시간·검색 정확도·근거 정확도·거짓 답변" loading="lazy">
+    <div class="shots one">
+      <figure><a href="assets/readypost_map.jpg" target="_blank" rel="noopener"><img src="assets/readypost_map.jpg" alt="운영 화면: 시군구별 사업장 수 버블 지도, 왼쪽 사업장 목록, 오른쪽 AI 패널의 조건 검색 결과 표" loading="lazy" width="1200" height="750"></a>
+      <figcaption><b>운영 화면 (2026-11-01).</b> 왼쪽 사업장 목록 1,922곳 · 가운데 시군구 버블 지도 · 오른쪽 AI 패널이 "마포구 재개발 중 조합설립 이상인 곳 시세 비교"를 조건 검색 9곳 표로 답하고, 아래에 자료 출처와 기준을 밝힙니다. 누르면 원본 크기로 열립니다.</figcaption></figure>
     </div>
-    <p style="font-size:12.5px;color:var(--text-muted);margin:-4px 0 14px">운영 화면 캡처(2026-11-01, 공공자료 값만 표시). 순서대로 지도·목록·AI 패널, 투자 질문 안내 답, KPI 7개 측정표.</p>
+    <div class="shots two">
+      <figure><a href="assets/readypost_ai.jpg" target="_blank" rel="noopener"><img src="assets/readypost_ai.jpg" alt="운영 화면: 투자 질문에 판단 대신 진행 이력·소요기간·동 시세를 자료 값으로 답하는 AI 패널" loading="lazy" width="1200" height="750"></a>
+      <figcaption><b>투자 질문 안내 답.</b> "지금 사도 될까요?"에 판단 대신 진행 단계·소요 기간·동 시세를 자료 값으로만 답합니다. 첫 문장 고정, 추천·전망 표현은 검사기가 막습니다.</figcaption></figure>
+      <figure><a href="assets/readypost_ops.jpg" target="_blank" rel="noopener"><img src="assets/readypost_ops.jpg" alt="PM 확정 KPI 7개 측정표: 수집 성공률·오류 노출·지도 표시 비율·반영 시간·검색 정확도·근거 정확도·거짓 답변" loading="lazy" width="1200" height="549"></a>
+      <figcaption><b>KPI 7개 측정표 (2026-10-26).</b> 운영 4개는 실행 기록, AI 3개는 정답셋으로 쟀고 재는 법을 항목마다 적었습니다. 위 "결과" 표의 출처입니다.</figcaption></figure>
+    </div>
 
     <div class="sh">숫자 뒤에서 한 일</div>
     <p><b>문제정의 · 75% → 95%.</b> 첫 평가에서 답의 숫자가 자료에 없는 비율이 25%였습니다. 프롬프트를 고치기 전에 걸린 답 5건을 뜯어 보니 4건은 모델이 아니라 검증기 문제였습니다. "2068.5만원"을 날짜로 읽고, 이어 묻는 턴에서 앞 답의 숫자를 미확인으로 잡고, 목록 번호 "1."을 숫자로 셌습니다. 측정 장치를 고치고 다시 재니 95%, 평가셋을 보지 않은 사람이 쓴 50문에서는 미확인 숫자 0건이었습니다. 숫자가 나쁘면 모델보다 측정 장치를 먼저 쪼갭니다.</p>
@@ -546,9 +557,9 @@
     <p><b>프롬프트 실험.</b> 사전 등록한 haiku 변형 3개(별칭 목록, 판정 기준, 구조화 출력)는 셋 다 점추정이 내려갔고 어느 것도 확정되지 않았습니다. 구조화 출력은 환각 0이지만 목록 안 오탐이 78 → 97로 늘었습니다. 그대로 공개했습니다.</p>
     <p><b>데모.</b> Streamlit 데모는 커밋된 CSV만 읽어 README와 숫자가 같고, 이력서·포트폴리오 PDF를 올리면 시장 대비 학습 우선순위를 돌려줍니다.</p>
     <div class="shots">
-      <img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭" loading="lazy">
-      <img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭" loading="lazy">
-      <img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭" loading="lazy">
+      <figure><a href="assets/demo_market.jpg" target="_blank" rel="noopener"><img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭" loading="lazy"></a><figcaption>시장 지형도 · 직무별 역량 출현율</figcaption></figure>
+      <figure><a href="assets/demo_gap.jpg" target="_blank" rel="noopener"><img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭" loading="lazy"></a><figcaption>갭 진단 · PDF 올리면 학습 우선순위</figcaption></figure>
+      <figure><a href="assets/demo_eval.jpg" target="_blank" rel="noopener"><img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭" loading="lazy"></a><figcaption>평가 결과 · README와 같은 CSV</figcaption></figure>
     </div>
 
     <div class="sh">한계와 다시 한다면</div>
@@ -695,6 +706,7 @@
   function sync(){ btn.setAttribute('aria-pressed', isDark()?'true':'false'); }
   btn.addEventListener('click', function(){ var next=isDark()?'light':'dark'; root.setAttribute('data-theme', next); try{localStorage.setItem('theme', next);}catch(e){} sync(); });
   sync();
+  var h=location.hash.replace('#',''), hd=h&&document.getElementById(h); if(hd&&hd.tagName==='DETAILS'){ hd.open=true; }
   var top=document.querySelector('header.top');
   function onScroll(){ top.classList.toggle('scrolled', window.scrollY>8); }
   window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
