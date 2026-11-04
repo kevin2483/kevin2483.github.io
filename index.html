@@ -121,6 +121,7 @@
   .shots.two { grid-template-columns: 1fr 1fr; gap: 14px; }
   .shots.one { grid-template-columns: 1fr; margin-top: 14px; }
   .shots figure { margin: 0; }
+  .shots video { width: 100%; height: auto; display: block; border-radius: 10px; border: 1px solid var(--border); background: #000; }
   .shots a { display: block; text-decoration: none; }
   .shots img { width: 100%; height: auto; border-radius: 10px; border: 1px solid var(--border); display: block; }
   .shots a:hover img { box-shadow: var(--shadow); }
@@ -318,6 +319,10 @@
     </div>
   </article>
   <details class="full" id="d01" open><summary></summary><div class="body">
+    <div class="shots one">
+      <figure><video controls muted playsinline preload="metadata" poster="assets/readypost_demo_poster.jpg" width="1440" height="900" aria-label="레디포스트 운영 화면 시연 영상"><source src="assets/readypost_demo.mp4" type="video/mp4"></video>
+      <figcaption><b>시연 영상 (1분 29초, 2026-11-04 운영 화면).</b> 지도에서 사업장을 찾아 상세와 근거를 보고, 문장으로 조건 검색을 한 뒤 AI에게 세 번 묻습니다. 화면이 한동안 멈춰 있던 구간(주로 AI 답을 기다리는 시간)은 6배속으로 넘겼고, 그때는 오른쪽 위에 표시가 뜹니다.</figcaption></figure>
+    </div>
     <div class="sh">문제와 데이터</div>
     <p>서울·경기·인천의 정비사업 자료는 엑셀, CSV, 게시판, 고시문으로 흩어져 있었고 같은 사업장도 기관마다 이름이 달랐습니다. 이 자료를 사업장 단위로 묶어 검증을 통과한 것만 내보내게 했고, AI가 자료에 없는 말을 하지 못하게 막았습니다. 이렇게 만든 서비스를 두 달 동안 매일 돌렸습니다.</p>
     <div class="fig wide">
