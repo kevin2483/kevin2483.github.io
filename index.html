@@ -289,7 +289,7 @@
       <div class="overlay">
         <div class="name">레디포스트</div>
         <div class="subname">재개발·재건축 공공데이터 지도 · AI는 자료만으로 답하게</div>
-        <a class="detail" href="#d01" data-open="d01">Project Detail →</a>
+        <a class="detail" href="#d01">Project Detail →</a>
       </div>
     </div>
     <div class="info">
@@ -313,10 +313,10 @@
         <li>자연어 검색 110문 <b>100%</b> · 자료 밖 질문 24문 지어낸 답 <b>0건</b> · 남이 쓴 50문 미확인 숫자 <b>0건</b></li>
         <li>사고 2건(ID 중복 노출, 재시작 누락)을 숨기지 않고 KPI 기록에 남김</li>
       </ul>
-      <div class="actions"><button class="btn btn-fill" type="button" data-open="d01">자세히 ▾</button><span class="chip">코드 비공개 · 아키텍처 공개</span></div>
+      <div class="actions"><span class="chip">코드 비공개 · 아키텍처 공개</span></div>
     </div>
   </article>
-  <details class="full" id="d01"><summary></summary><div class="body">
+  <details class="full" id="d01" open><summary></summary><div class="body">
     <div class="sh">문제와 데이터</div>
     <p>서울·경기·인천의 정비사업 자료는 엑셀, CSV, 게시판, 고시문으로 흩어져 있었고 같은 사업장도 기관마다 이름이 달랐습니다. 이 자료를 사업장 단위로 묶어 검증을 통과한 것만 내보내게 했고, AI가 자료에 없는 말을 하지 못하게 막았습니다. 이렇게 만든 서비스를 두 달 동안 매일 돌렸습니다.</p>
     <div class="fig wide">
@@ -354,6 +354,21 @@
     </div>
     <p>기관 5곳·수집원 17개 → 원문 컬럼은 그대로 두고 표준 컬럼을 옆에 붙임 → 같은 지번은 한 구역(중복은 1:N 보존) → 행 수·채움률·급감·연결 무결성 53항목 검증, 하나라도 실패면 중단 → 통과 때만 공개 스키마 교체, 변경 감지 요약, 실패·침묵 알림. 구역 1,922개, 사업장 레코드 1,949건, 실거래 131만 건(60개월)을 구역에 연결했고 지도 좌표 연결 91.9%는 행정동 표기가 원인임을 찾아 42곳을 보강했습니다.</p>
 
+    <div class="sh">운영 인프라 (AWS)</div>
+    <div class="fig wide">
+      <div class="hint">↔ 좌우로 밀어서 보기</div>
+      <div class="scroll"><svg viewBox="0 0 1040 420" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard Variable, Pretendard, Apple SD Gothic Neo, sans-serif" role="img" aria-labelledby="aws1t aws1d">
+        <title id="aws1t">레디포스트 AWS 구성도</title>
+        <desc id="aws1d">사용자는 HTTPS로 ALB에 들어오고, EC2 한 대 안에서 nginx, FastAPI, PostgreSQL, cron이 돈다. cron은 매일 새벽 공공데이터를 받아 검증한 뒤 공개하고, 백업과 침묵 감시를 한다. FastAPI는 Claude API와 Google OAuth를 부르고, 알림은 Slack으로 간다. S3와 CloudFront는 OpenTofu로 만들어 두고 전환을 기다린다.</desc>
+        <defs><marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--diagram-stroke)"/></marker></defs>
+        <g fill="var(--text)">
+          <rect x="10" y="60" width="190" height="76" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="105.0" y="82" text-anchor="middle" font-weight="700" font-size="13">사용자 브라우저</text><text x="105.0" y="100" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">React 화면 · 카카오맵</text><text x="105.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">HTTPS</text><rect x="10" y="300" width="190" height="92" rx="10" fill="none" stroke="var(--diagram-stroke)" stroke-dasharray="4 4"/><text x="105.0" y="322" text-anchor="middle" font-weight="700" font-size="13">개발자 맥</text><text x="105.0" y="340" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">코드 rsync 배포</text><text x="105.0" y="356" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">주 1회 백업 당겨 4주 보관</text><text x="105.0" y="372" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">GitHub Actions CI (PR마다)</text><rect x="230" y="20" width="580" height="392" rx="14" fill="none" stroke="var(--accent)" stroke-width="1.2" stroke-dasharray="6 4"/><text x="246" y="42" font-size="12" font-weight="700" fill="var(--accent)">AWS · ap-southeast-2 (시드니)</text><rect x="250" y="60" width="180" height="76" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="340.0" y="82" text-anchor="middle" font-weight="700" font-size="13">ALB + ACM 인증서</text><text x="340.0" y="100" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">HTTPS 종료</text><text x="340.0" y="116" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">임시 도메인 (PM 제공)</text><rect x="460" y="52" width="334" height="250" rx="12" fill="none" stroke="var(--diagram-stroke)"/><text x="474" y="72" font-size="12" font-weight="700">EC2 t4g.small · 서버 1대</text><rect x="474" y="84" width="140" height="60" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="544.0" y="106" text-anchor="middle" font-weight="700" font-size="13">nginx :80</text><text x="544.0" y="124" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">정적 화면 + API 프록시</text><rect x="634" y="84" width="146" height="60" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="707.0" y="106" text-anchor="middle" font-weight="700" font-size="13">FastAPI</text><text x="707.0" y="124" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">systemd · 읽기 전용 세션</text><rect x="634" y="160" width="146" height="60" rx="10" fill="var(--navy-900)" stroke="var(--diagram-stroke)"/><text x="707.0" y="182" text-anchor="middle" font-weight="700" font-size="13" fill="#f3f4f8">PostgreSQL</text><text x="707.0" y="200" text-anchor="middle" font-size="11.5" fill="#b9bbc2">Docker · 표 42개</text><rect x="474" y="160" width="140" height="128" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/><text x="544.0" y="182" text-anchor="middle" font-weight="700" font-size="13" fill="var(--accent)">cron (KST)</text><text x="544.0" y="200" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">03:30 수집·검증·공개</text><text x="544.0" y="216" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">04:30 pg_dump 7일 보관</text><text x="544.0" y="232" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">09:00 침묵 감시</text><text x="544.0" y="248" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">Doppler로 비밀값 주입</text><text x="640" y="244" font-size="11" fill="var(--text-muted)" text-anchor="start">build 스키마 → 검증 통과 →</text><text x="640" y="260" font-size="11" fill="var(--text-muted)" text-anchor="start">public 으로 한 번에 교체</text><rect x="250" y="320" width="250" height="76" rx="10" fill="none" stroke="var(--diagram-stroke)" stroke-dasharray="4 4"/><text x="375.0" y="342" text-anchor="middle" font-weight="700" font-size="13">S3 + CloudFront</text><text x="375.0" y="360" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">OpenTofu로 생성 · 전환 대기</text><text x="375.0" y="376" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">"tofu plan" → No changes</text><rect x="520" y="320" width="274" height="76" rx="10" fill="none" stroke="var(--diagram-stroke)" stroke-dasharray="4 4"/><text x="657.0" y="342" text-anchor="middle" font-weight="700" font-size="13">OpenTofu · Ansible · Docker</text><text x="657.0" y="360" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">EC2·보안 그룹 import, 배포 플레이북</text><text x="657.0" y="376" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">서버를 코드로 다시 세울 수 있게</text><rect x="840" y="40" width="190" height="72" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="935.0" y="62" text-anchor="middle" font-weight="700" font-size="13">공공데이터 원천 5곳</text><text x="935.0" y="80" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">정보몽땅·경기도청·포털·서울·국토부</text><rect x="840" y="132" width="190" height="72" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="935.0" y="154" text-anchor="middle" font-weight="700" font-size="13">Claude API</text><text x="935.0" y="172" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">검색 해석 · 대화 도구 호출</text><rect x="840" y="224" width="190" height="72" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="935.0" y="246" text-anchor="middle" font-weight="700" font-size="13">Google OAuth</text><text x="935.0" y="264" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">로그인 · 대화 이력</text><rect x="840" y="316" width="190" height="72" rx="10" fill="var(--diagram-fill)" stroke="var(--diagram-stroke)"/><text x="935.0" y="338" text-anchor="middle" font-weight="700" font-size="13">Slack 웹훅</text><text x="935.0" y="356" text-anchor="middle" font-size="11.5" fill="var(--text-muted)">실패·변경·침묵 알림</text><path d="M200 98 L248 98" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M430 98 L472 114" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M614 114 L632 114" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M707 144 L707 158" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M614 224 L632 198" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M838 100 L822 100 L822 310 L544 310 L544 290" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#aw)"/><path d="M780 100 L838 168" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M780 124 L838 260" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M614 276 L838 352" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" marker-end="url(#aw)"/><path d="M200 330 L472 260" fill="none" stroke="var(--diagram-stroke)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#aw)"/><text x="330" y="294" font-size="11" fill="var(--text-muted)" text-anchor="start">rsync</text>
+        </g>
+      </svg></div>
+      <div class="cap">서버 한 대에 DB·파이프라인·API를 모으고, 새벽 cron이 수집부터 공개까지 돌립니다. 점선 상자는 만들어 두었지만 아직 운영 경로가 아닌 것입니다. 서버가 죽으면 맥의 원본과 백업으로 약 1시간 안에 다시 세웁니다.</div>
+    </div>
+    <p>AWS 무료 크레딧 안에서 운영했고, 비밀값은 Doppler에 두어 서버에 파일로 남기지 않았습니다. 실패하면 슬랙으로 알리고, 아예 돌지 않은 날은 아침 9시 침묵 감시가 잡습니다. 한계도 있습니다. 서버가 한 대뿐이라 장애에 약하고, 고정 IP가 없어 인스턴스를 멈추면 주소가 바뀝니다. 다음 단계는 CloudFront로 옮기면서 고정 IP를 붙이고 Ansible로 컨테이너 배포로 바꾸는 것입니다.</p>
+
     <div class="sh">평가 방법</div>
     <p>AI는 자료에 있는 값만 말하게 했습니다. 질문은 구조화 출력으로 검색 조건이 되고, 대화에서는 읽기 전용 도구 11개가 돌려준 결과로만 답합니다. 답에 나온 숫자와 날짜는 검증기가 도구 결과와 맞춰 보고, 추천이나 전망 같은 표현이 나오면 검사기가 다시 쓰게 합니다. 기능을 만들기 전에 정답이 있는 문항부터 만들었고, 자동 채점과 사람 채점 결과를 함께 남겼습니다.</p>
 
@@ -387,7 +402,6 @@
     <p><b>기록한 사고 두 건.</b> 경기 자료 ID 중복으로 촉진구역 40곳에 다른 사업장 이력이 이틀간 노출 → 이력 합계 테스트가 잡아 ID를 파일 행 번호로 바꾸고 중복 검증 추가. 배포 뒤 API 재시작 누락으로 20시간 동안 서울 이력이 빈 채 노출 → 운영 절차에 재시작 단계 추가. 두 건 모두 KPI 기록에 남겼습니다.</p>
     <div class="retro"><b>다시 한다면.</b> 고시문 날짜 추출에서 후보를 못 찾은 70개가 더 큰 한계였으므로, 다음에는 추출 정확도보다 후보 탐색 재현율을 먼저 재는 평가를 세우겠습니다. 사고 2건은 재시작 누락처럼 절차 문제였으니 배포 체크리스트를 코드로 강제하겠습니다.</div>
     <div class="chips" style="margin-top:14px"><span class="chip">pandas</span><span class="chip">MCP</span><span class="chip">OpenTofu</span><span class="chip">Ansible</span><span class="chip">cron</span><span class="chip">Doppler</span></div>
-    <div class="close-row"><button type="button" data-close="d01">접기 ▴</button></div>
   </div></details>
   </div>
 
@@ -408,7 +422,7 @@
       <div class="overlay">
         <div class="name">CareerFit</div>
         <div class="subname">채용공고 역량 추출 · 정규식 vs Claude 3종을 같은 정답셋으로</div>
-        <a class="detail" href="#d02" data-open="d02">Project Detail →</a>
+        <a class="detail" href="#d02">Project Detail →</a>
       </div>
     </div>
     <div class="info">
@@ -432,10 +446,10 @@
         <li>2차 교정에서 opus 최하위 → 1위, 3차에서 "우위" → "확정 불가", 4차에서 잘린 응답 재호출</li>
         <li>한국어 조사가 단어 경계를 깨는 문제를 고쳐 정규식 추출량 <b>+7.2%</b></li>
       </ul>
-      <div class="actions"><button class="btn btn-fill" type="button" data-open="d02">자세히 ▾</button><a class="btn btn-line" href="https://github.com/kevin2483/Careerfit">GitHub</a><a class="btn btn-line" href="https://careerfit-kevin2483.streamlit.app">라이브 데모</a></div>
+      <div class="actions"><a class="btn btn-line" href="https://github.com/kevin2483/Careerfit">GitHub</a><a class="btn btn-line" href="https://careerfit-kevin2483.streamlit.app">라이브 데모</a></div>
     </div>
   </article>
-  <details class="full" id="d02"><summary></summary><div class="body">
+  <details class="full" id="d02" open><summary></summary><div class="body">
     <div class="sh">문제와 데이터</div>
     <p>채용공고 1,190건(데이터 사이언티스트·엔지니어·ML 엔지니어·데이터 분석가)에서 요구 역량을 뽑는 일은 LLM에 맡기면 금방 끝납니다. 그런데 그 결과가 맞는지 확인할 방법이 없었습니다. 역량 사전 106 canonical / 288 alias를 만들고, 공고 38건을 사람이 판정한 정답셋을 먼저 세웠습니다.</p>
 
@@ -497,7 +511,6 @@
     <p>정답셋 38건은 어떤 순위도 확정하기에 작습니다. 정답셋 2차 확장(후보 208건)은 판정이 성급했음을 스스로 확인해 폐기했고, 레포는 38건을 유지합니다. 네 번째 결함(잘린 응답)은 예측 파일 쪽을 한 번도 의심하지 않아서 생겼습니다.</p>
     <div class="retro"><b>다시 한다면.</b> 정답셋 38건은 프롬프트를 사전 등록해도 통계력이 부족했습니다. 다음에는 정답셋을 먼저 100건 이상으로 키운 뒤 모델 비교를 시작하겠습니다. 예측 파일의 실패 행 검사를 첫날부터 채점기에 넣고, 프롬프트 실험은 정답셋을 개발용과 평가용으로 나눈 뒤에만 하겠습니다. 라우팅 시뮬레이션은 무작위 대비 +1.1σ였으므로 "작동한다"는 표현을 쓰지 않은 판단을 유지합니다.</div>
     <div class="chips" style="margin-top:14px"><span class="chip">GitHub Actions</span><span class="chip">Claude Code 서브에이전트</span></div>
-    <div class="close-row"><button type="button" data-close="d02">접기 ▴</button></div>
   </div></details>
   </div>
 
@@ -529,7 +542,7 @@
       <div class="overlay">
         <div class="name">패션 플랫폼</div>
         <div class="subname">수집 → BigQuery → 자연어 질의 MCP 서버 · 고객 세분화</div>
-        <a class="detail" href="#d03" data-open="d03">Project Detail →</a>
+        <a class="detail" href="#d03">Project Detail →</a>
       </div>
     </div>
     <div class="info">
@@ -553,10 +566,10 @@
         <li>Claude Desktop에서 자연어로 BigQuery를 질의하는 MCP 서버를 JSON-RPC로 직접 구현. 변경 쿼리·다중 구문 차단, <b>LIMIT 자동 부착</b></li>
         <li>우수고객의 VIP 전환이 가장 큰 지렛대라는 결론까지. 조기 종료 누수는 README에 적음</li>
       </ul>
-      <div class="actions"><button class="btn btn-fill" type="button" data-open="d03">자세히 ▾</button><a class="btn btn-line" href="https://github.com/kevin2483/fashion-insight-platform">GitHub</a></div>
+      <div class="actions"><a class="btn btn-line" href="https://github.com/kevin2483/fashion-insight-platform">GitHub</a></div>
     </div>
   </article>
-  <details class="full" id="d03"><summary></summary><div class="body">
+  <details class="full" id="d03" open><summary></summary><div class="body">
     <div class="sh">문제와 데이터</div>
     <p>무신사 랭킹을 Selenium으로 수집하고 공휴일 API와 함께 BigQuery에 적재한 뒤 두 경로로 썼습니다. 하나는 Claude Desktop에서 자연어로 BigQuery를 질의하는 MCP 서버, 다른 하나는 GA 공개 고객 데이터 9,996명의 RFM 등급 예측입니다. 두 데이터는 조인되지 않은 별도 파이프라인입니다.</p>
     <div class="sh">평가 방법</div>
@@ -573,7 +586,6 @@
       <li>무신사 상품 데이터와 GA 고객 데이터는 조인되지 않은 별도 파이프라인입니다.</li>
     </ul>
     <div class="retro"><b>다시 한다면.</b> 타겟을 RFM 등급이 아니라 "다음 달 재구매 여부"로 정의해 순환을 끊고, 검증 세트를 따로 떼어 조기 종료에 쓰겠습니다. MCP 서버에는 쿼리 비용 상한과 호출 로그를 넣겠습니다.</div>
-    <div class="close-row"><button type="button" data-close="d03">접기 ▴</button></div>
   </div></details>
   </div>
 
