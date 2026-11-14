@@ -432,25 +432,26 @@
       </div>
     </div>
     <div class="info">
-      <div class="eyebrow">ACT 02 · 2026.07 – 2026.10 · 개인 프로젝트</div>
+      <div class="eyebrow">ACT 02 · 2026.07 – 2026.11 · 개인 프로젝트</div>
       <h3>추출기보다 "재는 장치"를 먼저 만들고, 그 장치를 네 번 고친 기록</h3>
       <p class="result">평가 장치를 믿을 수 있는지부터 따졌습니다. 결함을 네 번 고쳤고, 그사이 결론이 두 번 뒤집힌 과정도 공개했습니다.</p>
       <dl class="meta">
-        <dt>참여 기간</dt><dd class="num">2026.07 – 2026.10</dd>
+        <dt>참여 기간</dt><dd class="num">2026.07 – 2026.11</dd>
         <dt>인원·역할</dt><dd>개인 프로젝트. 설계와 구현, 정답셋 판정까지 혼자 했습니다</dd>
-        <dt>담당 범위</dt><dd>정답셋 판정, 베이스라인, 부트스트랩 CI, 데모, CI/CD</dd>
+        <dt>담당 범위</dt><dd>정답셋 판정, 베이스라인, 부트스트랩 CI, 공고 검색(RAG), 데모, CI/CD</dd>
       </dl>
       <div class="kpis">
         <div class="kpi"><b class="num">F1 0.863</b><span>opus · 정규식 0.853과 구간 겹침</span><small>정답셋 38건 · 부트스트랩 10,000회</small></div>
         <div class="kpi"><b class="num">4회</b><span>평가 장치 결함 교정</span><small>결론 2회 뒤집힘 · 전 과정 커밋</small></div>
         <div class="kpi"><b class="num">3 / 3 실패</b><span>사전 등록한 프롬프트 변형 전부 하락</span><small>실행 전 판정 기준 커밋 · 각 1회</small></div>
-        <div class="kpi"><b class="num">84 테스트</b><span>make reproduce 바이트 단위 재현</span><small>GitHub Actions 매 push 검증</small></div>
+        <div class="kpi"><b class="num">162 테스트</b><span>make reproduce 바이트 단위 재현</span><small>GitHub Actions 매 push 검증</small></div>
       </div>
-      <div class="chips"><span class="chip">Python</span><span class="chip">정규식</span><span class="chip">Anthropic API</span><span class="chip">구조화 출력</span><span class="chip">부트스트랩 CI</span><span class="chip">pytest</span><span class="chip">Streamlit</span><span class="chip">Docker</span></div>
+      <div class="chips"><span class="chip">Python</span><span class="chip">정규식</span><span class="chip">Anthropic API</span><span class="chip">구조화 출력</span><span class="chip">부트스트랩 CI</span><span class="chip">RAG</span><span class="chip">BM25</span><span class="chip">임베딩 검색</span><span class="chip">pytest</span><span class="chip">Streamlit</span><span class="chip">Docker</span></div>
       <ul class="bul">
         <li>채용공고 <b>1,190건</b>, 사전 106 canonical / 288 alias, 사람 정답셋 <b>38건</b>(블라인드 풀링)</li>
         <li>2차 교정에서 opus 최하위 → 1위, 3차에서 "우위" → "확정 불가", 4차에서 잘린 응답 재호출</li>
         <li>한국어 조사가 단어 경계를 깨는 문제를 고쳐 정규식 추출량 <b>+7.2%</b></li>
+        <li>공고 검색(RAG) 여섯 방식을 질문 30개, 직접 판정 <b>493건</b>으로 비교. 확정된 차이는 하나</li>
       </ul>
       <div class="actions"><a class="btn btn-line" href="https://github.com/kevin2483/Careerfit">GitHub</a><a class="btn btn-line" href="https://careerfit-kevin2483.streamlit.app">라이브 데모</a></div>
     </div>
@@ -508,13 +509,26 @@
       <figcaption><b>시장 지형도 탭.</b> 직무별로 많이 요구하는 역량 20개와 그 역량의 신입 접근성을 보여 줍니다. 공고 1,190건에서 뽑은 출현율입니다.</figcaption></figure>
     </div>
 
+    <div class="sh">공고 검색 (RAG)</div>
+    <p>"FastAPI 경험을 요구하는 공고가 어디냐" 같은 질문은 통계로 답할 수 없습니다. 그래서 공고 892건을 문단 4,573개로 나눠 검색하고, 찾은 문단만 근거로 답하는 기능을 붙였습니다. 이번에도 재는 방법부터 정했습니다. 방식과 판정 기준을 실행 전에 커밋했고 방식마다 한 번만 돌렸습니다.</p>
+    <table>
+      <tr><th>검색 방식</th><th>Recall@5</th><th>nDCG@5</th><th>지연 p90</th></tr>
+      <tr><td>BM25 (직접 구현, 한글 2-gram)</td><td class="num">0.350</td><td class="num">0.848</td><td class="num">13ms</td></tr>
+      <tr><td>벡터 (multilingual-e5-small)</td><td class="num">0.281</td><td class="num">0.746</td><td class="num">236ms</td></tr>
+      <tr><td>하이브리드 (RRF)</td><td class="num">0.354</td><td class="num">0.881</td><td class="num">245ms</td></tr>
+      <tr><td>하이브리드 + 리랭커 (bge-reranker-v2-m3)</td><td class="num">0.375</td><td class="num">0.927</td><td class="num">6,130ms</td></tr>
+    </table>
+    <p>질문 30개를 직접 쓰고, 여섯 방식이 찾은 문단 493건을 방식 이름을 가린 채 판정했습니다. 확정된 차이는 하이브리드가 벡터 단독보다 낫다는 것 하나입니다(+0.073 [+0.022, +0.128]). 직접 만든 BM25는 13ms 만에 하이브리드와 0.004 차이까지 따라왔습니다. 리랭커는 점수가 가장 높았지만 차이가 확정되지 않았고 6.1초가 걸려 쓰지 않았습니다.</p>
+    <p><b>답변 생성.</b> 하이브리드 상위 5개 문단을 claude-sonnet-5-5에 주고, 주장마다 근거 문단을 하나씩 붙이게 했습니다. 근거가 없는 질문 5개에는 전부 "해당하는 공고 없음"으로 답했습니다. 주장 43건은 모두 인용한 문단에 있는 말이었습니다. 다만 문단을 옮겨 적는 과제라 틀릴 여지가 거의 없었고, 그래서 이 숫자는 성과로 적지 않았습니다.</p>
+    <p><b>RAG를 쓴 곳과 안 쓴 곳.</b> 역량 추출과 시장 통계에는 쓰지 않았습니다. 공고 전체를 세는 일이라 검색할 것이 없습니다. "어느 공고에 뭐라고 적혀 있나"를 찾는 질문에만 붙였습니다.</p>
+
     <div class="sh">이 프로젝트에서 한 판단</div>
     <p><b>평가 장치의 결함을 네 번 고쳤습니다.</b> 첫 정답셋은 정규식 출력을 사람이 확인하는 방식이라, 정규식이 못 본 태그는 정답에 없었습니다. "어느 모델이 낫나"를 묻기 전에 "이 정답셋을 믿을 수 있나"를 먼저 물었고, 네 시스템의 후보를 출처를 가리고 섞어 다시 판정했습니다(후보 439건 중 127건 제외, 정규식-LLM 격차 0.091 → 0.024). 그 뒤에 찾은 풀링 누락, 사전 충돌과 함의 규칙 부재, 잘린 응답도 추출기가 아니라 채점기와 정답셋, 예측 파일 쪽 문제였습니다. 그 과정에서 결론이 두 번 바뀌었고, 바뀐 결론을 그대로 적었습니다.</p>
     <p><b>확정되지 않은 결론은 쓰지 않았습니다.</b> 라우팅 시뮬레이션은 무작위 대비 +1.1σ라 "작동한다"고 쓰지 않았습니다. 프롬프트 변형 3개는 판정 기준을 실행 전에 커밋하고 각 1회만 돌렸으며, 셋 다 점추정이 내려간 결과도 공개했습니다. 정답셋 2차 확장(후보 208건)은 판정이 성급했음을 스스로 확인해 폐기했습니다.</p>
-    <p><b>누구나 같은 표를 다시 만들 수 있게 했습니다.</b> 정답셋 38건을 직접 판정하고 전 과정을 커밋했습니다. 모든 표는 <code>make reproduce</code> 한 줄로 바이트 단위 재현되고 GitHub Actions가 매 push 검증합니다. 테스트는 84건입니다.</p>
+    <p><b>누구나 같은 표를 다시 만들 수 있게 했습니다.</b> 정답셋 38건을 직접 판정하고 전 과정을 커밋했습니다. 모든 표는 <code>make reproduce</code> 한 줄로 바이트 단위 재현되고 GitHub Actions가 매 push 검증합니다. 테스트는 162건입니다.</p>
 
     <div class="sh">한계와 다시 한다면</div>
-    <p>정답셋 38건은 어떤 순위도 확정하기에 작습니다. 2차 확장은 폐기해서 레포는 38건 그대로입니다. 네 번째 결함(잘린 응답)은 예측 파일을 한 번도 의심하지 않아서 생겼습니다.</p>
+    <p>정답셋 38건은 어떤 순위도 확정하기에 작습니다. 2차 확장은 폐기해서 레포는 38건 그대로입니다. 네 번째 결함(잘린 응답)은 예측 파일을 한 번도 의심하지 않아서 생겼습니다. 공고 검색 평가도 질문 30개에 판정자가 저 한 명이고, 50건을 다시 판정했더니 78%만 일치했습니다. 공고 원문이 비공개라 공개 데모에는 검색창 대신 평가 결과만 넣었습니다.</p>
     <div class="retro"><b>다시 한다면.</b> 정답셋 38건은 프롬프트를 사전 등록해도 통계력이 부족했습니다. 다음에는 정답셋을 먼저 100건 이상으로 키운 뒤 모델 비교를 시작하겠습니다. 예측 파일의 실패 행 검사를 첫날부터 채점기에 넣고, 프롬프트 실험은 정답셋을 개발용과 평가용으로 나눈 뒤에만 하겠습니다.</div>
     <div class="chips" style="margin-top:14px"><span class="chip">GitHub Actions</span><span class="chip">Claude Code 서브에이전트</span></div>
   </div></details>
