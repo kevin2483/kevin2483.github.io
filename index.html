@@ -497,14 +497,14 @@
     </table>
     <p><b>라우팅 시뮬레이션.</b> 긴 공고 40%만 opus로 보내면 opus 수준 F1 0.863을 비용 40%($6.20)로 얻습니다. 그런데 무작위 라우팅 대비 +1.1σ에 그쳐 "작동한다"고 쓰지 않았습니다.</p>
     <p><b>프롬프트 실험.</b> 사전 등록한 haiku 변형 3개(별칭 목록, 판정 기준, 구조화 출력)는 셋 다 점추정이 내려갔고 어느 것도 확정되지 않았습니다. 구조화 출력은 환각이 없었지만 목록 안 오탐이 78건에서 97건으로 늘었습니다. 이 결과도 지우지 않고 올려 두었습니다.</p>
-    <p><b>데모.</b> Streamlit 데모는 커밋된 CSV만 읽어 README와 숫자가 같고, 이력서·포트폴리오 PDF를 올리면 시장 대비 학습 우선순위를 돌려줍니다.</p>
+    <p><b>데모.</b> Streamlit 데모는 커밋된 CSV만 읽어 README와 숫자가 같습니다. 이력서나 포트폴리오 PDF를 올리면 공고가 자주 요구하는데 이력서에 없는 역량을 찾아 먼저 채울 5개를 알려 줍니다.</p>
     <div class="shots one">
       <figure><a href="assets/demo_eval.jpg" target="_blank" rel="noopener"><img src="assets/demo_eval.jpg" alt="데모 평가 결과 탭: F1과 95% 신뢰구간, 정확도 대비 비용, 방식별 요약 표" loading="lazy" width="1200" height="629"></a>
       <figcaption><b>평가 결과 탭.</b> 네 방식의 F1과 95% 신뢰구간, 정확도 대비 비용, 방식별 요약 표를 보여 줍니다. 누르면 원본 크기로 열립니다.</figcaption></figure>
     </div>
     <div class="shots two">
-      <figure><a href="assets/demo_gap.jpg" target="_blank" rel="noopener"><img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭: 예시 이력서를 넣은 뒤 이번 분기 학습 로드맵 top 5" loading="lazy" width="1200" height="508"></a>
-      <figcaption><b>갭 진단 탭.</b> 이력서·포트폴리오 PDF를 올리면 직무 출현율 × 미보유 × 신입접근성으로 이번 분기 학습 항목 5개를 돌려줍니다. 예시 이력서를 넣은 결과 부분입니다.</figcaption></figure>
+      <figure><a href="assets/demo_gap.jpg" target="_blank" rel="noopener"><img src="assets/demo_gap.jpg" alt="데모 갭 진단 탭: 예시 이력서를 넣은 결과. 자주 요구되는 역량 19개 중 7개가 이력서에 있고, 역량 20개를 있음과 없음으로 색을 나눈 막대 그래프" loading="lazy" width="1120" height="720"></a>
+      <figcaption><b>갭 진단 탭.</b> 이력서를 넣으면 자주 요구되는 역량 가운데 몇 개가 이력서에 있는지 먼저 알려 줍니다. 파란 막대는 이력서에 있는 역량, 주황 막대는 없는 역량입니다. 예시 이력서를 넣은 결과입니다.</figcaption></figure>
       <figure><a href="assets/demo_market.jpg" target="_blank" rel="noopener"><img src="assets/demo_market.jpg" alt="데모 시장 지형도 탭: 직무별 요구 역량 상위 20과 신입 접근성" loading="lazy" width="1200" height="629"></a>
       <figcaption><b>시장 지형도 탭.</b> 직무별로 많이 요구하는 역량 20개와 그 역량의 신입 접근성을 보여 줍니다. 공고 1,190건에서 뽑은 출현율입니다.</figcaption></figure>
     </div>
@@ -519,6 +519,10 @@
       <tr><td>하이브리드 + 리랭커 (bge-reranker-v2-m3)</td><td class="num">0.375</td><td class="num">0.927</td><td class="num">6,130ms</td></tr>
     </table>
     <p>질문 30개를 직접 쓰고, 여섯 방식이 찾은 문단 493건을 방식 이름을 가린 채 판정했습니다. 확정된 차이는 하이브리드가 벡터 단독보다 낫다는 것 하나입니다(+0.073 [+0.022, +0.128]). 직접 만든 BM25는 13ms 만에 하이브리드와 0.004 차이까지 따라왔습니다. 리랭커는 점수가 가장 높았지만 차이가 확정되지 않았고 6.1초가 걸려 쓰지 않았습니다.</p>
+    <div class="shots one">
+      <figure><a href="assets/demo_rag.jpg" target="_blank" rel="noopener"><img src="assets/demo_rag.jpg" alt="데모 공고 검색 탭: 여섯 검색 방식의 Recall@5와 95% 신뢰구간, 검색 지연 p90, 방식별 요약 표" loading="lazy" width="1120" height="815"></a>
+      <figcaption><b>공고 검색 (RAG) 탭.</b> 여섯 방식의 Recall@5와 신뢰구간, 검색 지연, 방식별 요약 표를 보여 줍니다. 공고 원문이 비공개라 검색창은 없고 평가 결과만 있습니다.</figcaption></figure>
+    </div>
     <p><b>답변 생성.</b> 하이브리드 상위 5개 문단을 claude-sonnet-5-5에 주고, 주장마다 근거 문단을 하나씩 붙이게 했습니다. 근거가 없는 질문 5개에는 전부 "해당하는 공고 없음"으로 답했습니다. 주장 43건은 모두 인용한 문단에 있는 말이었습니다. 다만 문단을 옮겨 적는 과제라 틀릴 여지가 거의 없었고, 그래서 이 숫자는 성과로 적지 않았습니다.</p>
     <p><b>RAG를 쓴 곳과 안 쓴 곳.</b> 역량 추출과 시장 통계에는 쓰지 않았습니다. 공고 전체를 세는 일이라 검색할 것이 없습니다. "어느 공고에 뭐라고 적혀 있나"를 찾는 질문에만 붙였습니다.</p>
 
@@ -636,7 +640,7 @@
   <p class="sub">정답이 있는 평가로 확인해 본 것을 앞에 두었습니다.</p>
   <div class="skills reveal">
     <div class="skill"><h3>LLM · 평가</h3>
-      <div class="chips"><span class="chip">Claude API</span><span class="chip">구조화 출력</span><span class="chip">MCP 서버 구현</span><span class="chip">평가셋 설계</span><span class="chip">블라인드 풀링</span><span class="chip">부트스트랩 신뢰구간</span><span class="chip">프롬프트 사전 등록</span><span class="chip">Function Calling</span><span class="chip">정규식 베이스라인</span><span class="chip">Claude Code 서브에이전트</span></div></div>
+      <div class="chips"><span class="chip">Claude API</span><span class="chip">구조화 출력</span><span class="chip">MCP 서버 구현</span><span class="chip">평가셋 설계</span><span class="chip">블라인드 풀링</span><span class="chip">부트스트랩 신뢰구간</span><span class="chip">프롬프트 사전 등록</span><span class="chip">RAG</span><span class="chip">BM25 직접 구현</span><span class="chip">임베딩 검색</span><span class="chip">하이브리드 검색(RRF)</span><span class="chip">리랭커</span><span class="chip">검색 평가(Recall · nDCG)</span><span class="chip">Function Calling</span><span class="chip">정규식 베이스라인</span><span class="chip">Claude Code 서브에이전트</span></div></div>
     <div class="skill"><h3>데이터 · 백엔드</h3>
       <div class="chips"><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">PostgreSQL</span><span class="chip">BigQuery</span><span class="chip">pandas</span><span class="chip">FastAPI</span><span class="chip">Selenium</span><span class="chip">Streamlit</span><span class="chip">scikit-learn</span><span class="chip">XGBoost</span><span class="chip">SHAP</span><span class="chip">공공데이터포털 API</span><span class="chip">BeautifulSoup</span><span class="chip">SQLAlchemy</span></div></div>
     <div class="skill"><h3>인프라 · 빅데이터</h3>
